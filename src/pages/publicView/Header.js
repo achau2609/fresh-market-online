@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
-import logo from '../image/logo.png';
+import { logo } from "../../image";
+
 const Header = () => {
 
     const [searchTerm, setSearchTerm] = React.useState('');

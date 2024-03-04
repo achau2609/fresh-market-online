@@ -4,7 +4,7 @@ import Navigation from './Navigation';
 import TopRightBar from './TopRightBar';
 import Footer from './Footer';
 import Banner from './Banner';
-import '../css/Public.css';
+import '../../css/Public.css'
 
 const PublicView = () => {
     

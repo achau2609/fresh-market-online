@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import banner1 from '../image/banner1.png';
-import banner2 from '../image/banner2.png';
+import {
+    banner1,
+    banner2
+} from "../../image"
 
 const Banner = () => {
     const [currentSlide, setCurrentSlide] = useState(0);

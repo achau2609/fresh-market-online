@@ -2,7 +2,7 @@
 import { Route, Routes, BrowserRouter as Router, Link, useLocation  } from 'react-router-dom';
 import Home from "./pages";
 import About from './pages/about';
-import PublicView from './publicView/PublicView';
+import PublicView from './pages/publicView/PublicView';
 
 const NavigationLinks = () => {
   const location = useLocation();
@@ -17,6 +17,7 @@ const NavigationLinks = () => {
       <li><Link to="/">Home</Link></li>
       <li><Link to="/about">About</Link></li>
       <li><a href="/public" target="_blank" rel="noopener noreferrer">Public</a></li>
+      <li><Link to="/myaccount">My Account</Link></li>
     </ul>
   );
 };
