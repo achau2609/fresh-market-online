@@ -1,5 +1,5 @@
 //import './css/App.css';
-import { Route, Routes, BrowserRouter as Router, Link, useLocation  } from 'react-router-dom';
+import { Route, Routes, Link, useLocation  } from 'react-router-dom';
 import Home from "./pages";
 import About from './pages/about';
 import PublicView from './pages/publicView/PublicView';
@@ -24,7 +24,7 @@ const NavigationLinks = () => {
 
 function App() {
   return (
-    <Router>
+    <div>
       <div>
         <NavigationLinks />
       </div>
@@ -33,7 +33,8 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/public" element={<PublicView />} />
       </Routes>
-    </Router>
+    </div>
+      
   );
 }
 

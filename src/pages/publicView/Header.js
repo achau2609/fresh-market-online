@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
 import { logo } from "../../image";
+import { Link } from 'react-router-dom';
 
 const Header = () => {
 
@@ -22,7 +23,7 @@ const Header = () => {
         <header>
             {/* logo */}
             <div className="logo">
-                <img src={logo} alt="Logo" />
+                <Link to="/"><img src={logo} alt="Logo" /></Link>
             </div>
 
             {/* Search bar */}
