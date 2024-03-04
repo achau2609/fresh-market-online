@@ -8,12 +8,15 @@ import { Outlet } from "react-router-dom";
 const Topbar = () => {
     
     return (
-        <div className="App">
-            <TopRightBar />
-            <Header />
-            <Navigation />
+        <>
+            <div className="App">
+                <TopRightBar />
+                <Header />
+                <Navigation />
+            </div>
             <Outlet />
-        </div>
+        </>
+        
     );
 };
 

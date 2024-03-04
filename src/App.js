@@ -33,7 +33,7 @@ function App() {
 
         <Routes>
           
-          {/*Pages that show topbar*/}
+          {/*Pages that show topbar footer*/}
           <Route element={<Topbar />}>
             <Route element={<Footer />}>
               <Route path="/" element={<Home />} />
