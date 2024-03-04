@@ -20,17 +20,19 @@ const Navigation = () => {
                     {/* Sample categories below*/}
                     <a href="#fruits">Fruits</a>
                     <a href="#vegetables">Vegetables</a>
-                    {/* FOR RESGISTERED PAGES TESTING PURPOSES*/}
+                    
                     
                 </div>
                 
 
             </div>
 
+            {/* FOR REGISTERED PAGES TESTING PURPOSES*/}
             <div style={{position: 'relative'}}>
                     <Link to="../404">404 | </Link>
                     <Link to="../">Home | </Link>
-                    <Link to="../registered pages/myaccount.js">My Account </Link>
+                    <Link to="../myaccount">My Account | </Link>
+                    <Link to="../checkout">Checkout </Link>
             </div>
 
             {/* Account Menu */}

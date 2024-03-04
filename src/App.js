@@ -8,6 +8,7 @@ import PageNotFound from './pages/404';
 import "./css/App.css"
 import NoTopbar from './pages/publicView/NoTopbar';
 import Checkout from './pages/checkout';
+import MyAccount from './pages/registered pages/myaccount';
 
 /*
 const NavigationLinks = () => {
@@ -39,6 +40,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/404" element={<PageNotFound />} />
               <Route path="/public" element={<PublicView />} />
+              <Route path="/myaccount" element={<MyAccount />} />
             </Route> 
           </Route>
 
