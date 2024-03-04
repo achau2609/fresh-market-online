@@ -1,12 +1,15 @@
 //import './css/App.css';
 import { Route, Routes, BrowserRouter as Router, Link, useLocation  } from 'react-router-dom';
 import Home from "./pages";
-import About from './pages/about';
 import PublicView from './pages/publicView/PublicView';
 import Topbar from './pages/publicView/Topbar';
 import Footer from './pages/publicView/Footer';
 import PageNotFound from './pages/404';
+import "./css/App.css"
+import NoTopbar from './pages/publicView/NoTopbar';
+import Checkout from './pages/checkout';
 
+/*
 const NavigationLinks = () => {
   const location = useLocation();
 
@@ -22,23 +25,32 @@ const NavigationLinks = () => {
       <li><Link to="/myaccount">My Account</Link></li>
     </ul>
   );
-};
+};*/
 
 function App() {
   return (
     <div>
-      <Topbar />
 
-      
-        <div style={{float: 'left'}}>
-          <NavigationLinks />
-        </div>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/404" element={<PageNotFound />} />
+          
+          {/*Pages that show topbar*/}
+          <Route element={<Topbar />}>
+            <Route element={<Footer />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/404" element={<PageNotFound />} />
+              <Route path="/public" element={<PublicView />} />
+            </Route> 
+          </Route>
+
+          {/*Pages that show staff topbar*/}
+
+          {/*Pages that dont show topbar*/}
+          <Route element={<NoTopbar />}>
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
+          
         </Routes>
 
-      <Footer />
     </div>
     
   );
@@ -47,6 +59,11 @@ function App() {
 export default App;
 
 /*
+
+<div style={{float: 'left'}}>
+          <NavigationLinks />
+        </div>
+
 function App() {
   return (
       <Router>

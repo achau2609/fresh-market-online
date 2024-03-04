@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaBars, FaArrowDown, FaUser, FaAngleDown } from 'react-icons/fa'; 
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
     const [showCategories, setShowCategories] = useState(false);
@@ -19,9 +20,19 @@ const Navigation = () => {
                     {/* Sample categories below*/}
                     <a href="#fruits">Fruits</a>
                     <a href="#vegetables">Vegetables</a>
+                    {/* FOR RESGISTERED PAGES TESTING PURPOSES*/}
                     
                 </div>
+                
+
             </div>
+
+            <div style={{position: 'relative'}}>
+                    <Link to="../404">404 | </Link>
+                    <Link to="../">Home | </Link>
+                    <Link to="../registered pages/myaccount.js">My Account </Link>
+            </div>
+
             {/* Account Menu */}
             <div className="account-dropdown">
                 <button className="account-dropbtn">

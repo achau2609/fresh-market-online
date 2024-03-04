@@ -365,7 +365,7 @@ nav {
 /*footer*/
 
 .footer {
-    position: absolute;
+
     bottom: 0;
     display: flex;
     justify-content: space-around;
@@ -373,7 +373,7 @@ nav {
     padding: 20px;
     background-color: #f1f1f1;
     flex-wrap: wrap;
-    width: 100%;
+
 }
 
 .footer-column {

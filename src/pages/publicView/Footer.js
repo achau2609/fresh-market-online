@@ -1,9 +1,13 @@
 import React from 'react';
 import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
+import { Outlet } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="footer">
+        <>
+            <Outlet />
+            <footer className="footer">
+            
             <div className="footer-column">
                 <h4>CUSTOMER SERVICE</h4>
                 <a href="#contact">Contact Us</a>
@@ -30,6 +34,8 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
+        </>
+        
     );
 };
 
