@@ -3,6 +3,9 @@ import { Route, Routes, BrowserRouter as Router, Link, useLocation  } from 'reac
 import Home from "./pages";
 import About from './pages/about';
 import PublicView from './pages/publicView/PublicView';
+import Topbar from './pages/publicView/Topbar';
+import Footer from './pages/publicView/Footer';
+import PageNotFound from './pages/404';
 
 const NavigationLinks = () => {
   const location = useLocation();
@@ -15,8 +18,7 @@ const NavigationLinks = () => {
   return (
     <ul>
       <li><Link to="/">Home</Link></li>
-      <li><Link to="/about">About</Link></li>
-      <li><a href="/public" target="_blank" rel="noopener noreferrer">Public</a></li>
+      <li><Link to="/404">404</Link></li>
       <li><Link to="/myaccount">My Account</Link></li>
     </ul>
   );
@@ -24,16 +26,21 @@ const NavigationLinks = () => {
 
 function App() {
   return (
-    <Router>
-      <div>
-        <NavigationLinks />
-      </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/public" element={<PublicView />} />
-      </Routes>
-    </Router>
+    <div>
+      <Topbar />
+
+      
+        <div style={{float: 'left'}}>
+          <NavigationLinks />
+        </div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/404" element={<PageNotFound />} />
+        </Routes>
+
+      <Footer />
+    </div>
+    
   );
 }
 
