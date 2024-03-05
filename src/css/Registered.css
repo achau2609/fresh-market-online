@@ -1,11 +1,16 @@
+/* Checkout Page */
 .checkout-topbar {
-    width: 100%;   
+    width: 100%;
+    height: 100px;
+    background-color: #eaebeb;
 }
 
 .checkout-title {
     width: 20%;
     text-align: center;
-    margin: 40px auto;
+    height: 100px;
+    margin: auto auto;
+    line-height: 100px;
     font-size: x-large;
     font-weight: bold;
 }
@@ -82,4 +87,55 @@
 
 .price-box-righttext {
     float: right;
+}
+
+/* My Account Page */
+.myacc-action-btn {
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin: 5px;
+    align-self: flex-start;
+}
+
+.myacc-navbar {
+    margin: 15px auto;
+    padding: 10px;
+    width: 40%;
+    border-bottom: 1px #d4d4d4 solid;
+}
+
+.myacc-navbar-btn {
+    padding: 5px 15px;
+}
+
+.myacc-navbar-btn:hover {
+    border-bottom: 1px solid #59b828;
+}
+
+.myacc-details-box {
+    margin: 5px auto 100px;
+    padding: 20px;
+    width: 40%;
+}
+
+.myacc-details-input {
+    margin: 10px auto;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+}
+
+.myacc-details-input-label {
+    margin: auto auto;
+    text-align: center;
+    width: 20%;
+    background-color: "green"
+}
+
+.myacc-details-input-box {
+    padding: 5px 5px;
+    margin: 8px auto;
+    width: 90%;
+    border: 1px solid #ddd;
+    font-size: 16px;
 }
