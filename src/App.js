@@ -11,6 +11,7 @@ import Checkout from './pages/checkout';
 import MyAccount from './pages/registered pages/myaccount';
 import ChangePw from './pages/registered pages/changepw';
 import OrderHistory from './pages/registered pages/OrderHistory';
+import OrderDetail from './pages/registered pages/OrderDetail';
 
 /*
 const NavigationLinks = () => {
@@ -45,6 +46,7 @@ function App() {
               <Route path="/myaccount" element={<MyAccount />} />
               <Route path="/myaccount/changepw" element={<ChangePw />} />
               <Route path="/myaccount/orderhistory" element={<OrderHistory />} />
+              <Route exact path="/myaccount/orderhistory/:orderId" element={<OrderDetail />} />
             </Route> 
           </Route>
 
