@@ -1,0 +1,54 @@
+.staff .product-thumbnail,
+.public .product-thumbnail {
+  display: grid;
+  min-height: 150px;
+  height: 150px;
+}
+
+.staff .product-small{
+  display: grid;
+  min-height: 100px;
+  height: 100px;
+}
+
+
+.staff .header-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.staff .zoom-image-container figure {
+  width: 600px;
+  background-repeat: no-repeat;
+}
+
+.staff .zoom-image-container figure:hover img {
+  opacity: 0;
+}
+
+.staff .zoom-image-container {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 50px;
+  border: 1px solid #00adb7;
+  border-radius: 15px;
+  :hover {
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.55), 0 14px 18px rgba(0, 0, 0, 0.55);
+  }
+}
+
+.staff .category-list .dnd-sortable-tree_simple_tree-item {
+  display: block;
+  border: 0;
+}
+
+.staff .nav {
+  --bs-link-color: var(--bs-green);
+  --bs-link-hover-color: #59b828;
+
+}
+
+.staff .nav-pills .nav-link.active {
+  --bs-nav-pills-link-active-bg: var(--bs-green);
+}

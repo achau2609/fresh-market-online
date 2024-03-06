@@ -40,17 +40,173 @@ html,body{
     color: #333; 
 }
 
-.account-info a {
+
+
+.account-info .login-logout-text {
     color: black;
     cursor: pointer;
     margin: 0px 5px 0px 5px; 
     display: inline-block; 
     transition: color 0.3s;
+
 }
 
-.account-info a:hover {
+.account-info .login-logout-text:hover {
     color: #59b828; 
 }
+
+/*login modal*/
+.modal {
+    display: block; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 50px 50px 50px 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px; 
+    
+}
+
+.accountMenu-switchTab {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 50px 50px 0px 0px;
+    overflow: hidden;
+
+}
+
+.accountMenu-title {
+    font-size: larger;
+    font-weight: bold;
+    color: #757575;
+    flex: 1;
+    padding: 20px;
+    background: #e4e4e4;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.accountMenu-activeTitle {
+    font-size: larger;
+    font-weight: bold;
+    color: #0c8b00;
+    flex: 1;
+    padding: 20px;
+    background: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.form-input-container {
+    position: relative;
+    padding: 15px 35px;
+  }
+  
+  .form-input-container input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 40px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 45px; 
+    box-sizing: border-box;
+  }
+
+  .password-toggle-icon {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    cursor: pointer;
+  }
+
+  .password-toggle-icon.active {
+    color: #59b828; 
+    background-color: #00000000;
+}
+
+.additional-links {
+    text-align: center; /* Align the link to the right */
+    margin-bottom: 15px; /* Spacing below the link */
+    
+}
+
+.additional-links,.back-to-login-link a {
+    font-size: 0.9rem; /* Smaller font size for the link */
+}
+
+.back-to-login-link {
+    text-align: center; /* Center the link */
+    padding-bottom: 5px;
+    margin-top: -25px;
+}
+
+
+  /* Style for the checkbox labels and containers */
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin-bottom: 30px;
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+  }
+
+  .form-button-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 0px 0px 30px 0px;
+  }
+
+  /* Style for the buttons like the sign-up button */
+  .form-button {
+    width: 70%;
+    background-color: #59b828; /* Example color */
+    border: none;
+    border-radius: 5px;
+    padding: 15px;
+
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .form-button:hover {
+    background-color: #4CAF50; /* Darker shade for hover state */
+  }
+
+  .forgot-password-form p {
+    text-align: center; 
+    padding: 0px 30px 0px 30px;
+    margin: 10px 0px;
+}
+
+
+
+
+
 
 /*Header (logo, search bar, shopping cart)*/
 
@@ -312,7 +468,6 @@ nav {
     transform: translateY(-50%);
     width: auto;
     padding: 16px;
-    margin-top: -22px;
     color: white;
     font-weight: bold;
     font-size: 18px;
@@ -362,18 +517,55 @@ nav {
     to {opacity: 1}
 }
 
+/*items carouse*/
+.carousel {
+    margin: auto;
+    padding: 30px 30px;
+  }
+  .carousel-container {
+    position: relative;
+  }
+  .flickity-prev-next-button {
+    top: 50% !important; 
+  }
+  
+  .flickity-prev-next-button.previous { 
+    left: 35px !important;
+  }
+  
+  .flickity-prev-next-button.next { 
+    right: 35px !important;  
+  }
+  
+  .flickity-prev-next-button .flickity-button-icon {
+    fill: #333; 
+  }
+
+  .carousel-cell {
+    margin-right: 10px; 
+    border-radius: 10px;
+    box-sizing: border-box;
+    width: calc((100% - 40px) / 5); 
+  }
+  
+  .carousel-cell img {
+    max-width: 50%; 
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .carousel-cell h3 {
+    text-align: center;
+  }
 /*footer*/
 
 .footer {
-
-    bottom: 0;
     display: flex;
     justify-content: space-around;
     align-items: start;
     padding: 20px;
     background-color: #f1f1f1;
     flex-wrap: wrap;
-
 }
 
 .footer-column {
@@ -404,6 +596,44 @@ nav {
 
     display: flex;
     gap: 10px;
+}
+
+/*reset password*/
+.password-reset-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.reset-password-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #59b828;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reset-password-button:hover {
+    background-color: #4CAF50;
 }
 
 /*responsive*/
