@@ -42,7 +42,7 @@ function App() {
               <Route path="/404" element={<PageNotFound />} />
               <Route path="/public" element={<PublicView />} />
               <Route path="/myaccount" element={<MyAccount />} />
-              <Route path="/changepw" element={<ChangePw />} />
+              <Route path="/myaccount/changepw" element={<ChangePw />} />
             </Route> 
           </Route>
 
