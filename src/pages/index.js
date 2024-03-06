@@ -1,46 +1,12 @@
 import React from "react";
+import ItemsCarousel from "./publicView/ItemsCarouse";
+import Banner from "./publicView/Banner";
  
 const Home = () => {
     return (
         <div>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
-            <h1>Testing 4040</h1>
+            <Banner />
+            <ItemsCarousel />
         </div>
     );
 };

@@ -19,7 +19,7 @@ const MyAccount = () => {
                         <label for="fullname">Name: </label>
                     </div>
                     <div style={{margin: "auto auto", width: "80%"}}>
-                        <input type="text" id="fullname" name="fullname" className="myacc-details-input-box"></input><br />
+                        <input type="text" id="fullname" name="fullname" className="myacc-details-input-box" value="John Smith"></input><br />
                     </div>
                 </div>
 
@@ -28,7 +28,7 @@ const MyAccount = () => {
                         <label for="email">Email: </label>
                     </div>
                     <div style={{margin: "auto auto", width: "80%"}}>
-                        <input type="text" id="email" name="email" className="myacc-details-input-box"></input><br />
+                        <input type="text" id="email" name="email" className="myacc-details-input-box" value="jsmith0915@gmail.com"></input><br />
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@ const MyAccount = () => {
                         <label for="address">Address: </label>
                     </div>
                     <div style={{margin: "auto auto", width: "80%"}}>
-                        <input type="text" id="address" name="address" className="myacc-details-input-box"></input><br />
+                        <input type="text" id="address" name="address" className="myacc-details-input-box" value="131 Park Ln Cir, ON N9V 4B3"></input><br />
                     </div>
                 </div>
 
@@ -45,7 +45,6 @@ const MyAccount = () => {
                     <button className="myacc-action-btn">Save Changes</button>
                     <span style={{float: "right"}}>
                         <button className="myacc-action-btn"><Link to="/myaccount/changepw" style={{ textDecoration: 'none', color: "white"}}>Change Password</Link></button>
-                        <button className="myacc-action-btn">Add Address</button>
                 </span>
                 </div>
                 

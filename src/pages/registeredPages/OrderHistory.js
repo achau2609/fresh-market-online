@@ -41,7 +41,7 @@ const OrderHistory = () => {
                             </p>
                         </div>
                         <div className='col-auto col-md-3'>
-                            <Link to="/orderhistory/0001" class="btn btn-success">Order Detail</Link>
+                            <Link to="/myaccount/orderhistory/0001" class="btn btn-success">Order Detail</Link>
                         </div>
                     </div>
                 </div>

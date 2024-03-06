@@ -27,14 +27,6 @@ const Navigation = () => {
 
             </div>
 
-            {/* FOR REGISTERED PAGES TESTING PURPOSES*/}
-            <div style={{position: 'relative'}}>
-                    <Link to="../404">404 | </Link>
-                    <Link to="../">Home | </Link>
-                    <Link to="../myaccount">My Account | </Link>
-                    <Link to="../checkout">Checkout </Link>
-            </div>
-
             {/* Account Menu */}
             <div className="account-dropdown">
                 <button className="account-dropbtn">
@@ -44,8 +36,8 @@ const Navigation = () => {
                     <div className="user-icon">
                         <FaUser /> 
                     </div>
-                    <a href="#MyAccount">My Account</a>
-                    <a href="#MyOrders">My Orders</a>
+                    <a href="#MyAccount"><Link to="/myaccount">My Account</Link></a>
+                    <a href="#MyOrders"><Link to="/myaccount/orderhistory">My Orders</Link></a>
                 </div>
             </div>
         </nav>

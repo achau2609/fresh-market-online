@@ -1,6 +1,6 @@
 import React from 'react'
-import CartSummary from '../../components/CartSummary'
-import ShoppingCartItem from '../../components/ShoppingCartItem'
+import CartSummary from '../../component/CartSummary'
+import ShoppingCartItem from '../../component/ShoppingCartItem'
 
 const ShoppingCart = () => {
 

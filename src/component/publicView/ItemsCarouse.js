@@ -1,11 +1,7 @@
 import React from 'react';
 import Flickity from 'flickity';
 import 'flickity/css/flickity.css';
-import {
-    orange,
-    apple,
-    fish
-} from "../../image"
+import { orange, apple, fish } from "../../image"
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const items = [
