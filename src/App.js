@@ -60,6 +60,7 @@ function App() {
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/resetpassword" element={<PasswordReset />}/>
               <Route exact path="/productlist" element={<ProductListPage />} />
+              <Route exact path="/productlist/productdetail" element={<ProductListPage />} />
             </Route> 
           </Route>
 
