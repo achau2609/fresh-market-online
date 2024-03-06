@@ -30,7 +30,7 @@ const ContactUs = () => {
     };
 
     return (
-        <div className="App">
+        <div className="">
 
             <div className="content">
                 <h1>CONTACT US</h1>
@@ -56,7 +56,7 @@ const ContactUs = () => {
                         <textarea id="message" name="message" placeholder="Details of your message" style={lastInputStyle}></textarea>
                     </div>
                     <div className="form-group">
-                        <button type="submit">Submit</button>
+                        <button type="submit" className="btn btn-custom-primary">Submit</button>
                     </div>
                 </form>
             </div>

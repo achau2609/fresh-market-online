@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import companyLogo from "../image/logo.png";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logo } from "../image";
 
@@ -7,15 +9,15 @@ class Header extends Component {
     return (
       <header className="d-flex flex-wrap align-items-left justify-content-left justify-content-md-between py-3 mb-4 border-bottom">
         <div className="col-md-3 mb-2 mb-md-0">
-          <a className="navbar-brand">
+          <Link className="navbar-brand" to='/'>
             <img
-              src={logo}
+              src={companyLogo}
               alt="Logo"
               width="100"
               height="100"
               className="d-inline-block align-text-top"
             />
-          </a>
+          </Link>
         </div>
           <a href="/admin/logout" className="nav-link" aria-current="page">
           <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 512 512">

@@ -30,11 +30,8 @@ import AboutUs from './pages/publicPages/about';
 import ContactUs from './pages/publicPages/contactUs';
 import FAQ from './pages/publicPages/FAQ';
 //Admin pages
-import AddNewUser from './pages/admin/AddNewUser';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import ManageCollections from './pages/admin/ManageCollections';
 import ManageDb from './pages/admin/ManageDb';
-import UpdateUser from './pages/admin/UpdateUser';
 import UsersAccounts from './pages/admin/UsersAccounts';
 
 
@@ -74,14 +71,9 @@ function App() {
             <Route exact path="/staff/products/:productId" element={<ProductDetailPage />} />
             <Route exact path="/staff/categories" element={<CategoryMaintenancePage />} />
             <Route exact path="/staff/reports" element={<StaffReportsPage />} />
-
-            {/*Admin Pages*/}
             <Route exact path="/admin" element={<AdminDashboard />} />
-            <Route exact path="/admin/addnewuser" element={<AddNewUser />} />
-            <Route exact path="/admin/managecollections" element={<ManageCollections />} />
-            <Route exact path="/admin/manage-db" element={<ManageDb />} />
-            <Route exact path="/admin/updateuser" element={<UpdateUser />} />
             <Route exact path="/admin/users-accounts" element={<UsersAccounts />} />
+            <Route exact path="/admin/manage-db" element={<ManageDb />} />
             
             {/*Checkout Page*/}
             <Route path="/checkout" element={<Checkout />} />

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Header from "../../component/header";
 import Sidebar from "../../component/sidebar";
 import Users from "../../component/users";
-import "../../css/admin.css";
 
 function UsersAccounts() {
   return (

@@ -5,7 +5,7 @@ import Banner from "../component/publicView/Banner";
  
 const Home = () => {
     return (
-        <div>
+        <div className="public">
             <Banner />
             <ItemsCarousel />
         </div>

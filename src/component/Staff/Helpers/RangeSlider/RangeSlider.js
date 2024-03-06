@@ -2,7 +2,7 @@ import React from 'react'
 import { Range, getTrackBackground } from 'react-range'
 
 
-const TwoThumbs = ({STEP=1, MIN =0, MAX = 100, values=[0,0], setValues, dp=0}) => {
+const TwoThumbs = ({STEP=1, MIN =0, MAX = 100, values=[0,0], setValues, dp=0, color='var(--custom-color-primary)'}) => {
 
     return (
         <div className='d-flex justify-content-center flex-wrap'>
@@ -31,7 +31,7 @@ const TwoThumbs = ({STEP=1, MIN =0, MAX = 100, values=[0,0], setValues, dp=0}) =
                                 height: '5px',
                                 background: getTrackBackground({
                                     values,
-                                    colors: ['#ccc', 'var(--bs-green)', '#ccc'],
+                                    colors: ['#ccc', color, '#ccc'],
                                     min: MIN,
                                     max: MAX
                                 }),
@@ -51,10 +51,11 @@ const TwoThumbs = ({STEP=1, MIN =0, MAX = 100, values=[0,0], setValues, dp=0}) =
                             boxShadow: '0px 2px 6px #AAA'
                         }}
                     >
-                        <div className='bg-success position-absolute fw-bold text-white p-1 rounded'
+                        <div className='position-absolute fw-bold text-white p-1 rounded'
                             style={{
                                 top: '-28px',
                                 fontSize: '14px',
+                                backgroundColor: color
                             }}
                         >
                             {values[index].toFixed(dp)}

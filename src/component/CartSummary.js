@@ -26,7 +26,7 @@ const CartSummary = () => {
                     <div className='col-md-4'> $15.03</div>
                 </div>
             </div>
-            <Link to='/' className='btn btn-success'>Proceed to Checkout</Link>
+            <Link to='/checkout' className='btn btn-custom-primary'>Proceed to Checkout</Link>
         </div>
     )
 }

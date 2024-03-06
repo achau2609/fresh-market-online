@@ -1,42 +1,167 @@
+:root {
+  --custom-color-primary: #59b828;
+  --custom-color-primary-hover: #4caf50;
+  --custom-color-link-hover: #04aa6d;
+  --custom-light-bg: #f1f1f1;
+  --bs-pagination-color: var(--bs-green);
+  --bs-link-color: var(--bs-green);
+  --bs-link-hover-color: var(--custom-color-primary-hover);
+  --bs-link-color-rgb: 25, 135, 84;
+  --bs-link-hover-color-rgb: 89,184,40;
+  --custom-color-secondary: var(--bs-green);
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .notfoundpage {
   padding: 10px 0px 100px 40px;
+}
+
+a.no-decoration,
+footer a {
+  color: var(--bs-dark);
+  text-decoration: none;
+}
+
+.pagination {
+  --bs-pagination-active-bg: var(--custom-color-primary-hover);
+  --bs-pagination-active-border-color: var(--custom-color-primary-hover);
+}
+
+.btn-custom-primary {
+  --bs-btn-bg: var(--custom-color-primary);
+  --bs-btn-hover-bg: var(--custom-color-primary-hover);
+  --bs-btn-hover-color: var(--bs-white);
+  color: var(--bs-white);
+  text-decoration: none;
+}
+
+.btn-custom-secondary {
+  --bs-btn-bg: var(--custom-color-secondary);
+  --bs-btn-hover-bg: var(--custom-color-primary-hover);
+  --bs-btn-hover-color: var(--bs-white);
+  color: var(--bs-white);
+  text-decoration: none;
+}
+
+
+.bg-custom-primary {
+  background-color: var(--custom-color-primary);
+}
+
+.bg-custom-secondary{
+  background-color: var(--custom-color-secondary);
+}
+
+.bg-custom-light {
+  background-color: var(--custom-light-bg);
+}
+
+.text-custom-primary {
+  color: var(--custom-color-primary) !important;
+}
+
+.border-custom-primary {
+  border-style: solid;
+  border-color: var(--custom-color-primary) !important;
+}
+
+.btn-outline-custom-primary {
+  --bs-btn-color: var(--custom-color-primary);
+  --bs-btn-border-color: var(--custom-color-primary);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--custom-color-primary-hover);
+  --bs-btn-hover-border-color: var(--custom-color-primary-hover);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--custom-color-primary);
+  --bs-btn-active-border-color: var(--custom-color-primary);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: var(--custom-color-primary);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--custom-color-primary);
+  --bs-gradient: none;
+}
+
+
+/*****                Public            ******/
+
+.public a:hover {
+  color: var(--custom-color-link-hover);
+}
+
+.public .carousel-button:hover {
+  background-color: var(--bs-dark);
+  cursor: pointer;
+}
+
+.public .flickity-cell {
+  width: 20%;
+}
+
+.public .carousel {
+  margin: auto;
+  padding: 30px 30px;
+}
+
+.public .flickity-prev-next-button {
+  top: 50% !important;
+}
+
+.public .flickity-prev-next-button.previous {
+  left: 35px !important;
+}
+
+.public .flickity-prev-next-button.next {
+  right: 35px !important;
+}
+
+.public .flickity-prev-next-button .flickity-button-icon {
+  fill: #333;
+}
+
+.public .logo img {
+  width: 90px;
+  height: auto;
+}
+
+.public .search-input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.public .shopping-cart-container:hover {
+  color: #59b828;
+}
+
+.public .shopping-cart-container:hover .btn {
+  color: #59b828;
+  background-color: var(--custom-light-bg);
+}
+
+
+/*****            Staff                 *******/
+.staff .product-thumbnail,
+.public .product-thumbnail {
+  display: grid;
+  min-height: 150px;
+  height: 150px;
+}
+
+.staff .product-small{
+  display: grid;
+  min-height: 100px;
+  height: 100px;
+}
+
+.staff .header-logo {
+  width: 70px;
+  height: 70px;
+}
+
+.staff .nav-pills .nav-link.active,
+.admin .nav-pills .nav-link.active  {
+  --bs-nav-pills-link-active-bg: var(--bs-green);
 }

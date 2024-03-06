@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown';
-import { Link } from 'react-router-dom';
 import TwoThumbs from '../../component/Staff/Helpers/RangeSlider/RangeSlider';
 import ProductList from '../../component/ProductList';
 
@@ -35,7 +34,7 @@ const ProductListPage = () => {
         <div className='container public'>
             <div className='row public'>
                 {/* Search */}
-                <div className='col-12 col-md-4 border-end pe-4'>
+                <div className='col-12 col-md-3 border-end pe-4'>
                     <div className="card border-0">
                         <div className='row card-header text-start'>
                             <h5 class="col-10 ">Search</h5>
@@ -65,7 +64,7 @@ const ProductListPage = () => {
                                             <TwoThumbs STEP={0.01} MIN={0} MAX={50} values={searchPrices} setValues={setSearchPrices} dp={2} />
                                         </div>
                                         <div className='col-12 d-grid gap-2'>
-                                            <button type='button' className='btn btn-success'>Search</button>
+                                            <button type='button' className='btn btn-custom-primary'>Search</button>
                                             <button type='button' className='btn btn-light'>Clear</button>
                                         </div>
 
@@ -76,7 +75,7 @@ const ProductListPage = () => {
                     </div>
                 </div>
                 {/* Table */}
-                <div className='col-12 col-md-8'>
+                <div className='col-12 col-md-9'>
                     <ProductList />
                 </div>
             </div>

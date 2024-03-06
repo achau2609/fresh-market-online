@@ -2,7 +2,6 @@ import React from 'react';
 import Flickity from 'flickity';
 import 'flickity/css/flickity.css';
 import { orange, apple, fish } from "../../image"
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const items = [
     { name: 'Orange0', image: orange, bgColor: '#FDEBD0' },
@@ -16,8 +15,6 @@ const items = [
     { name: 'Fish2', image: fish, bgColor: '#D1F2FB' }
   ];
   
-
-
   class ItemsCarousel extends React.Component {
     componentDidMount() {
       this.flickity = new Flickity(this.carousel, {
@@ -35,11 +32,11 @@ const items = [
   
     render() {
       return (
-        <div className="carousel" ref={el => this.carousel = el}>
+        <div className="p-4" ref={el => this.carousel = el}>
           {items.map((item, index) => (
-            <div key={index} className="carousel-cell" style={{ backgroundColor: item.bgColor }}>
-              <img src={item.image} alt={item.name} />
-              <h3>{item.name}</h3>
+            <div key={index} className="rounded-2 me-3 p-2" style={{ backgroundColor: item.bgColor }}>
+              <img src={item.image} alt={item.name} className='w-50 mb-1' />
+              <h3 className='text-center'>{item.name}</h3>
             </div>
           ))}
         </div>

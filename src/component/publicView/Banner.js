@@ -23,26 +23,28 @@ const Banner = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-        }, 3000); // Change silde showing time here
+        }, 2000); // Change silde showing time here
 
-        return () => clearInterval(timer); 
+        return () => clearInterval(timer);
     }, [slides.length]);
 
     return (
-        <section className="banner-slider">
+        <section className="overflow-hidden w-100 m-0 position-relative banner-slider">
             {slides.map((slide, index) => (
                 <div className={`mySlides fade ${index === currentSlide ? 'display' : ''}`} key={index}>
                     <div className="numbertext">{index + 1} / {slides.length}</div>
-                    <img src={slide.url} alt={`Banner ${index + 1}`} style={{ width: "100%" }} />
+                    <img src={slide.url} alt={`Banner ${index + 1}`} className='w-100' />
                 </div>
             ))}
 
             {/* Previous and Next buttons */}
-            <a className="prev" onClick={() => nextSlide(-1)}>❮</a>
-            <a className="next" onClick={() => nextSlide(1)}>❯</a>
-            
+            <a className="carousel-button position-absolute top-50 p-4 text-white fw-bold rounded-end translate-middle-y"
+                onClick={() => nextSlide(-1)}>❮</a>
+            <a className="carousel-button position-absolute end-0 top-50 p-4 text-white fw-bold rounded-start translate-middle-y"
+                onClick={() => nextSlide(1)}>❯</a>
+
             {/* dots */}
-            <div className="dot-container">
+            <div className="text-center w-100 px-3 py-2 position-absolute bottom-0">
                 {slides.map((_, index) => (
                     <span className={`dot ${index === currentSlide ? 'active' : ''}`} onClick={() => setSlide(index)} key={index}></span>
                 ))}
