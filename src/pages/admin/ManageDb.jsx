@@ -1,9 +1,8 @@
 import * as React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../../css/Admin.css";
 import Header from "../../components/header";
 import Sidebar from "../../components/sidebar";
 import DatabaseLists from "../../components/databaseLists";
+import "../../css/Admin.css";
 
 function ManageDb() {
   return (
@@ -22,7 +21,7 @@ function ManageDb() {
             <div className="card-body">
               <div className="row">
                 <div className="col-12">
-                  <h3>Manage Db</h3>
+                  <h3>Database Object Lists</h3>
                 </div>
               </div>
               <div className="row">

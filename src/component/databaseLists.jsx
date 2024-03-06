@@ -55,7 +55,11 @@ class DatabaseLists extends Component {
             <tbody>
               {collections.map((collection) => (
                 <tr key={collection._id}>
-                  <td>{collection.ObjectName}</td>
+                  <td>
+                    <span class="badge text-bg-secondary">
+                      {collection.ObjectName}
+                    </span>
+                  </td>
                   <td>{collection.Description}</td>
                   <td>
                     <button
