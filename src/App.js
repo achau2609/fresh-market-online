@@ -11,6 +11,7 @@ import MyAccount from './pages/registeredPages/myaccount';
 import ChangePw from './pages/registeredPages/changepw';
 import OrderHistory from './pages/registeredPages/OrderHistory';
 import OrderDetail from './pages/registeredPages/OrderDetail';
+import PasswordReset from './pages/PasswordReset';
 
 import "./css/App.css"
 import ShoppingCart from './pages/publicPages/ShoppingCart';
@@ -31,6 +32,7 @@ function App() {
               <Route path="/myaccount/orderhistory" element={<OrderHistory />} />
               <Route exact path="/myaccount/orderhistory/:orderId" element={<OrderDetail />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
+              <Route path="/resetpassword" element={<PasswordReset />}/>
             </Route> 
           </Route>
 

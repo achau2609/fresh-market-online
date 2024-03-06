@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
-
+import LoginModal from './LoginModal';
 import { MdLanguage } from "react-icons/md";
+import '../../css/Public.css'
 
 const TopRightBar = () => {
     const [language, setLanguage] = React.useState('English');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
+    const [showModal, setShowModal] = useState(false); // for login modal
 
     const handleLanguageChange = (event) => {
         setLanguage(event.target.value);
+    };
+
+    const handleAccountInfoClick = () => {
+        if (isLoggedIn) {
+            handleLogout();
+        } else {
+            setShowModal(true);
+        }
     };
 
     const handleLogin = () => {
@@ -33,14 +43,14 @@ const TopRightBar = () => {
             </div>
 
             {/* Login */}
-            <div className="account-info">
-                {isLoggedIn ? (
-                    <span>Hi, {username}</span>
-                ) : (
-                    <a href="#" onClick={handleLogin}>Login</a>
-                )}
-                {isLoggedIn && <a href="#" onClick={handleLogout}>Logout</a>}
+            <div className="account-info" onClick={handleAccountInfoClick}>
+                <span className="login-logout-text">
+                    {isLoggedIn ? `Hi, ${username}` : 'Login'}
+                </span>
             </div>
+
+            {/* Modal */}
+            {showModal && <LoginModal onClose={() => setShowModal(false)} />}
         </div>
     );
 };
