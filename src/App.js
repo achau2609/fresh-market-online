@@ -1,5 +1,5 @@
-//import './css/App.css';
 import { Route, Routes, useLocation  } from 'react-router-dom';
+import "./css/App.css"
 
 // Components
 import TopBar from './component/publicView/Topbar';
@@ -29,8 +29,13 @@ import ProductListPage from './pages/publicPages/ProductListPage';
 import AboutUs from './pages/publicPages/about';
 import ContactUs from './pages/publicPages/contactUs';
 import FAQ from './pages/publicPages/FAQ';
-
-import "./css/App.css"
+//Admin pages
+import AddNewUser from './pages/admin/AddNewUser';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ManageCollections from './pages/admin/ManageCollections';
+import ManageDb from './pages/admin/ManageDb';
+import UpdateUser from './pages/admin/UpdateUser';
+import UsersAccounts from './pages/admin/UsersAccounts';
 
 
 
@@ -60,6 +65,7 @@ function App() {
 
           {/*Pages that dont show public topbar*/}
           <Route element={<NoTopbar />}>
+            {/*Staff Pages*/}
             <Route exact path="/staff" element={<Dashboard />} />
             <Route exact path="/staff/orders" element={<OrdersMaintenancePage />} />
             <Route exact path="/staff/orders/:orderId" element={<OrderDetailPage />} />
@@ -67,7 +73,16 @@ function App() {
             <Route exact path="/staff/products/:productId" element={<ProductDetailPage />} />
             <Route exact path="/staff/categories" element={<CategoryMaintenancePage />} />
             <Route exact path="/staff/reports" element={<StaffReportsPage />} />
+
+            {/*Admin Pages*/}
+            <Route exact path="/admin" element={<AdminDashboard />} />
+            <Route exact path="/admin/addnewuser" element={<AddNewUser />} />
+            <Route exact path="/admin/managecollections" element={<ManageCollections />} />
+            <Route exact path="/admin/manage-db" element={<ManageDb />} />
+            <Route exact path="/admin/updateuser" element={<UpdateUser />} />
+            <Route exact path="/admin/users-accounts" element={<UsersAccounts />} />
             
+            {/*Checkout Page*/}
             <Route path="/checkout" element={<Checkout />} />
           </Route>
           

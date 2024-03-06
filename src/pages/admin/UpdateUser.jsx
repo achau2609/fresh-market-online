@@ -1,9 +1,8 @@
 import * as React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/header";
-import Sidebar from "../../components/sidebar";
-import EditUser from "../../components/editUser";
-import "../../css/Admin.css";
+import Header from "../../component/header";
+import Sidebar from "../../component/sidebar";
+import EditUser from "../../component/editUser";
+import "../../css/admin.css";
 
 function UpdateUser() {
   return (

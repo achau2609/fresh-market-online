@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import companyLogo from "../img/logo.png";
+import { logo } from "../image";
 
 class Header extends Component {
   render() {
@@ -9,7 +9,7 @@ class Header extends Component {
         <div className="col-md-3 mb-2 mb-md-0">
           <a className="navbar-brand">
             <img
-              src={companyLogo}
+              src={logo}
               alt="Logo"
               width="100"
               height="100"

@@ -1,9 +1,8 @@
 import * as React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/header";
-import Sidebar from "../../components/sidebar";
-import ManageCollection from "../../components/manageCollection";
-import "../../css/Admin.css";
+import Header from "../../component/header";
+import Sidebar from "../../component/sidebar";
+import ManageCollection from "../../component/manageCollection";
+import "../../css/admin.css";
 
 function ManageCollections() {
   return (

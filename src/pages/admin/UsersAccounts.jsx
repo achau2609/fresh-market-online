@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../components/header";
-import Sidebar from "../../components/sidebar";
-import Users from "../../components/users";
-import "../../css/Admin.css";
+import Header from "../../component/header";
+import Sidebar from "../../component/sidebar";
+import Users from "../../component/users";
+import "../../css/admin.css";
 
 function UsersAccounts() {
   return (
