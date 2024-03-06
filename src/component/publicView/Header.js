@@ -42,13 +42,13 @@ const Header = () => {
 
             {/* Shopping Cart */}
             <div >
-                <a href="/shoppingCart" className="shopping-cart-container">
+                <Link to="/shoppingCart" className="shopping-cart-container">
                     <div className="header-icons"> 
                         <FaShoppingCart />
                     </div>
                     <span className="cart-total-cost">${totalCost.toFixed(2)}</span>
                     <span className="cart-item-count">{itemCount}</span>
-                </a>
+                </Link>
             </div>
         </header>
     );

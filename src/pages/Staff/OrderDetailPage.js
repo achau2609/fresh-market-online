@@ -1,7 +1,7 @@
 import React from 'react'
-import StaffMenu from '../../components/Staff/StaffMenu';
-import StaffHeader from '../../components/Staff/StaffHeader';
-import StaffOrderDetail from '../../components/Staff/StaffOrderDetail';
+import StaffMenu from '../../component/Staff/StaffMenu';
+import StaffHeader from '../../component/Staff/StaffHeader';
+import StaffOrderDetail from '../../component/Staff/StaffOrderDetail';
 
 const OrderDetailPage = () => {
   return (

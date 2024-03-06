@@ -1,6 +1,7 @@
 import React from "react";
-import ItemsCarousel from "./publicView/ItemsCarouse";
-import Banner from "./publicView/Banner";
+import ItemsCarousel from "../component/publicView/ItemsCarouse";
+import Banner from "../component/publicView/Banner";
+
  
 const Home = () => {
     return (

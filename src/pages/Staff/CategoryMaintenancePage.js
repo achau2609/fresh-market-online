@@ -1,7 +1,7 @@
 import React from 'react';
-import StaffMenu from '../../components/Staff/StaffMenu';
-import StaffHeader from '../../components/Staff/StaffHeader';
-import Categories from '../../components/Staff/Categories';
+import StaffMenu from '../../component/Staff/StaffMenu';
+import StaffHeader from '../../component/Staff/StaffHeader';
+import Categories from '../../component/Staff/Categories';
 
 const CategoryMaintenancePage = () => {
   return (

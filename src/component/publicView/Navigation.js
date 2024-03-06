@@ -18,8 +18,8 @@ const Navigation = () => {
                 <div className={`categories-dropdown-content ${showCategories ? 'visible' : 'hidden'}`}>
                     {/* Dynamically render categories here */}
                     {/* Sample categories below*/}
-                    <a href="#fruits">Fruits</a>
-                    <a href="#vegetables">Vegetables</a>
+                    <a href="/productlist">Fruits</a>
+                    <a href="/productlist">Vegetables</a>
                     
                     
                 </div>

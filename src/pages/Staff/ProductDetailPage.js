@@ -1,7 +1,7 @@
-import StaffMenu from '../../components/Staff/StaffMenu';
-import StaffHeader from '../../components/Staff/StaffHeader';
+import StaffMenu from '../../component/Staff/StaffMenu';
+import StaffHeader from '../../component/Staff/StaffHeader';
 import React from 'react';
-import ProductDetail from '../../components/Staff/ProductDetail';
+import ProductDetail from '../../component/Staff/ProductDetail';
 
 const ProductDetailPage = () => {
   return (

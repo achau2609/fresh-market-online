@@ -1,8 +1,8 @@
-import StaffMenu from '../../components/Staff/StaffMenu';
-import StaffHeader from '../../components/Staff/StaffHeader';
+import StaffMenu from '../../component/Staff/StaffMenu';
+import StaffHeader from '../../component/Staff/StaffHeader';
 import React from 'react';
-import TodayPickupOrders from '../../components/Staff/TodayPickupOrders';
-import LowInventoryItems from '../../components/Staff/LowInventoryItems';
+import TodayPickupOrders from '../../component/Staff/TodayPickupOrders';
+import LowInventoryItems from '../../component/Staff/LowInventoryItems';
 
 const Dashboard = () => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
-import StaffMenu from '../../components/Staff/StaffMenu';
-import StaffHeader from '../../components/Staff/StaffHeader';
-import StaffReport from '../../components/Staff/StaffReport';
+import StaffMenu from '../../component/Staff/StaffMenu';
+import StaffHeader from '../../component/Staff/StaffHeader';
+import StaffReport from '../../component/Staff/StaffReport';
 import '../../css/Staff.css'
 
 const StaffReportsPage = () => {

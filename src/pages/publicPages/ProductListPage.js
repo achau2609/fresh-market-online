@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Multiselect from 'multiselect-react-dropdown';
 import { Link } from 'react-router-dom';
-import TwoThumbs from '../../components/Staff/Helpers/RangeSlider/RangeSlider';
-import ProductList from '../../components/ProductList';
+import TwoThumbs from '../../component/Staff/Helpers/RangeSlider/RangeSlider';
+import ProductList from '../../component/ProductList';
 
 const ProductListPage = () => {
 

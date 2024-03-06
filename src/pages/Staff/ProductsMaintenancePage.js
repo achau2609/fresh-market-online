@@ -1,7 +1,7 @@
-import StaffMenu from '../../components/Staff/StaffMenu';
-import StaffHeader from '../../components/Staff/StaffHeader';
+import StaffMenu from '../../component/Staff/StaffMenu';
+import StaffHeader from '../../component/Staff/StaffHeader';
 import React from 'react';
-import Products from '../../components/Staff/ProductsMaintenance';
+import Products from '../../component/Staff/ProductsMaintenance';
 
 const ProductsMaintenancePage = () => {
   return (
