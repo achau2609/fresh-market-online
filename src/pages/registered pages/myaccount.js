@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MyAccountNavBar from '../../component/MyAccountNavBar';
 
 const MyAccount = () => {
 
     return (
         <>
             
-            <div className='myacc-navbar'>
-                <span className='myacc-navbar-btn'>My Orders</span>
-                <span className='myacc-navbar-btn'><Link to="/myaccount" style={{ textDecoration: 'none', color: "black"}}>My Account</Link></span>
-            </div>
+            <MyAccountNavBar />
+            
             <div className='myacc-details-box'>
                 <div style={{padding: "10px 0px 10px 20px", margin: "20px", fontSize: "20px"}}>
                     Account Details

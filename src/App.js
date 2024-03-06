@@ -10,6 +10,7 @@ import NoTopbar from './pages/publicView/NoTopbar';
 import Checkout from './pages/checkout';
 import MyAccount from './pages/registered pages/myaccount';
 import ChangePw from './pages/registered pages/changepw';
+import OrderHistory from './pages/registered pages/OrderHistory';
 
 /*
 const NavigationLinks = () => {
@@ -43,6 +44,7 @@ function App() {
               <Route path="/public" element={<PublicView />} />
               <Route path="/myaccount" element={<MyAccount />} />
               <Route path="/myaccount/changepw" element={<ChangePw />} />
+              <Route path="/myaccount/orderhistory" element={<OrderHistory />} />
             </Route> 
           </Route>
 
