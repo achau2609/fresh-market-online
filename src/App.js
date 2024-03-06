@@ -26,9 +26,12 @@ import ProductDetailPage from './pages/Staff/ProductDetailPage';
 import CategoryMaintenancePage from './pages/Staff/CategoryMaintenancePage';
 import StaffReportsPage from './pages/Staff/StaffReportsPage';
 import ProductListPage from './pages/publicPages/ProductListPage';
-
+import AboutUs from './pages/publicPages/about';
+import ContactUs from './pages/publicPages/contactUs';
+import FAQ from './pages/publicPages/FAQ';
 
 import "./css/App.css"
+
 
 
 function App() {
@@ -41,6 +44,9 @@ function App() {
           <Route element={<TopBar />}>
             <Route element={<Footer />}>
               <Route path="/" element={<Home />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/faq" element={<FAQ />} />
               <Route path="/404" element={<PageNotFound />} />
               <Route path="/myaccount" element={<MyAccount />} />
               <Route path="/myaccount/changepw" element={<ChangePw />} />

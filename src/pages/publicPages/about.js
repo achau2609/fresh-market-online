@@ -1,18 +1,10 @@
 import React from "react";
-import Header from './Header'; // Ensure this path is correct
-import Navigation from './Navigation'; // Ensure this path is correct
-import TopRightBar from './TopRightBar'; // Ensure this path is correct
-import Footer from './Footer'; // Ensure this path is correct
-import Banner from './Banner'; // Ensure this path is correct
 import '../../css/Public.css'; // Ensure this path is correct
 
 const AboutUs = () => {
     return (
         <div className="App">
-            <Header />
-            <TopRightBar />
-            <Navigation />
-            <Banner />
+
             <div className="content">
                 <h1>About Us</h1>
                 <p>Welcome to Fresh Market Online! We are committed to bringing you the freshest produce, convenient shopping, and a seamless online experience.</p>
@@ -23,7 +15,7 @@ const AboutUs = () => {
                 <p>Email: support@freshmarketonline.com</p>
                 <p>Phone: 1-800-123-4567</p>
             </div>
-            <Footer />
+
         </div>
     );
 };

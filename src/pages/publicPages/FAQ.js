@@ -1,9 +1,5 @@
 import React from "react";
-import Header from './Header';
-import Navigation from './Navigation'; 
-import TopRightBar from './TopRightBar'; 
-import Footer from './Footer'; 
-import Banner from './Banner'; 
+
 import '../../css/Public.css'; 
 
 const FAQ = () => {
@@ -22,10 +18,7 @@ const FAQ = () => {
 
     return (
         <div className="App">
-            <Header />
-            <TopRightBar />
-            <Navigation />
-            <Banner />
+
             <div className="content" style={contentStyle}>
                 <h1>Hi! How can we help you?</h1>
                 <div className="dropdown">
@@ -40,7 +33,7 @@ const FAQ = () => {
                     </select>
                 </div>
             </div>
-            <Footer />
+
         </div>
     );
 };

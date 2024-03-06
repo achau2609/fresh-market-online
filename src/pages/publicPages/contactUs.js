@@ -1,8 +1,4 @@
 import React from "react";
-import Header from './Header';
-import Navigation from './Navigation';
-import TopRightBar from './TopRightBar';
-import Footer from './Footer';
 import '../../css/Public.css';
 
 const ContactUs = () => {
@@ -35,9 +31,7 @@ const ContactUs = () => {
 
     return (
         <div className="App">
-            <Header />
-            <TopRightBar />
-            <Navigation />
+
             <div className="content">
                 <h1>CONTACT US</h1>
                 <form className="contact-form">
@@ -66,7 +60,7 @@ const ContactUs = () => {
                     </div>
                 </form>
             </div>
-            <Footer />
+
         </div>
     );
 };
