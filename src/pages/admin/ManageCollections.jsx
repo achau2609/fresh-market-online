@@ -2,7 +2,6 @@ import * as React from "react";
 import Header from "../../component/header";
 import Sidebar from "../../component/sidebar";
 import ManageCollection from "../../component/manageCollection";
-import "../../css/admin.css";
 
 function ManageCollections() {
   return (

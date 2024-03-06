@@ -3,7 +3,6 @@ import * as React from "react";
 import Header from "../../component/header";
 import Sidebar from "../../component/sidebar";
 import NewUser from '../../component/newUser'
-import "../../css/admin.css";
 
 function AddNewUser() {
   return (
