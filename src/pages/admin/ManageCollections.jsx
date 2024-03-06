@@ -1,11 +1,11 @@
 import * as React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../css/Admin.css";
 import Header from "../../components/header";
 import Sidebar from "../../components/sidebar";
-import DatabaseLists from "../../components/databaseLists";
+import ManageCollection from "../../components/manageCollection";
+import "../../css/Admin.css";
 
-function ManageDb() {
+function ManageCollections() {
   return (
     <div className="container">
       <div className="row">
@@ -15,19 +15,14 @@ function ManageDb() {
       </div>
       <div className="row">
         <div className="col-sm-12 col-md-3">
-          <Sidebar activeItem={3} />
+          <Sidebar activeItem={2} />
         </div>
         <div className="col-sm-12 col-md-9">
           <div className="card">
             <div className="card-body">
               <div className="row">
                 <div className="col-12">
-                  <h3>Manage Db</h3>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  <DatabaseLists />
+                  <ManageCollection />
                 </div>
               </div>
             </div>
@@ -38,4 +33,4 @@ function ManageDb() {
   );
 }
 
-export default ManageDb;
+export default ManageCollections;

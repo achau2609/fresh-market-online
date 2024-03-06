@@ -21,6 +21,10 @@ class Users extends Component {
     this.setState({ users });
   };
 
+  handleEdit = (user) => {
+    this.setState({ users: getUser(user._id) });
+  };
+
   handleUser = (staff) => {
     console.log("handle User event");
   };
@@ -73,6 +77,7 @@ class Users extends Component {
                     <Link to="/admin/users-accounts/id">
                       <button
                         type="button"
+                        onClick={() => this.handleEdit(user)}
                         className="btn btn-outline-warning btn-sm"
                       >
                         Edit
@@ -80,6 +85,7 @@ class Users extends Component {
                     </Link>
                     <span>&nbsp;</span>
                     <button
+                      type="button"
                       onClick={() => this.handleDelete(user)}
                       className="btn btn-outline-danger btn-sm"
                     >

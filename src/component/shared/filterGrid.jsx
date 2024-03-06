@@ -17,7 +17,7 @@ const FilterGrid = () => {
             <option value="3">15</option>
           </select>
         </div>
-        <div className="col-md-8 col-sm-12 mb-3">
+        <div className="col-md-10 col-sm-12 mb-3">
           <label for="inputPassword2" className="visually-hidden">
             Search
           </label>
@@ -28,9 +28,9 @@ const FilterGrid = () => {
             placeholder="Type to search..."
           />
         </div>
-        <div className="col-md-2 col-sm-12">
+        {/* <div className="col-md-2 col-sm-12">
           <Link to="/admin/users-accounts/add-new"><button type='button' className='btn btn-success mb-3'> Add User</button></Link>
-        </div>
+        </div> */}
       </form>
     </div>
   );
