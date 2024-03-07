@@ -1,9 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartItem from '../component/ShoppingCartItem'
 
 const Checkout = () => {
 
     const navigate = useNavigate();
+
+    const products = [
+        {
+            "ProductName": "Organic Apples",
+            "ProductDescription": "Organic Fresh Apples (Bag 2lb)",
+            "ProductPrice": 5.99,
+            "Quantity": 2,
+            "Picture": "https://assets.shop.loblaws.ca/products/20606349001/b1/en/front/20606349001_front_a06.png"
+        },
+        {
+            "ProductName": "Organic Spinach",
+            "ProductDescription": "Fresh Organic Baby Spinach Leaves (100g)",
+            "ProductPrice": 3.49,
+            "Quantity": 1,
+            "Picture": "https://www.earthboundfarm.com/wp-content/uploads/2019/06/baby-spinach-5oz.png"
+        }
+    ]
 
     return (
         <div>
@@ -21,7 +39,7 @@ const Checkout = () => {
                 <div className='col-12 col-md-8 d-flex flex-column align-items-center'>
                     {/* Address box */}
                     <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary">
-                        Choose an address<br />
+                        Choose an address
 
                         <div className="form-check d-flex align-items-center">
                             <input className="form-check-input mx-2" type="radio" name="address" id="address1" value='1' />
@@ -45,7 +63,7 @@ const Checkout = () => {
 
                     {/* Payment box */}
                     <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary">
-                        Choose a payment method<br /><br />
+                        Choose a payment method
 
                         <div className="form-check d-flex align-items-center">
                             <input className="form-check-input mx-2" type="radio" name="payment" id="payment1" />
@@ -87,7 +105,8 @@ const Checkout = () => {
                     {/* items box */}
                     <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary">
                         <div style={{ width: "110%" }}>Confirm items</div>
-                        <label for="payment"><input type="radio" id="payment" name="payment1" value="Payment 1" />Visa debit ending in  4093</label><br />
+                        {products.map((product) =>
+                        <ShoppingCartItem product={product} />)}
                     </div>
 
                     {/* confirm box */}

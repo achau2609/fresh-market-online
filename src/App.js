@@ -36,6 +36,7 @@ import ManageCollections from './pages/admin/ManageCollections';
 import ManageDb from './pages/admin/ManageDb';
 import UpdateUser from './pages/admin/UpdateUser';
 import UsersAccounts from './pages/admin/UsersAccounts';
+import ProductDetail from './component/Staff/ProductDetail';
 
 
 
@@ -60,7 +61,7 @@ function App() {
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/resetpassword" element={<PasswordReset />}/>
               <Route exact path="/productlist" element={<ProductListPage />} />
-              <Route exact path="/productlist/productdetail" element={<ProductListPage />} />
+              <Route exact path="/productlist/:productId" element={<ProductDetail />} />
             </Route> 
           </Route>
 
