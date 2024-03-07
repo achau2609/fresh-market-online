@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
 import { Link, Outlet } from 'react-router-dom';
+//hi
 
 const Footer = () => {
     return (
@@ -34,7 +35,6 @@ const Footer = () => {
                 </div>
             </footer>
         </>
-
     );
 };
 

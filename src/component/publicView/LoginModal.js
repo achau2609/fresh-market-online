@@ -74,8 +74,7 @@ const LoginModal = ({ onClose }) => {
         setIsAdminStaffLogin(true);
         setIsForgotPassword(false);
     };
-
-    return (
+return (
         <div className="modal" onClick={onClose}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
                 {!isForgotPassword && !isAdminStaffLogin ? (
