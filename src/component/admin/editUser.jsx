@@ -87,25 +87,23 @@ class EditUser extends Component {
               <label for="address" className="form-label">
                 Address
               </label>
-              <textarea
-                class="form-control"
-                id="address"
-                rows="3"
-              ></textarea>
+              <textarea class="form-control" id="address" rows="3"></textarea>
             </div>
           </div>
-          <Link to="/admin/users-accounts">
-            <button type="button" className="btn btn-secondary">
-              Back to List
-            </button>
-          </Link>
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={{ float: "right", width: "100px" }}
-          >
-            Update
-          </button>
+          <div className="row justify-content-between">
+            <div className="col-12 col-md-2">
+              <Link to="/admin/users-accounts">
+                <button type="button" className="btn btn-secondary">
+                  Back to List
+                </button>
+              </Link>
+            </div>
+            <div className="col-12 col-md-2 text-end">
+              <button type="button" className="btn btn-custom-secondary">
+                Update
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
