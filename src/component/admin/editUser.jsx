@@ -99,7 +99,7 @@ class EditUser extends Component {
               </Link>
             </div>
             <div className="col-12 col-md-2 text-end">
-              <button type="button" className="btn btn-custom-secondary">
+              <button type="button" className="btn btn-success">
                 Update
               </button>
             </div>

@@ -38,7 +38,7 @@ const Header = () => {
             </div>
             {/* Shopping Cart */}
             <div className='col-12 col-sm-2 shopping-cart-container d-flex justify-content-start'>
-                    <Link to="/shoppingCart" className="row no-decoration align-items-center">
+                    <Link to="/shoppingCart" className="row text-decoration-none text-dark align-items-center">
                         <div className='col-6'>
                             <button className="btn bg-custom-light p-3 rounded-circle position-relative">
                                 <FaShoppingCart />
