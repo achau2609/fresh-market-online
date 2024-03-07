@@ -19,7 +19,7 @@ const Navigation = () => {
                     {/* Dynamically render categories here */}
                     {/* Sample categories below*/}
                     <Link to="/productlist">Fruits</Link>
-                    <Link href="/productlist">Vegetables</Link>
+                    <Link to="/productlist">Vegetables</Link>
                     
                     
                 </div>

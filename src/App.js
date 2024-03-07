@@ -83,6 +83,9 @@ function App() {
             <Route exact path="/admin/manage-db" element={<ManageDb />} />
             <Route exact path="/admin/updateuser" element={<UpdateUser />} />
             <Route exact path="/admin/users-accounts" element={<UsersAccounts />} />
+            <Route path="/admin/users-accounts/add-new" element={<AddNewUser />} />
+            <Route path="/admin/users-accounts/:id" element={<UpdateUser />} />
+            <Route path="/admin/manage-db/:id" element={<ManageCollections />} />
             
             {/*Checkout Page*/}
             <Route path="/checkout" element={<Checkout />} />
