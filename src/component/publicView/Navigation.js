@@ -36,8 +36,8 @@ const Navigation = () => {
                     <div className="user-icon">
                         <FaUser /> 
                     </div>
-                    <a href="#MyAccount"><Link to="/myaccount">My Account</Link></a>
-                    <a href="#MyOrders"><Link to="/myaccount/orderhistory">My Orders</Link></a>
+                    <Link to="/myaccount">My Account</Link>
+                    <Link to="/myaccount/orderhistory">My Orders</Link>
                 </div>
             </div>
         </nav>
