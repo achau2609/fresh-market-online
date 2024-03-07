@@ -23,7 +23,7 @@ const Banner = () => {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-        }, 2000); // Change silde showing time here
+        }, 5000); // Change silde showing time here
 
         return () => clearInterval(timer);
     }, [slides.length]);

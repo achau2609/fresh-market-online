@@ -102,9 +102,14 @@ footer a {
   color: var(--custom-color-link-hover);
 }
 
+.public .carousel-button{
+  text-decoration: none;
+}
+
 .public .carousel-button:hover {
   background-color: var(--bs-dark);
   cursor: pointer;
+  
 }
 
 .public .flickity-cell {

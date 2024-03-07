@@ -19,7 +19,6 @@ const items = [
     componentDidMount() {
       this.flickity = new Flickity(this.carousel, {
         cellAlign: 'left',
-        contain: true,
         wrapAround: true,
         pageDots: false,
         groupCells: 1 // groups items into sets based on width
