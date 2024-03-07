@@ -88,7 +88,7 @@ const ProductDetail = () => {
                     <Link to='/staff/products'>{'<<Back'}</Link>
                 </div>
                 <div className='col-auto'>
-                    <button type='button' className='btn btn-custom-secondary'>Save</button>
+                    <button type='button' className='btn btn-success'>Save</button>
                 </div>
             </div>
             <hr />

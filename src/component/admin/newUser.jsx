@@ -103,7 +103,7 @@ class NewUser extends Component {
               </Link>
             </div>
             <div className="col col-md-2 text-end">
-              <button type="button" className="btn btn-custom-secondary">
+              <button type="button" className="btn btn-success">
                 Create
               </button>
             </div>

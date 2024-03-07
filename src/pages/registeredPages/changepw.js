@@ -49,7 +49,7 @@ const ChangePw = () => {
 
                 <div className='row mt-5 text-end'>
                     <span>
-                        <Link to="/myaccount" className='no-decoration'><button className="btn btn-custom-primary">Save changes</button></Link>
+                        <Link to="/myaccount" className='text-decoration-none'><button className="btn btn-custom-primary">Save changes</button></Link>
                     </span>
                 </div>
 
