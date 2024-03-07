@@ -6,12 +6,12 @@ const Footer = () => {
     return (
         <>
             <Outlet />
-            <footer className="bg-custom-light px-5 py-2 mt-5">
+            <footer className="bg-custom-light px-5 py-4 mt-5">
                 <div className='row justify-content-between'>
                     <div className="col-12 col-md-3 mb-2">
                         <h4>CUSTOMER SERVICE</h4>
                         <div className='row mb-2'><Link to='/contactus' className='text-decoration-none'>Contact Us</Link></div>
-                        <div className='row mb-2'><Link to='#faq' className='text-decoration-none'>FAQ</Link></div>
+                        <div className='row mb-2'><Link to='/faq' className='text-decoration-none'>FAQ</Link></div>
                         <div className='row mb-2'><Link to='#return' className='text-decoration-none'>Return & Refund</Link></div>
                         <div className='row mb-2'><Link to='#payment' className='text-decoration-none'>Payment Methods</Link></div>
                         <div className='row mb-2'><Link to='#tracking' className='text-decoration-none'>Order Tracking</Link></div>

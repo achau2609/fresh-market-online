@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation  } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import "./css/App.css"
 
 // Components
@@ -36,7 +36,7 @@ import ManageCollections from './pages/admin/ManageCollections';
 import ManageDb from './pages/admin/ManageDb';
 import UpdateUser from './pages/admin/UpdateUser';
 import UsersAccounts from './pages/admin/UsersAccounts';
-import ProductDetail from './component/Staff/ProductDetail';
+import ProductDetails from './pages/publicPages/productDetails';
 
 
 
@@ -61,7 +61,7 @@ function App() {
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/resetpassword" element={<PasswordReset />}/>
               <Route exact path="/productlist" element={<ProductListPage />} />
-              <Route exact path="/productlist/:productId" element={<ProductDetail />} />
+              <Route exact path="/productlist/:productId" element={<ProductDetails />} />
             </Route> 
           </Route>
 

@@ -7,7 +7,7 @@
   --bs-link-color: var(--bs-green);
   --bs-link-hover-color: var(--custom-color-primary-hover);
   --bs-link-color-rgb: 25, 135, 84;
-  --bs-link-hover-color-rgb: 89,184,40;
+  --bs-link-hover-color-rgb: 89, 184, 40;
   --custom-color-secondary: var(--bs-green);
 }
 
@@ -46,12 +46,11 @@ footer a {
   text-decoration: none;
 }
 
-
 .bg-custom-primary {
   background-color: var(--custom-color-primary);
 }
 
-.bg-custom-secondary{
+.bg-custom-secondary {
   background-color: var(--custom-color-secondary);
 }
 
@@ -84,6 +83,18 @@ footer a {
   --bs-gradient: none;
 }
 
+.table-custom {
+  --bs-table-color: #000;
+  --bs-table-bg: #f3fbee;
+  --bs-table-striped-bg: white;
+  --bs-table-striped-color: #000;
+  --bs-table-active-bg: #bcd0c7;
+  --bs-table-active-color: #000;
+  --bs-table-hover-bg: #d1efbd;
+  --bs-table-hover-color: #000;
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color);
+}
 
 /*****                Public            ******/
 
@@ -141,7 +152,6 @@ footer a {
   background-color: var(--custom-light-bg);
 }
 
-
 /*****            Staff                 *******/
 .staff .product-thumbnail,
 .public .product-thumbnail {
@@ -150,7 +160,7 @@ footer a {
   height: 150px;
 }
 
-.staff .product-small{
+.staff .product-small {
   display: grid;
   min-height: 100px;
   height: 100px;
@@ -162,6 +172,6 @@ footer a {
 }
 
 .staff .nav-pills .nav-link.active,
-.admin .nav-pills .nav-link.active  {
+.admin .nav-pills .nav-link.active {
   --bs-nav-pills-link-active-bg: var(--bs-green);
 }

@@ -104,15 +104,49 @@ const Checkout = () => {
 
                     {/* items box */}
                     <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary">
-                        <div style={{ width: "110%" }}>Confirm items</div>
-                        {products.map((product) =>
-                        <ShoppingCartItem product={product} />)}
+                        <div>Confirm items</div>
+                        <div className='table-responsive mt-3'>
+                            <table className="table table-striped table-hover text-start table-custom">
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>#</th>
+                                        <th scope='col'>Product</th>
+                                        <th scope='col'>Unit Price</th>
+                                        <th scope='col'>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody className='py-3'>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            <img src="https://assets.shop.loblaws.ca/products/21121560001/b1/en/front/21121560001_front_a07.png" alt="Logo" width="30" height="24" className="d-inline-block align-text-top mx-3" />
+                                            Brocoli Crown
+                                        </td>
+                                        <td>
+                                            $15.18
+                                        </td>
+                                        <td>
+                                            9
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>
+                                            <img src="https://assets.shop.loblaws.ca/products/20761372/b1/en/front/20761372_front_a07.png" alt="Logo" width="30" height="24" className="d-inline-block align-text-top mx-3" />
+                                            Whole Cremini Mushrooms
+                                        </td>
+                                        <td>$11.26</td>
+                                        <td>10</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     {/* confirm box */}
                     <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary text-end">
                         Total: $20
-                        <button className="btn btn-custom-primary mx-2">Pay Now</button>
+                        <button className="btn btn-custom-primary ms-4">Pay Now</button>
 
                     </div>
                 </div>
@@ -167,13 +201,6 @@ const Checkout = () => {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
         </div >
     );
 };
