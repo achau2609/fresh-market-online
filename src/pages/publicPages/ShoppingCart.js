@@ -22,7 +22,7 @@ const ShoppingCart = () => {
     ]
 
     return (
-        <div className='container public'>
+        <div className='container public mb-5'>
             <div className='row'>
                 <div className='col-12 col-md-8'>
                     <div className='fs-4'>My Cart ({products.length} Items)</div>
@@ -36,10 +36,10 @@ const ShoppingCart = () => {
                         <div className='col-auto ps-0'>
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="btnradio" id="delivery-btn" autocomplete="off" />
-                                <label class="btn btn-outline-success" for="delivery-btn">Delivery</label>
+                                <label class="btn btn-outline-custom-primary" for="delivery-btn">Delivery</label>
 
                                 <input type="radio" class="btn-check" name="btnradio" id="pickup-btn" autocomplete="off" />
-                                <label class="btn btn-outline-success" for="pickup-btn">Pickup</label>
+                                <label class="btn btn-outline-custom-primary" for="pickup-btn">Pickup</label>
                             </div>
                         </div>
                     </div>

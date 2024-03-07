@@ -1,6 +1,6 @@
 import * as React from "react";
-import Header from "../../component/header";
-import Sidebar from "../../component/sidebar";
+import Header from "../../component/admin/header";
+import Sidebar from "../../component/admin/sidebar";
 
 function AdminDashboard() {
   return (

@@ -1,41 +1,39 @@
 import React from 'react';
 import { FaCcVisa, FaCcMastercard } from 'react-icons/fa';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const Footer = () => {
     return (
         <>
             <Outlet />
-            <footer className="footer">
-            
-            <div className="footer-column">
-                <h4>CUSTOMER SERVICE</h4>
-                <a href="#contact">Contact Us</a>
-                <a href="#faq">FAQ</a>
-                <a href="#return">Return & Refund</a>
-                <a href="#payment">Payment Methods</a>
-                <a href="#tracking">Order Tracking</a>
-            </div>
-            <div className="footer-column">
-                <h4>SERVICES</h4>
-                <a href="#return-policy">Return Policy</a>
-                <a href="#delivery">Delivery Policy</a>
-            </div>
-            <div className="footer-column">
-                <h4>ABOUT</h4>
-                <a href="#about">About Us</a>
-                <a href="#privacy">Privacy Policy</a>
-            </div>
-            <div className="footer-column">
-                <h4>PAYMENT</h4>
-                <div className="payment-icons">
-                    <FaCcVisa size="2em" />
-                    <FaCcMastercard size="2em" />
+            <footer className="bg-custom-light px-5 py-4 mt-5">
+                <div className='row justify-content-between'>
+                    <div className="col-12 col-md-3 mb-2">
+                        <h4>CUSTOMER SERVICE</h4>
+                        <div className='row mb-2'><Link to='/contactus' className='text-decoration-none'>Contact Us</Link></div>
+                        <div className='row mb-2'><Link to='/myaccount/orderhistory' className='text-decoration-none'>Order Tracking</Link></div>
+                    </div>
+                    {/*}
+                    <div className="col-12 col-md-3 mb-2">
+                        <h4>SERVICES</h4>
+                        <div className='row mb-2'><Link to='#return-policy' className='text-decoration-none'>Return Policy</Link></div>
+                        <div className='row mb-2'><Link to='#delivery' className='text-decoration-none'>Delivery Policy</Link></div>
+                    </div>*/}
+                    <div className="col-12 col-md-3 mb-2">
+                        <h4>ABOUT</h4>
+                        <div className='row mb-2'><Link to='/aboutus' className='text-decoration-none'>About Us</Link></div>
+                        <div className='row mb-2'><Link to='/faq' className='text-decoration-none'>FAQ</Link></div>
+                    </div>
+                    <div className="col-12 col-md-3 mb-2">
+                        <h4>PAYMENT</h4>
+                        <div className="row justify-content-start">
+                            <div className='col-2'><FaCcVisa size="2em" /></div>
+                            <div className='col-2'><FaCcMastercard size="2em" /></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
         </>
-        
     );
 };
 

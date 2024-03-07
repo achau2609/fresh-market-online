@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import Header from "../../component/header";
-import Sidebar from "../../component/sidebar";
-import Users from "../../component/users";
-import "../../css/admin.css";
+import Header from "../../component/admin/header";
+import Sidebar from "../../component/admin/sidebar";
+import Users from "../../component/admin/users";
 
 function UsersAccounts() {
   return (

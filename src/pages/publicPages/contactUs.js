@@ -1,66 +1,71 @@
 import React from "react";
-import '../../css/Public.css';
 
 const ContactUs = () => {
-    // Inline CSS for the form input containers -Decided not to put inside css im having travel in running
-    const formGroupStyle = {
-        display: 'flex',
-        marginBottom: '1rem',
-        alignItems: 'center',
-        justifyContent: 'flex-start' // Adjust the alignment of the items
-    };
-
-    // Inline CSS for the labels to ensure spacing
-    const labelStyle = {
-        minWidth: '100px', // Minimum width for the label
-        paddingRight: '20px' // Space between the label and the input box
-    };
-
-    // Inline CSS for the form inputs
-    const inputStyle = {
-        flex: 1,
-        marginRight: '96px', // 1 inch margin
-        maxWidth: 'calc(100% - 116px)' // Adjusting for label width and spacing
-    };
-
-    // Inline CSS for the last form input (textarea) to avoid adding the right margin
-    const lastInputStyle = {
-        ...inputStyle,
-        marginRight: 0 // Removing right margin for the last item
-    };
 
     return (
-        <div className="App">
+        <div className="container">
 
-            <div className="content">
-                <h1>CONTACT US</h1>
-                <form className="contact-form">
-                    <div style={formGroupStyle}>
-                        <label htmlFor="name" style={labelStyle}>Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name" style={inputStyle} />
-                    </div>
-                    <div style={formGroupStyle}>
-                        <label htmlFor="mobile" style={labelStyle}>Mobile Phone</label>
-                        <input type="tel" id="mobile" name="mobile" placeholder="Your mobile number" style={inputStyle} />
-                    </div>
-                    <div style={formGroupStyle}>
-                        <label htmlFor="email" style={labelStyle}>Email</label>
-                        <input type="email" id="email" name="email" placeholder="Your email address" style={inputStyle} />
-                    </div>
-                    <div style={formGroupStyle}>
-                        <label htmlFor="subject" style={labelStyle}>Subject</label>
-                        <input type="text" id="subject" name="subject" placeholder="Subject of your message" style={inputStyle} />
-                    </div>
-                    <div style={formGroupStyle}>
-                        <label htmlFor="message" style={labelStyle}>Message Details</label>
-                        <textarea id="message" name="message" placeholder="Details of your message" style={lastInputStyle}></textarea>
-                    </div>
-                    <div className="form-group">
-                        <button type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
+            <form className=''>
+                <div className='ps-3 fs-3 mt-5 text-center'>
+                    CONTACT US
+                </div>
+                <div className='row justify-content-center'>
+                    <form>
+                        <div className='row g-3 align-items-center my-3'>
+                            <div className="col-12 col-md-4 text-end">
+                                <label htmlFor="fullname" className="col-form-label">Name</label>
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <input type="text" id="fullname" className="form-control" placeholder='Your name' />
+                            </div>
+                        </div>
 
+                        <div className='row g-2 align-items-center my-3'>
+                            <div className="col-12 col-md-4 text-end">
+                                <label htmlFor="phone" className='col-form-label'>Mobile Phone</label>
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <input type="text" id="phone" className="form-control" placeholder="Your mobile number" />
+                            </div>
+                        </div>
+
+                        <div className='row g-2 align-items-center my-3'>
+                            <div className="col-12 col-md-4 text-end">
+                                <label htmlFor="email" className='col-form-label'>Email</label>
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <input type="text" id="email" className="form-control" placeholder='Your email address' />
+                            </div>
+                        </div>
+
+                        <div className='row g-2 align-items-center my-3'>
+                            <div className='col-12 col-md-4 text-end'>
+                                <label htmlFor="subject" className='col-form-label'>Subject</label>
+                            </div>
+                            <div className='col-12 col-md-6'>
+                                <input type="text" id="subject" name="subject" className="form-control" placeholder="Subject of your message" />
+                            </div>
+                        </div>
+
+                        <div className='row g-2 align-items-center my-3'>
+                            <div className='col-12 col-md-4 text-end'>
+                                <label htmlFor="msg" className='col-form-label'>Message Details</label>
+                            </div>
+                            <div className='col-12 col-md-6'>
+                                <textarea class="form-control" id="msg" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div className='row mb-3 mt-4 text-end'>
+                            <div className="col-12 col-md-10">
+                                <button className="btn btn-custom-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+            </form>
         </div>
     );
 };

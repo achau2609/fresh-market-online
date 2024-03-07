@@ -9,7 +9,7 @@ const Topbar = () => {
     
     return (
         <>
-            <div className="App">
+            <div className="App public mb-0">
                 <TopRightBar />
                 <Header />
                 <Navigation />

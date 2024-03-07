@@ -2,7 +2,6 @@ import React from 'react'
 import StaffMenu from '../../component/Staff/StaffMenu';
 import StaffHeader from '../../component/Staff/StaffHeader';
 import StaffReport from '../../component/Staff/StaffReport';
-import '../../css/Staff.css'
 
 const StaffReportsPage = () => {
     return (

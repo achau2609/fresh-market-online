@@ -1,8 +1,7 @@
 import * as React from "react";
-import Header from "../../component/header";
-import Sidebar from "../../component/sidebar";
-import DatabaseLists from "../../component/databaseLists";
-import "../../css/admin.css";
+import Header from "../../component/admin/header";
+import Sidebar from "../../component/admin/sidebar";
+import DatabaseLists from "../../component/admin/databaseLists";
 
 function ManageDb() {
   return (

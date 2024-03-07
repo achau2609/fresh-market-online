@@ -1,56 +1,60 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MyAccountNavBar from '../../component/MyAccountNavBar';
 
 const ChangePw = () => {
 
     return (
-        <>
-            
-            <div className='myacc-navbar'>
-                <span className='myacc-navbar-btn'>My Orders</span>
-                <span className='myacc-navbar-btn'><Link to="/myaccount" style={{ textDecoration: 'none', color: "black"}}>My Account</Link></span>
-            </div>
-            <div className='myacc-details-box'>
-                <div style={{padding: "10px 0px 10px 20px", margin: "20px", fontSize: "20px"}}>
+        <div className='container w-50'>
+
+            <MyAccountNavBar active={2} />
+
+            <form className='container w-75'>
+
+                <div className='ps-3 fs-5 row mt-5'>
                     Change password
                 </div>
-                
-                <div className='myacc-details-input'>
-                    <div className='myacc-details-input-label' style={{width: "50%"}}>
-                        <label for="currentpw">Current password: </label>
+
+
+                <div className='row justify-content-center'>
+
+                    <div className='row g-3 align-items-center'>
+                        <div className="col-12 col-md-4 text-end">
+                            <label for="currentpw" className="col-form-label">Current password:</label>
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <input type="password" id="currentpw" name='currentpw' className="form-control" />
+                        </div>
                     </div>
-                    <div style={{margin: "auto auto", width: "80%"}}>
-                        <input type="password" id="currentpw" name="currentpw" className="myacc-details-input-box"></input><br />
+
+                    <div className='row g-3 align-items-center'>
+                        <div className="col-12 col-md-4 text-end">
+                            <label for="newpw" className="col-form-label">New password:</label>
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <input type="password" id="newpw" name='newpw' className="form-control" />
+                        </div>
                     </div>
+
+                    <div className='row g-3 align-items-center'>
+                        <div className="col-12 col-md-4 text-end">
+                            <label for="confirmpw" className="col-form-label">Repeat new password:</label>
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <input type="password" id="confirmpw" name='confirmpw' className="form-control" />
+                        </div>
+                    </div>
+
                 </div>
 
-                <div className='myacc-details-input'>
-                    <div className='myacc-details-input-label' style={{width: "50%"}}>
-                        <label for="newpw">New password: </label>
-                    </div>
-                    <div style={{margin: "auto auto", width: "80%"}}>
-                        <input type="password" id="newpw" name="newpw" className="myacc-details-input-box"></input><br />
-                    </div>
+                <div className='row mt-5 text-end'>
+                    <span>
+                        <Link to="/myaccount" className='text-decoration-none'><button className="btn btn-custom-primary">Save changes</button></Link>
+                    </span>
                 </div>
 
-                <div className='myacc-details-input'>
-                    <div className='myacc-details-input-label' style={{width: "50%"}}>
-                        <label for="confirmpw">Repeat new password: </label>
-                    </div>
-                    <div style={{margin: "auto auto", width: "80%"}}>
-                        <input type="password" id="confirmpw" name="confirmpw" className="myacc-details-input-box"></input><br />
-                    </div>
-                </div>
-
-                <div style={{margin: "50px 0px 10px 20px"}}>
-                    <span style={{float: "right"}}>
-                        <button className="myacc-action-btn"><Link to="/myaccount" style={{ textDecoration: 'none', color: "white"}}>Save changes</Link></button>
-                </span>
-                </div>
-                
-            </div>
-            
-        </>
+            </form>
+        </div>
     )
 
 }

@@ -1,8 +1,7 @@
 import * as React from "react";
-import Header from "../../component/header";
-import Sidebar from "../../component/sidebar";
-import EditUser from "../../component/editUser";
-import "../../css/admin.css";
+import Header from "../../component/admin/header";
+import Sidebar from "../../component/admin/sidebar";
+import EditUser from "../../component/admin/editUser";
 
 function UpdateUser() {
   return (

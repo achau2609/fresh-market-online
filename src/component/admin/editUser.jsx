@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class NewUser extends Component {
+class EditUser extends Component {
   state = {};
   render() {
     return (
       <div className="card">
-        <h5 className="card-header">Add New User</h5>
+        <h5 className="card-header">Edit Selected User</h5>
         <div className="card-body">
-          <h5 className="card-title">User Id: 101</h5>
-          <p className="card-text">
+          <h5 className="card-title mb-3">User Id: 101</h5>
+          <div className="card-text">
             <div className="row mb-3">
               <div className="col-6">
                 <label for="firstName" class="form-label">
@@ -83,33 +83,31 @@ class NewUser extends Component {
               </div>
             </div>
 
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">
+            <div className="col-12 mb-3">
+              <label for="address" className="form-label">
                 Address
               </label>
-              <textarea
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-              ></textarea>
+              <textarea class="form-control" id="address" rows="3"></textarea>
             </div>
-          </p>
-          <Link to="/admin/users-accounts">
-            <button type="button" className="btn btn-secondary">
-              Back to List
-            </button>
-          </Link>
-          <button
-            type="button"
-            className="btn btn-primary"
-            style={{ float: "right", width: "100px" }}
-          >
-            Create
-          </button>
+          </div>
+          <div className="row justify-content-between">
+            <div className="col-12 col-md-2">
+              <Link to="/admin/users-accounts">
+                <button type="button" className="btn btn-secondary">
+                  Back to List
+                </button>
+              </Link>
+            </div>
+            <div className="col-12 col-md-2 text-end">
+              <button type="button" className="btn btn-success">
+                Update
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default NewUser;
+export default EditUser;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { getCollection, getCollections } from "../services/databaseLists";
-import Pagination from "./shared/pagination";
-import { paginate } from "../utils/paginate";
-import FilterGrid from "./shared/filterGrid";
+//import { getCollections } from "../services/databaseLists";
+import Pagination from "../shared/pagination";
+import { paginate } from "../../utils/paginate";
+import FilterGrid from "../shared/filterGrid";
 
 class DatabaseLists extends Component {
   state = {
@@ -13,7 +13,7 @@ class DatabaseLists extends Component {
   };
 
   componentDidMount() {
-    this.setState({ collections: getCollections() });
+  //  this.setState({ collections: getCollections() });
   }
 
   handleDelete = (collection) => {

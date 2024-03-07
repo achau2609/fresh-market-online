@@ -1,9 +1,8 @@
 import * as React from "react";
 //import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../component/header";
-import Sidebar from "../../component/sidebar";
-import NewUser from '../../component/newUser'
-import "../../css/admin.css";
+import Header from "../../component/admin/header";
+import Sidebar from "../../component/admin/sidebar";
+import NewUser from '../../component/admin/newUser'
 
 function AddNewUser() {
   return (

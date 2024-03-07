@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation  } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import "./css/App.css"
 
 // Components
@@ -36,6 +36,7 @@ import ManageCollections from './pages/admin/ManageCollections';
 import ManageDb from './pages/admin/ManageDb';
 import UpdateUser from './pages/admin/UpdateUser';
 import UsersAccounts from './pages/admin/UsersAccounts';
+import ProductDetails from './pages/publicPages/productDetails';
 
 
 
@@ -60,7 +61,7 @@ function App() {
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/resetpassword" element={<PasswordReset />}/>
               <Route exact path="/productlist" element={<ProductListPage />} />
-              <Route exact path="/productlist/productdetail" element={<ProductListPage />} />
+              <Route exact path="/productlist/:productId" element={<ProductDetails />} />
             </Route> 
           </Route>
 
@@ -82,6 +83,9 @@ function App() {
             <Route exact path="/admin/manage-db" element={<ManageDb />} />
             <Route exact path="/admin/updateuser" element={<UpdateUser />} />
             <Route exact path="/admin/users-accounts" element={<UsersAccounts />} />
+            <Route path="/admin/users-accounts/add-new" element={<AddNewUser />} />
+            <Route path="/admin/users-accounts/:id" element={<UpdateUser />} />
+            <Route path="/admin/manage-db/:id" element={<ManageCollections />} />
             
             {/*Checkout Page*/}
             <Route path="/checkout" element={<Checkout />} />

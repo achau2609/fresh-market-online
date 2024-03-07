@@ -17,30 +17,36 @@ const PasswordReset = () => {
     };
 
     return (
-        <div className="password-reset-container">
-            <h2>Reset Your Password</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="new-password">New Password</label>
-                    <input
-                        type="password"
-                        id="new-password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                    />
+            <div className="public container p-4 text-center">
+                <div className='row justify-content-center'>
+                    <div className='col-12 col-md-3'>
+                        <h2>Reset Your Password</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-4">
+                                <label htmlFor="new-password">New Password</label>
+                                <input
+                                className='form-control'
+                                    type="password"
+                                    id="new-password"
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="confirm-password">Confirm New Password</label>
+                                <input
+                                className='form-control'
+                                    type="password"
+                                    id="confirm-password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </div>
+                            <button type="submit" className="btn btn-custom-primary w-100 p-2">Reset Password</button>
+                        </form>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="confirm-password">Confirm New Password</label>
-                    <input
-                        type="password"
-                        id="confirm-password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit" className="reset-password-button">Reset Password</button>
-            </form>
-        </div>
+            </div>
     );
 };
 

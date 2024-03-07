@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const PasswordInput = ({ placeholder }) => {
     const [password, setPassword] = useState('');
@@ -32,7 +33,9 @@ const AdminStaffLoginForm = ({ role, onClose }) => (
         </div>
         <PasswordInput placeholder="Password" />
         <div className="form-button-container">
-            <button className="form-button" onClick={onClose}>Login</button>
+            <Link to={role === 'Admin' ? '/admin' : '/staff'} onClick={onClose} className='btn btn-custom-primary w-75 py-3'>
+                Login
+            </Link>
         </div>
     </div>
 );
@@ -71,8 +74,7 @@ const LoginModal = ({ onClose }) => {
         setIsAdminStaffLogin(true);
         setIsForgotPassword(false);
     };
-
-    return (
+return (
         <div className="modal" onClick={onClose}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
                 {!isForgotPassword && !isAdminStaffLogin ? (

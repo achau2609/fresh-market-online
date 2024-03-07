@@ -20,37 +20,37 @@ const Header = () => {
     const totalCost = 15.00; // This should be dynamic based on cart contents
 
     return (
-        <header>
+        <header className='row align-items-center py-2'>
             {/* logo */}
-            <div className="logo">
-                <Link to="/"><img src={logo} alt="Logo" /></Link>
+            <div className="col-12 col-sm-2 logo">
+                <Link to="/"><img src={logo} alt="Logo" className='ps-4' /></Link>
             </div>
 
             {/* Search bar */}
-            <form onSubmit={handleSearchSubmit} className="search-form">
-                <input
-                    type="search"
-                    className="search-input"
-                    placeholder="Search for Products"
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
-                <button type="submit" className="search-button">
-                    <FaSearch className="search-icon" />
-                </button>
-            </form>
-
-            {/* Shopping Cart */}
-            <div >
-                <Link to="/shoppingCart" className="shopping-cart-container">
-                    <div className="header-icons"> 
-                        <FaShoppingCart />
+            <div className='col-12 col-sm-8'>
+                <form onSubmit={handleSearchSubmit} className='d-flex'>
+                    <div class="input-group">
+                        <input type="search" class="form-control py-2 rounded-0" placeholder="Search for Products" value={searchTerm}
+                            onChange={handleSearchChange} />
+                        <button class="btn pb-2 rounded-0 border" type="button" id="button-addon2"><FaSearch className="search-icon" /></button>
                     </div>
-                    <span className="cart-total-cost">${totalCost.toFixed(2)}</span>
-                    <span className="cart-item-count">{itemCount}</span>
-                </Link>
+                </form>
             </div>
-        </header>
+            {/* Shopping Cart */}
+            <div className='col-12 col-sm-2 shopping-cart-container d-flex justify-content-start'>
+                    <Link to="/shoppingCart" className="row text-decoration-none text-dark align-items-center">
+                        <div className='col-6'>
+                            <button className="btn bg-custom-light p-3 rounded-circle position-relative">
+                                <FaShoppingCart />
+                                <span class="position-absolute top-0 start-100 translate-middle-x badge rounded-pill bg-custom-primary">
+                                    {itemCount}
+                                </span>
+                            </button>
+                        </div>
+                        <div className='cart-total-cost col-6'><span>${totalCost.toFixed(2)}</span></div>
+                    </Link>
+            </div>
+        </header >
     );
 };
 

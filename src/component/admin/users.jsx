@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { getUser, getUsers } from "../services/users";
-import Pagination from "./shared/pagination";
-import { paginate } from "../utils/paginate";
-import FilterGrid from "./shared/filterGrid";
+import { getUser, getUsers } from "../../services/users";
+import Pagination from "../shared/pagination";
+import { paginate } from "../../utils/paginate";
+import FilterGrid from "../shared/filterGrid";
 
 class Users extends Component {
   state = {

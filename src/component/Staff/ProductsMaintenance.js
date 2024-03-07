@@ -68,11 +68,11 @@ const Products = () => {
                                 <div className='row mb-3'>
                                     <div className='col-6'>
                                         <label htmlFor='price-range'>Price Range</label>
-                                        <TwoThumbs STEP={0.01} MIN={0} MAX={50} values={searchPrices} setValues={setSearchPrices} dp={2} />
+                                        <TwoThumbs STEP={0.01} MIN={0} MAX={50} values={searchPrices} setValues={setSearchPrices} dp={2} color='var(--bs-green)' />
                                     </div>
                                     <div className='col-6'>
                                         <label htmlFor='inventory-level'>Inventory Level</label>
-                                        <TwoThumbs STEP={1} MIN={0} MAX={100} values={searchInventory} setValues={setSearchInventory} dp={0} />
+                                        <TwoThumbs STEP={1} MIN={0} MAX={100} values={searchInventory} setValues={setSearchInventory} dp={0} color='var(--bs-green)'/>
                                     </div>
                                 </div>
                                 <div className='row justify-content-between'>

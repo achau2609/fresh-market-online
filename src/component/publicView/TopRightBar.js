@@ -32,25 +32,29 @@ const TopRightBar = () => {
     };
 
     return (
-        <div className="top-right-bar">
-            {/* Language */}
-            <div className="language-selector">
-                <MdLanguage />
-                    <select value={language} onChange={handleLanguageChange}>
-                        <option value="English">English</option>
-                        <option value="Français">Français</option>
-                    </select>
+        <div className="p-2 row justify-content-end align-items-center w-100">
+            <div className='row w-25'>
+                {/* Language */}
+                <div className='col-8 row align-items-center'>
+                    <div className='col-3 text-end'>
+                        <MdLanguage size="1.5rem" />
+                    </div>
+                    <div className='col-9'>
+                        <select value={language} onChange={handleLanguageChange} className='form-select'>
+                            <option value="English">English</option>
+                            <option value="Français">Français</option>
+                        </select>
+                    </div>
+                </div>
+                {/* Login */}
+                <div className='col-4'>
+                    <div className="btn btn-custom-primary" onClick={handleAccountInfoClick}>
+                        {isLoggedIn ? `Hi, ${username}` : 'Login'}
+                    </div>
+                </div>
+                {/* Modal */}
+                {showModal && <LoginModal onClose={() => setShowModal(false)} />}
             </div>
-
-            {/* Login */}
-            <div className="account-info" onClick={handleAccountInfoClick}>
-                <span className="login-logout-text">
-                    {isLoggedIn ? `Hi, ${username}` : 'Login'}
-                </span>
-            </div>
-
-            {/* Modal */}
-            {showModal && <LoginModal onClose={() => setShowModal(false)} />}
         </div>
     );
 };
