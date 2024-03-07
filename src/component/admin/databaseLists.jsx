@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 //import { getCollections } from "../services/databaseLists";
-import Pagination from "./shared/pagination";
-import { paginate } from "../utils/paginate";
-import FilterGrid from "./shared/filterGrid";
+import Pagination from "../shared/pagination";
+import { paginate } from "../../utils/paginate";
+import FilterGrid from "../shared/filterGrid";
 
 class DatabaseLists extends Component {
   state = {

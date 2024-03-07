@@ -1,7 +1,7 @@
 import * as React from "react";
-import Header from "../../component/header";
-import Sidebar from "../../component/sidebar";
-import ManageCollection from "../../component/manageCollection";
+import Header from "../../component/admin/header";
+import Sidebar from "../../component/admin/sidebar";
+import ManageCollection from "../../component/admin/manageCollection";
 
 function ManageCollections() {
   return (

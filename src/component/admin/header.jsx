@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import companyLogo from "../image/logo.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { logo } from "../image";
+import { logo } from "../../image";
 
 class Header extends Component {
   render() {
