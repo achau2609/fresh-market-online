@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import companyLogo from "../image/logo.png";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logo } from "../../image";
@@ -11,7 +10,7 @@ class Header extends Component {
         <div className="col-md-3 mb-2 mb-md-0">
           <Link className="navbar-brand" to='/'>
             <img
-              src={companyLogo}
+              src={logo}
               alt="Logo"
               width="100"
               height="100"
