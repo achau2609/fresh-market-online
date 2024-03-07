@@ -47,7 +47,7 @@ const Header = () => {
                                 </span>
                             </button>
                         </div>
-                        <div className='col-6'><span>${totalCost.toFixed(2)}</span></div>
+                        <div className='cart-total-cost col-6'><span>${totalCost.toFixed(2)}</span></div>
                     </Link>
             </div>
         </header >
