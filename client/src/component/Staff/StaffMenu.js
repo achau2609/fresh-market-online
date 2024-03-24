@@ -16,24 +16,6 @@ const StaffMenu = (props) => {
             Orders
           </Link>
         </li>
-        <hr />
-        <li>
-          <Link to="/staff/products" className={props.activeItem === 3 ? "nav-link active" : "nav-link link-dark"}>
-            Products
-          </Link>
-        </li>
-        <hr />
-        <li>
-        <Link to="/staff/categories" className={props.activeItem === 4 ? "nav-link active" : "nav-link link-dark"}>
-            Categories
-          </Link>
-        </li>
-        <hr />
-        <li>
-        <Link to="/staff/reports" className={props.activeItem === 5 ? "nav-link active" : "nav-link link-dark"}>
-            Reports
-          </Link>
-        </li>
       </ul>
     </div>
   )

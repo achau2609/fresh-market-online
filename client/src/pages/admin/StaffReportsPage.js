@@ -1,10 +1,10 @@
-import * as React from "react";
+import React from "react";
 import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
-import EditUser from "../../component/admin/editUser";
+import StaffReport from "../../component/admin/StaffReport";
 import Footer from "../../component/admin/footer";
 
-function UpdateUser() {
+const StaffReportsPage = () => {
   return (
     <div className="container">
       <div className="row">
@@ -14,16 +14,12 @@ function UpdateUser() {
       </div>
       <div className="row">
         <div className="col-sm-12 col-md-3">
-          <Sidebar activeItem={2} />
+          <Sidebar activeItem={1} />
         </div>
         <div className="col-sm-12 col-md-9">
-          <div className="card">
-            <div className="card-body">
-              <div className="row">
-                <div className="col-12">
-                  <EditUser />
-                </div>
-              </div>
+          <div class="card">
+            <div class="card-body">
+              <StaffReport />
             </div>
           </div>
         </div>
@@ -35,6 +31,6 @@ function UpdateUser() {
       </div>
     </div>
   );
-}
+};
 
-export default UpdateUser;
+export default StaffReportsPage;

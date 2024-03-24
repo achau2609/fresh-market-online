@@ -2,7 +2,8 @@ import * as React from "react";
 //import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
-import NewUser from '../../component/admin/newUser'
+import NewUser from "../../component/admin/newUser";
+import Footer from "../../component/admin/footer";
 
 function AddNewUser() {
   return (
@@ -26,6 +27,11 @@ function AddNewUser() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12">
+          <Footer />
         </div>
       </div>
     </div>
