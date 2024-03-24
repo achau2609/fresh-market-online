@@ -72,7 +72,7 @@ class NewUser extends Component {
               </div>
               <div className="col-6">
                 <label for="birthdate" class="form-label">
-                  First Name
+                  Birth Date
                 </label>
                 <input
                   type="date"
