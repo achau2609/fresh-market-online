@@ -1,4 +1,4 @@
-const mongoose = require("mpngoose");
+const mongoose = require("mongoose");
 const emailValidator = require("email-validator");
 
 const addressSchema = mongoose.Schema({
@@ -40,7 +40,8 @@ const userSchema = mongoose.Schema({
   },
   customer: { type: customerSchema, required: false },
   staff: { type: staffSchema, required: false },
-  timestamps: true,
 });
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

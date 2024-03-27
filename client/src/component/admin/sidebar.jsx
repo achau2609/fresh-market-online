@@ -92,7 +92,7 @@ class Sidebar extends Component {
             </li>
             <li>
               <Link
-                to="/admin/users-accounts"
+                to="/admin/users"
                 className={
                   this.props.activeItem === 4
                     ? "nav-link active"

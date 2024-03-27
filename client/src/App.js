@@ -82,10 +82,11 @@ function App() {
           />
 
           {/*Admin Pages*/}
-          <Route exact path="/admin/" element={<StaffReportsPage />} />
-          <Route exact path="/admin/addnewuser" element={<AddNewUser />} />
+          <Route path="/admin/" element={<StaffReportsPage />} />
+          <Route path="/admin/add" element={<AddNewUser />} />
+          <Route path="/admin/edit/:id" element={<UpdateUser />} />
+          <Route path="/admin/users" element={<UsersAccounts />} />
           <Route
-            exact
             path="/admin/categories"
             element={<CategoryMaintenancePage />}
           />
@@ -99,17 +100,7 @@ function App() {
             path="/admin/products/:productId"
             element={<ProductDetailPage />}
           />
-          <Route exact path="/admin/updateuser" element={<UpdateUser />} />
-          <Route
-            exact
-            path="/admin/users-accounts"
-            element={<UsersAccounts />}
-          />
-          <Route
-            path="/admin/users-accounts/add-new"
-            element={<AddNewUser />}
-          />
-          <Route path="/admin/users-accounts/:id" element={<UpdateUser />} />
+
           {/*Checkout Page*/}
           <Route path="/checkout" element={<Checkout />} />
         </Route>

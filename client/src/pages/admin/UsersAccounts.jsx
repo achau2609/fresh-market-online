@@ -36,13 +36,12 @@ function UsersAccounts() {
                   </select>
                 </div>
                 <div className="col-4">
-                  <Link to="/admin/users-accounts/add-new">
+                  <Link to="/admin/add">
                     <button
                       type="button"
                       style={{ float: "right", width: "100px" }}
                       className="btn btn-success mb-3"
                     >
-                      {" "}
                       Add User
                     </button>
                   </Link>

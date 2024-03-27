@@ -3,17 +3,22 @@ import { Link } from "react-router-dom";
 import { getUser, getUsers } from "../../services/users";
 import Pagination from "../shared/pagination";
 import { paginate } from "../../utils/paginate";
-import FilterGrid from "../shared/filterGrid";
+import SearchBox from "../shared/searchBox";
+import Select from '../shared/select';
 
 class Users extends Component {
   state = {
     users: [],
+    pageSizes: [],
+    searchQuery: "",
     currentPage: 1,
     pageSize: 4,
+    selectedPageSize: null
   };
 
   componentDidMount() {
-    this.setState({ users: getUsers() });
+    const pageSizes = [{_id:"", name:"All Rows"}];
+    this.setState({ users: getUsers() , pageSizes});
   }
 
   handleDelete = (user) => {
@@ -33,9 +38,29 @@ class Users extends Component {
     this.setState({ currentPage: page });
   };
 
+  handleSearch = query => {
+    this.setState({ searchQuery: query, selectedPageSize:null, currentPage: 1 });
+  };
+
+  handlePageSizeSelect = pageSize => {
+    this.setState({ selectedPageSize: pageSize, searchQuery:"", currentPage: 1 });
+  };
+
+  getPagedData = () => {
+    const { pageSize, currentPage, selectedPageSize, searchQuery, users: allUsers} = this.state;
+
+    let filtered = allUsers;
+    if(searchQuery)
+      filtered = allUsers.filter(u=> u.FirstName.toLowerCase().startsWith(searchQuery.toLowerCase()));
+      
+      const users = paginate(currentPage, pageSize);
+      
+      return {totalCount: filtered.length, data: users};
+  };
+
   render() {
     const { length: count } = this.state.users;
-    const { pageSize, currentPage, users: allUsers } = this.state;
+    const { pageSize, currentPage, searchQuery, users: allUsers } = this.state;
 
     if (count === 0) return <p>There are no users in the database.</p>;
 
@@ -44,7 +69,14 @@ class Users extends Component {
     return (
       <React.Fragment>
         <hr />
-        <FilterGrid />
+        <div className="row">
+          <div className="col-md-2 col-sm-12">
+            <Select />
+          </div>
+          <div className="col-md-10 col-sm-12 mb-3">
+            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          </div>
+        </div>
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
@@ -60,10 +92,10 @@ class Users extends Component {
             <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
-                  <td>{user.FirstName}</td>
-                  <td>{user.LastName}</td>
-                  <td>{user.Email}</td>
-                  <td>{user.ContactNumber}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.contactNumber}</td>
                   <td>
                     <a
                       className="btn btn-outline-info btn-sm"
@@ -74,7 +106,7 @@ class Users extends Component {
                     </a>
                   </td>
                   <td>
-                    <Link to="/admin/users-accounts/id">
+                    <Link to={`/admin/edit/${user._id}`}>
                       <button
                         type="button"
                         onClick={() => this.handleEdit(user)}
