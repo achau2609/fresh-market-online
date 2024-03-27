@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaBars, FaArrowDown, FaUser, FaAngleDown } from 'react-icons/fa'; 
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
     const [showCategories, setShowCategories] = useState(false);
@@ -17,11 +18,15 @@ const Navigation = () => {
                 <div className={`categories-dropdown-content ${showCategories ? 'visible' : 'hidden'}`}>
                     {/* Dynamically render categories here */}
                     {/* Sample categories below*/}
-                    <a href="#fruits">Fruits</a>
-                    <a href="#vegetables">Vegetables</a>
+                    <Link to="/productlist">Fruits</Link>
+                    <Link to="/productlist">Vegetables</Link>
+                    
                     
                 </div>
+                
+
             </div>
+
             {/* Account Menu */}
             <div className="account-dropdown">
                 <button className="account-dropbtn">
@@ -31,8 +36,8 @@ const Navigation = () => {
                     <div className="user-icon">
                         <FaUser /> 
                     </div>
-                    <a href="#MyAccount">My Account</a>
-                    <a href="#MyOrders">My Orders</a>
+                    <Link to="/myaccount">My Account</Link>
+                    <Link to="/myaccount/orderhistory">My Orders</Link>
                 </div>
             </div>
         </nav>
