@@ -28,7 +28,7 @@ const Orders = () => {
             {/* Search */}
             <div className='container mb-4'>
                 <div className="card border-0">
-                    <h5 class="card-header text-start">Search</h5>
+                    <h5 className="card-header text-start">Search</h5>
                     <div claclassNames="card-body">
                         <div className='card-text py-3'>
                             <form className='container text-start'>
@@ -39,7 +39,7 @@ const Orders = () => {
                                     </div>
                                     <div className='col'>
                                         <label htmlFor='order-status'>Status</label>
-                                        <select class="form-select" id="order-status">
+                                        <select className="form-select" id="order-status">
                                             <option selected>--All--</option>
                                             <option value="1">Processing</option>
                                             <option value="2">Ready for Pickup</option>

@@ -17,8 +17,8 @@ const StaffReportsPage = () => {
           <Sidebar activeItem={1} />
         </div>
         <div className="col-sm-12 col-md-9">
-          <div class="card">
-            <div class="card-body">
+          <div className="card">
+            <div className="card-body">
               <StaffReport />
             </div>
           </div>

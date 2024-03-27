@@ -191,3 +191,8 @@ footer a {
 .admin .nav-pills .nav-link.active {
   --bs-nav-pills-link-active-bg: var(--bs-green);
 }
+
+label.required::after {
+  content: " *";
+  color: red;
+}

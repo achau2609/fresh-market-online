@@ -12,23 +12,23 @@ class EditUser extends Component {
           <div className="card-text">
             <div className="row mb-3">
               <div className="col-6">
-                <label for="firstName" class="form-label">
+                <label for="firstName" className="form-label">
                   First Name
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="firstName"
                   placeholder="First Name"
                 />
               </div>
               <div className="col-6">
-                <label for="lastName" class="form-label">
+                <label for="lastName" className="form-label">
                   Last Name
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="lastName"
                   placeholder="Last Name"
                 />
@@ -36,23 +36,23 @@ class EditUser extends Component {
             </div>
             <div className="row mb-3">
               <div className="col-6">
-                <label for="email" class="form-label">
+                <label for="email" className="form-label">
                   Email
                 </label>
                 <input
                   type="email"
-                  class="form-control"
+                  className="form-control"
                   id="email"
                   placeholder="name@example.com"
                 />
               </div>
               <div className="col-6">
-                <label for="password" class="form-label">
+                <label for="password" className="form-label">
                   Password
                 </label>
                 <input
                   type="password"
-                  class="form-control"
+                  className="form-control"
                   id="password"
                   placeholder=""
                 />
@@ -60,23 +60,23 @@ class EditUser extends Component {
             </div>
             <div className="row mb-3">
               <div className="col-6">
-                <label for="contactNumber" class="form-label">
+                <label for="contactNumber" className="form-label">
                   Contact Number
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="contactNumber"
                   placeholder="+1(604-123-5555)"
                 />
               </div>
               <div className="col-6">
-                <label for="birthdate" class="form-label">
+                <label for="birthdate" className="form-label">
                   Birth Date
                 </label>
                 <input
                   type="date"
-                  class="form-control"
+                  className="form-control"
                   id="birthdate"
                   placeholder="Birth Date"
                 />
@@ -87,7 +87,7 @@ class EditUser extends Component {
               <label for="address" className="form-label">
                 Address
               </label>
-              <textarea class="form-control" id="address" rows="3"></textarea>
+              <textarea className="form-control" id="address" rows="3"></textarea>
             </div>
           </div>
           <div className="row justify-content-between">

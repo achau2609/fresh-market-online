@@ -17,8 +17,8 @@ const ProductsMaintenancePage = () => {
           <Sidebar activeItem={3} />
         </div>
         <div className="col-sm-12 col-md-9">
-          <div class="card">
-            <div class="card-body">
+          <div className="card">
+            <div className="card-body">
               <h3>Products</h3>
               <Products />
             </div>

@@ -37,7 +37,7 @@ const ProductListPage = () => {
                 <div className='col-12 col-md-3 border-end pe-4'>
                     <div className="card border-0">
                         <div className='row card-header text-start'>
-                            <h5 class="col-10 ">Search</h5>
+                            <h5 className="col-10 ">Search</h5>
                         </div>
                         <div claclassNames="card-body">
                             <div className='card-text py-3'>

@@ -2,8 +2,11 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
 
+
 const HTTP_PORT = process.env.PORT || 8080;
 const app = express();
+
+app.use(express.json());
 
 mongoose
   .connect(process.env.dbConn, {})
@@ -15,6 +18,14 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+const { Product } = require('./models/productModel');
+
+app.get("/products", (req, res) => {
+  Product.findOne({}).then((data)=> {
+    return res.status(200).json(data)
+  });
+});
 
 //const { MongoClient } = require("mongodb");
 // async function main() {

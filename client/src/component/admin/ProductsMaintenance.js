@@ -41,7 +41,7 @@ const Products = () => {
       <div className="container mb-2">
         <div className="card border-0">
           <div className="row card-header text-start">
-            <h5 class="col-10 ">Search</h5>
+            <h5 className="col-10 ">Search</h5>
             <div className="col-2">
               <Link to="/admin/products/0001">
                 <button type="button" className="btn btn-success">

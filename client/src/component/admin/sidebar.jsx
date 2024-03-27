@@ -5,7 +5,7 @@ class Sidebar extends Component {
   render(props) {
     return (
       <React.Fragment>
-        <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <svg xmlns="http://www.w3.org/2000/svg" className="d-none">
           <symbol id="bootstrap" viewBox="0 0 118 94">
             <title>Bootstrap</title>
             <path
@@ -52,7 +52,7 @@ class Sidebar extends Component {
                     : "nav-link link-dark"
                 }
               >
-                <svg class="bi pe-none me-2" width="16" height="16">
+                <svg className="bi pe-none me-2" width="16" height="16">
                   <use xlinkHref="#speedometer2"></use>
                 </svg>
                 Dashboard
@@ -68,7 +68,7 @@ class Sidebar extends Component {
                     : "nav-link link-dark"
                 }
               >
-                <svg class="bi pe-none me-2" width="16" height="16">
+                <svg className="bi pe-none me-2" width="16" height="16">
                   <use xlinkHref="#grid"></use>
                 </svg>
                 Categories
@@ -84,7 +84,7 @@ class Sidebar extends Component {
                     : "nav-link link-dark"
                 }
               >
-                <svg class="bi pe-none me-2" width="16" height="16">
+                <svg className="bi pe-none me-2" width="16" height="16">
                   <use xlinkHref="#table"></use>
                 </svg>
                 Products
@@ -99,7 +99,7 @@ class Sidebar extends Component {
                     : "nav-link link-dark"
                 }
               >
-                <svg class="bi pe-none me-2" width="16" height="16">
+                <svg className="bi pe-none me-2" width="16" height="16">
                   <use xlinkHref="#people-circle"></use>
                 </svg>
                 Users Accounts

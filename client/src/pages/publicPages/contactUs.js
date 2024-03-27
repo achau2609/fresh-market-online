@@ -52,7 +52,7 @@ const ContactUs = () => {
                                 <label htmlFor="msg" className='col-form-label'>Message Details</label>
                             </div>
                             <div className='col-12 col-md-6'>
-                                <textarea class="form-control" id="msg" rows="3"></textarea>
+                                <textarea className="form-control" id="msg" rows="3"></textarea>
                             </div>
                         </div>
 

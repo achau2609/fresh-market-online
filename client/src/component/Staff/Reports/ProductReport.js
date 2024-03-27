@@ -71,8 +71,8 @@ const ProductReport = () => {
                 </div>
 
                 <div className='col-auto col-md-6'>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped-columns">
+                    <div className="table-responsive">
+                        <table className="table table-hover table-striped-columns">
                             <thead className="table-light">
                                 <tr>
                                     <th>Product Name</th>

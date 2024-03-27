@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Range, getTrackBackground } from 'react-range'
 
 
-const TwoThumbs = ({STEP=1, MIN =0, MAX = 100, values=[0,0], setValues, dp=0, color='var(--custom-color-primary)'}) => {
+const TwoThumbs = ({ STEP = 1, MIN = 0, MAX = 100, values = [0, 0], setValues, dp = 0, color = 'var(--custom-color-primary)' }) => {
 
+    const [displayThumb, setDisplayThumb] = useState(false)
     return (
-        <div className='d-flex justify-content-center flex-wrap'>
+        <div className='d-flex justify-content-center flex-wrap'
+            onMouseUp={() => setDisplayThumb(false)}
+        >
             <Range
                 values={values}
                 step={STEP}
@@ -50,16 +53,18 @@ const TwoThumbs = ({STEP=1, MIN =0, MAX = 100, values=[0,0], setValues, dp=0, co
                             width: '15px',
                             boxShadow: '0px 2px 6px #AAA'
                         }}
+                        onMouseOver={() => setDisplayThumb(true)}
                     >
-                        <div className='position-absolute fw-bold text-white p-1 rounded'
-                            style={{
-                                top: '-28px',
-                                fontSize: '14px',
-                                backgroundColor: color
-                            }}
-                        >
-                            {values[index].toFixed(dp)}
-                        </div>
+                        {displayThumb ?
+                            <div className='position-absolute fw-bold text-white p-1 rounded'
+                                style={{
+                                    top: '-28px',
+                                    fontSize: '14px',
+                                    backgroundColor: color
+                                }}
+                            >
+                                {values[index].toFixed(dp)}
+                            </div> : ''}
                     </div>
                 )}
             />

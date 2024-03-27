@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Input from "../shared/Input";
 
 const ProductDetail = () => {
   const categories = [
@@ -36,9 +37,11 @@ const ProductDetail = () => {
   const [product, setProduct] = useState({
     ProductName: "Organic Apples",
     ProductDescription: "Organic Fresh Apples (Bag 2lb)",
+    Brand: 'ABC',
     ProductPrice: 5.99,
     Quantity: 150,
     CategoryId: "Fresh Fruits",
+    Inventory: 50,
     Picture: [
       "https://assets.shop.loblaws.ca/products/20606349001/b1/en/front/20606349001_front_a06.png",
       "https://theproduceguyz.com/cdn/shop/products/image_38f13c69-1f3b-4a3f-86d5-14a06180efa8.jpg?v=1603080352",
@@ -49,31 +52,22 @@ const ProductDetail = () => {
   });
 
   const [hasDiscount, setHasDiscount] = useState(false);
-
-  const toggleHasDiscount = () => {
-    setHasDiscount(!hasDiscount);
-  };
-
-  const [orgPrice, setOrgPrice] = useState(product.ProductPrice);
-  const [discountNumber, setDiscountNumber] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
 
   const changeOrgPrice = (e) => {
-    setOrgPrice(e.target.value);
-    setDiscountPercentage(((discountNumber / orgPrice) * 100).toFixed(2));
-    setDiscountNumber((orgPrice * discountPercentage).toFixed(2));
+    if (hasDiscount && product.discountPrice)
+      setDiscountPercentage(((e.target.value - product.discountPrice) / e.target.value * 100).toFixed(2))
   };
 
-  const changeDiscountNumber = (e) => {
-    setDiscountNumber(e.target.value);
-    setDiscountPercentage(Math.round((discountNumber / orgPrice) * 100));
-  };
+  const removeDiscountPrice = () =>{
+    const newProduct = {...product};
+    delete newProduct['discountPrice']
+    console.log(newProduct)
+    setProduct(newProduct)
+    console.log(product.discountPrice)
+  }
 
-  const changeDiscountPercentage = (e) => {
-    setDiscountPercentage(e.target.value);
-    setDiscountNumber((orgPrice * discountPercentage).toFixed(2));
-  };
-
+  //Image
   const [previewImage, setPreviewImage] = useState(product.Picture[0]);
   const clickImage = (e) => {
     setPreviewImage(e.target.src);
@@ -86,6 +80,16 @@ const ProductDetail = () => {
     const newProduct = { ...product, Picture: oldPicture };
     setProduct(newProduct);
   };
+
+  const submit = () => {
+    let validate = true
+    const form = document.getElementById('product-form')
+    validate = form.checkValidity()
+    if (!validate) {
+      //do something
+    }
+  }
+
   return (
     <div className="container text-start">
       <div className="row justify-content-between">
@@ -93,7 +97,7 @@ const ProductDetail = () => {
           <Link to="/admin/products">{"<<Back"}</Link>
         </div>
         <div className="col-auto">
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-success" onClick={submit}>
             Save
           </button>
         </div>
@@ -107,7 +111,7 @@ const ProductDetail = () => {
           </div>
           <div className="row row-cols-1 row-cols-md-4 justify-content-start gx-5">
             {product.Picture.map((source, index) => (
-              <div className="col m-2">
+              <div className="col m-2" key={source}>
                 <button
                   type="button"
                   className="btn p-0 m-0 position-relative"
@@ -119,7 +123,7 @@ const ProductDetail = () => {
                     alt={product.ProductName}
                   />
                   <button
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger border-0"
+                    className="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger border-0"
                     onClick={() => removeImage(index)}
                   >
                     <svg
@@ -127,12 +131,12 @@ const ProductDetail = () => {
                       width="12"
                       height="12"
                       fill="currentColor"
-                      class="bi bi-x-lg"
+                      className="bi bi-x-lg"
                       viewBox="0 0 16 16"
                     >
                       <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
                     </svg>
-                    <span class="visually-hidden">Remove</span>
+                    <span className="visually-hidden">Remove</span>
                   </button>
                 </button>
               </div>
@@ -148,7 +152,7 @@ const ProductDetail = () => {
                   width="50"
                   height="50"
                   fill="currentColor"
-                  class="bi bi-upload mt-2"
+                  className="bi bi-upload mt-2"
                   viewBox="0 0 16 16"
                 >
                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
@@ -172,7 +176,7 @@ const ProductDetail = () => {
                 width="16"
                 height="16"
                 fill="currentColor"
-                class="bi bi-trash mx-2"
+                className="bi bi-trash mx-2"
                 viewBox="0 0 16 16"
               >
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
@@ -184,109 +188,110 @@ const ProductDetail = () => {
         </div>
         {/* Edit product form */}
         <div className="col-6">
-          <form>
+          <form id='product-form' noValidate>
             <div className="row mb-3 gx-0">
-              <label htmlFor="product-name">Product Name</label>
-              <input
-                id="product-name"
-                type="text"
-                className="form-control"
+              <Input id='product-name' label='Product Name' type='text' isRequired={true}
                 value={product.ProductName}
+                onChange={(e) => {setProduct({ ...product, ProductName: e.target.value }); console.log(e)}}
+              />
+            </div>
+
+            <div className="row mb-3 gx-0">
+              <Input id="product-brand" label='Brand' type='text'
+                isRequired={true}
+                value={product.Brand}
+                onChange={(e) => setProduct({ ...product, Brand: e.target.value })}
               />
             </div>
             <div className="row mb-3 gx-0">
-              <label htmlFor="product-brand">Brand</label>
-              <input
-                id="product-brand"
-                type="text"
-                className="form-control"
-                value="ABC"
-              />
-            </div>
-            <div className="row mb-3 gx-0">
-              <label htmlFor="product-category">Category</label>
-              <select className="form-select" id="product-category">
+              <label htmlFor="product-category" className="required">Category</label>
+              <select className="form-select" id="product-category"
+                value={product.CategoryId}
+                required
+                onChange={(e) => setProduct({ ...product, CategoryId: e.target.value })}
+              >
                 {categories.map((category) =>
-                  category.key === product.CategoryId ? (
-                    <option selected>{category.key}</option>
-                  ) : (
-                    <option>{category.key}</option>
-                  )
+                  <option key={category.key}>{category.key}</option>
                 )}
               </select>
             </div>
             <div className="row mb-3 gx-0">
               <label htmlFor="product-description">Description</label>
               <textarea
-                class="form-control"
+                className="form-control"
                 placeholder="Description"
                 id="product-description"
                 value={product.ProductDescription}
+                onChange={(e) => setProduct({ ...product, ProductDescription: e.target.value })}
               ></textarea>
             </div>
             <div className="row mb-3 gx-0">
-              <label htmlFor="org-price">Original Price</label>
-              <div className="input-group">
-                <span className="input-group-text">$</span>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="org-price"
-                  onChange={changeOrgPrice}
-                />
-              </div>
+              <Input id="org-price" label='Original Price' type='number'
+                isRequired={true}
+                value={product.ProductPrice}
+                placeholder='$0.00'
+                min={0}
+                step={0.01}
+                onChange={(e) => { setProduct({ ...product, ProductPrice: e.target.value }); changeOrgPrice(e) }}
+              />
             </div>
             <div className="row mb-3 gx-0">
-              <div className="col-auto col-md-4">
-                <label htmlFor="product-inventory">Inventory</label>
-                <input
-                  id="product-inventory"
-                  type="text"
-                  className="form-control"
-                  value="50"
+              <div className="col-auto col-md-6">
+                <Input id="product-inventory" label='Inventory' type='number'
+                  isRequired={true}
+                  value={product.Inventory}
+                  min={0}
+                  onChange={(e) => setProduct({ ...product, Inventory: e.target.value })}
                 />
               </div>
             </div>
             <div className="row mb-3 gx-0">
               <div className="col-7 form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="discount"
-                  onChange={toggleHasDiscount}
+                <Input id="discount" label='Has Discount' type='checkbox'
+                  isRequired={false}
+                  value=''
+                  onChange={(e) => {
+                    setHasDiscount(e.target.checked)
+                    setDiscountPercentage(0)
+                    removeDiscountPrice()
+                  }}
+                  className='form-check-input'
                 />
-                <label className="form-check-label" htmlFor="discount">
-                  Has Discount
-                </label>
               </div>
             </div>
-            <div className={hasDiscount ? "row mb-3 gx-0" : "d-none"}>
+            {hasDiscount ? 
+            <div className="row mb-3 gx-0">
+              <label className="required">Discount Price</label>
               <div className="col-auto col-md-5 me-3">
-                <div className="input-group">
-                  <span className="input-group-text">$</span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="discount-number"
-                    value={discountNumber}
-                    onChange={changeDiscountNumber}
-                  />
-                </div>
+                <Input id="discount-number" type='number'
+                  isRequired={hasDiscount}
+                  value={product.discountPrice}
+                  min={0}
+                  max={product.ProductPrice}
+                  step={0.01}
+                  onChange={(e) => {
+                    setProduct({ ...product, discountPrice: e.target.value })
+                    setDiscountPercentage(((product.ProductPrice - e.target.value) / product.ProductPrice * 100).toFixed(2));
+                  }}
+                  placeholder='$4.99'
+                />
               </div>
               <div className="col-auto col-md-5">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="discount-precentage"
-                    value={discountPercentage}
-                    onChange={changeDiscountPercentage}
-                  />
-                  <span className="input-group-text">%</span>
-                </div>
+                <Input id="discount-precentage" type='number'
+                  isRequired={hasDiscount}
+                  value={discountPercentage}
+                  min={0}
+                  max={100}
+                  step={0.01}
+                  placeholder='50.00%'
+                  onChange={e => {
+                    setDiscountPercentage(e.target.value);
+                    setProduct({ ...product, discountPrice: (product.ProductPrice * (100 - e.target.value) / 100).toFixed(2) })
+                  }}
+                />
               </div>
             </div>
+            :''}
           </form>
         </div>
       </div>

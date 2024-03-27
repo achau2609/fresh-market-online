@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Pagination from './shared/pagination';
 
 const ProductList = () => {
 
-    const products = [
+    const [products, setProducts] = useState([
         {
             "ProductName": "Organic Apples",
             "ProductDescription": "Organic Fresh Apples (Bag 2lb)",
@@ -67,21 +68,55 @@ const ProductList = () => {
             "Quantity": 100,
             "Picture": "https://product-images.metro.ca/images/h62/h38/9131793711134.jpg"
         },
-    ]
+    ])
+
+    const [sort, setSort] = useState(0);
+    const [page, setPage] = useState(1);
+
+    const sortOptions = ["Price (Low to High)", "Price (High to Low)", "A-Z"]
+
+    const sortProducts = (selectedSort) => {
+
+        const newProduct = products;
+
+        if (selectedSort === sortOptions[0]) {
+            newProduct.sort((a, b) => a.ProductPrice - b.ProductPrice)
+        }
+        if (selectedSort === sortOptions[1]) {
+            newProduct.sort((a, b) => (a.ProductPrice - b.ProductPrice) * -1)
+        }
+        if (selectedSort === sortOptions[2]) {
+            newProduct.sort((a, b) => {
+                const nameA = a.ProductName.toUpperCase(); // ignore upper and lowercase
+                const nameB = b.ProductName.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                // names must be equal
+                return 0;
+            })
+        }
+        setProducts(newProduct)
+        setPage(1)
+    }
+
+    const changePage = (page) => {
+        setPage(page)
+    }
 
     return (
         <div className="container text-center">
             {/* Sort by */}
-            <div class="row justify-content-end mb-4 align-items-center">
-                <div class="col-12 col-md-auto">
+            <div className="row justify-content-end mb-4 align-items-center">
+                <div className="col-12 col-md-auto">
                     <label htmlFor='price-range'>Sort by:</label>
                 </div>
-                <div class="col-12 col-md-auto">
-                    <select class="form-select" id="order-status">
-                        <option selected>Price (Low to High)</option>
-                        <option value="1">Price (High to Low)</option>
-                        <option value="2">A-Z</option>
-                        <option value="3">Newest to Oldest</option>
+                <div className="col-12 col-md-auto">
+                    <select className="form-select" id="order-status" value={sort} onChange={e => { setSort(e.target.value); sortProducts(e.target.value) }}>
+                        {sortOptions.map((e) => <option key={e} value={e}>{e}</option>)}
                     </select>
                 </div>
             </div>
@@ -104,17 +139,12 @@ const ProductList = () => {
                 )}
             </div>
             {/* Pagination */}
-            <div className='d-flex justify-content-end'>
-                <nav className='border-0'>
-                    <ul className="pagination">
-                        <li className="page-item"><a className="page-link" href="#">Previous</a></li>
-                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item"><a className="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
-            </div>
+            <Pagination
+                itemsCount={50}
+                pageSize={10}
+                currentPage={page}
+                onPageChange={changePage}
+            />
         </div>
     )
 }

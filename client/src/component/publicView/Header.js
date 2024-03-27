@@ -29,10 +29,10 @@ const Header = () => {
             {/* Search bar */}
             <div className='col-12 col-sm-8'>
                 <form onSubmit={handleSearchSubmit} className='d-flex'>
-                    <div class="input-group">
-                        <input type="search" class="form-control py-2 rounded-0" placeholder="Search for Products" value={searchTerm}
+                    <div className="input-group">
+                        <input type="search" className="form-control py-2 rounded-0" placeholder="Search for Products" value={searchTerm}
                             onChange={handleSearchChange} />
-                        <button class="btn pb-2 rounded-0 border" type="button" id="button-addon2"><FaSearch className="search-icon" /></button>
+                        <button className="btn pb-2 rounded-0 border" type="button" id="button-addon2"><FaSearch className="search-icon" /></button>
                     </div>
                 </form>
             </div>
@@ -42,7 +42,7 @@ const Header = () => {
                         <div className='col-6'>
                             <button className="btn bg-custom-light p-3 rounded-circle position-relative">
                                 <FaShoppingCart />
-                                <span class="position-absolute top-0 start-100 translate-middle-x badge rounded-pill bg-custom-primary">
+                                <span className="position-absolute top-0 start-100 translate-middle-x badge rounded-pill bg-custom-primary">
                                     {itemCount}
                                 </span>
                             </button>
