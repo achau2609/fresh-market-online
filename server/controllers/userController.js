@@ -1,39 +1,32 @@
 const User = require("../models/userModel");
 
 // Create a new user
-exports.createUser = async (req, res) => {
-  const { firstName, lastName, email, secret, contactNumber, birthDate } =
-    req.body;
+async function createUser(req, res) {
+  //const { firstName, lastName, email, secret } = req.body;
   try {
-    const user = new User({
-      firstName,
-      lastName,
-      email,
-      secret,
-      contactNumber,
-      birthDate,
-    });
+    const user = new User(req.body);
     const savedUser = await user.save();
     res.status(201).json(savedUser);
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ error: "An error occurred while creating the user" });
   }
-};
+}
 
 // Get all users
-exports.getAllUser = async (req, res) => {
+async function getAllUsers(req, res) {
   try {
     const user = await User.find();
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: "An error occurred while fetching user" });
   }
-};
+}
 
 // Get a specific user by ID
-exports.getUser = async (req, res) => {
+async function getUser(req, res) {
   const userId = req.params.id;
   try {
     const user = await User.findById(userId);
@@ -46,18 +39,19 @@ exports.getUser = async (req, res) => {
       .status(500)
       .json({ error: "An error occurred while fetching the user" });
   }
-};
+}
 
 // Update a user by ID
-exports.updateUser = async (req, res) => {
+async function updateUser(req, res) {
   const userId = req.params.id;
-  const { firstName, lastName, email, secret, contactNumber, birthDate } =
-    req.body;
+  const user = req.body;
   try {
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { firstName, lastName, email, secret, contactNumber, birthDate },
-      { new: true }
+      user,
+      {
+        new: true,
+      }
     );
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found" });
@@ -68,20 +62,45 @@ exports.updateUser = async (req, res) => {
       .status(500)
       .json({ error: "An error occurred while updating the user" });
   }
-};
+}
 
 // Delete a user by ID
-exports.deleteUser = async (req, res) => {
+async function deleteUser (req, res) {
   const userId = req.params.id;
   try {
-    const deletedUser = await User.findByIdAndRemove(userId);
-    if (!deletedUser) {
+    const result = await User.findByIdAndDelete(userId);
+    if (!result) {
       return res.status(404).json({ error: "User not found" });
     }
-    res.json(deletedUser);
+
+    //res.body.message = "User deleted";
+    res.json(result);
   } catch (error) {
     res
       .status(500)
       .json({ error: "An error occurred while deleting the user" });
   }
+};
+
+async function getUserById(req, res, next) {
+  let user;
+  try {
+    user = await User.findById(req.params.id);
+    if (user == null) {
+      return res.status(404).json({ message: "Cannot find user" });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+  res.user = user;
+  next();
+}
+
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUser,
+  updateUser,
+  deleteUser,
+  getUserById,
 };

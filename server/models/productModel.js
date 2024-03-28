@@ -1,6 +1,6 @@
-const mongoose = require("mpngoose");
+const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema({
+const productSchema = new mongoose.Schema({
   productName: { type: String, required: true },
   productDescription: { type: String, required: false },
   productPrice: { type: Number, required: true },
@@ -10,9 +10,10 @@ const productSchema = mongoose.Schema({
   picture: { type: [String], required: false },
 });
 
-module.exports = mongoose.model("Product", productSchema);
+const Product = mongoose.model("PRODUCT", productSchema, 'PRODUCT');
+module.exports = { Product };
 
-// TODO: The below line will be remove later
+// TODO: The below line will remove later
 /*
 {
   "_id": {

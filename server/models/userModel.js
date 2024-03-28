@@ -20,7 +20,6 @@ const staffSchema = mongoose.Schema({
 const userSchema = mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  contactNumber: { type: String, required: false },
   email: {
     type: String,
     required: true,
@@ -38,10 +37,10 @@ const userSchema = mongoose.Schema({
       minlength: 6,
     },
   },
+  birthDate: { type: Date, required: false },
+  contactNumber: { type: String, required: false },
   customer: { type: customerSchema, required: false },
   staff: { type: staffSchema, required: false },
 });
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports =  mongoose.model('User', userSchema);
