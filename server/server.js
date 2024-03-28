@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const { Product } = require('./models/productModel');
 const UserController = require("./controllers/userController");
 
 const app = express();
@@ -23,6 +24,14 @@ app.get("/api/users/:id", UserController.getUserById, UserController.getUser);
 app.post("/api/users", UserController.createUser);
 app.patch("/api/users/:id", UserController.getUserById, UserController.updateUser);
 app.delete("/api/users/:id", UserController.getUserById, UserController.deleteUser);
+
+// Products APIs
+app.get("/products", (req, res) => {
+  Product.findOne({}).then((data)=> {
+    return res.status(200).json(data)
+  });
+});
+
 
 
 app.listen(HTTP_PORT, () => {

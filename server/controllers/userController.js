@@ -46,13 +46,9 @@ async function updateUser(req, res) {
   const userId = req.params.id;
   const user = req.body;
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      user,
-      {
-        new: true,
-      }
-    );
+    const updatedUser = await User.findByIdAndUpdate(userId, user, {
+      new: true,
+    });
     if (!updatedUser) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -65,7 +61,7 @@ async function updateUser(req, res) {
 }
 
 // Delete a user by ID
-async function deleteUser (req, res) {
+async function deleteUser(req, res) {
   const userId = req.params.id;
   try {
     const result = await User.findByIdAndDelete(userId);
@@ -80,7 +76,7 @@ async function deleteUser (req, res) {
       .status(500)
       .json({ error: "An error occurred while deleting the user" });
   }
-};
+}
 
 async function getUserById(req, res, next) {
   let user;
@@ -96,6 +92,11 @@ async function getUserById(req, res, next) {
   next();
 }
 
+async function changePw(req, res) {
+  const userId = req.params.id;
+  return;
+}
+
 module.exports = {
   createUser,
   getAllUsers,
@@ -103,4 +104,5 @@ module.exports = {
   updateUser,
   deleteUser,
   getUserById,
+  changePw,
 };

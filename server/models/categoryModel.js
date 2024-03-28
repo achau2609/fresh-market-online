@@ -7,15 +7,3 @@ const categorySchema = mongoose.Schema({
 
 
 module.exports = mongoose.model("Category", categorySchema);
-
-
-// TODO: The below line will be remove later
-/*
-{
-  "_id": {
-    "$oid": "65d6ada7c837e9f2b8765133"
-  },
-  "parentCategory": "Fruits & Vegetables",
-  "categoryName": "Fresh Vegetables"
-}
-*/
