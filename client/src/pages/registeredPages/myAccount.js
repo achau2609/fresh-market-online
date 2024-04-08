@@ -26,7 +26,7 @@ const MyAccount = () => {
   useEffect(() => {
     axios
       .get(
-        `http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users/${user_id}`
+        `http://localhost:8080/api/users/${user_id}`
       )
       .then((res) => {
         setFormData(res.data);
@@ -40,7 +40,7 @@ const MyAccount = () => {
     try {
       await axios
         .patch(
-          `http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users/${user_id}`,
+          `http://localhost:8080/api/users/${user_id}`,
           formData
         )
         .then((res) => {
