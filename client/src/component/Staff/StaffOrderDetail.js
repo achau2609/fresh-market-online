@@ -1,55 +1,122 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
 const StaffOrderDetail = () => {
+
+    const [order, setOrder] = useState({});
+    const orderNo = useParams().orderId;
+    const navigation = useNavigate();
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/orders/order?orderNo=${orderNo}`)
+            .then((res) => {
+                if (!res.ok)
+                    navigation('/*');
+                return res.json()
+            })
+            .then(data => {
+                if (data.orderDate)
+                    data.orderDate = data.orderDate.slice(0, 10);
+                if (data.PickupDateTime)
+                    data.PickupDateTime = `${data.PickupDateTime.slice(0, 10)} ${data.PickupDateTime.slice(11, 16)}`;
+
+                if (data.Products)
+                    data.Products = data.Products.map((product) => {
+                        if (product.picture)
+                            product.picture = product.picture[0]
+                        return product;
+                    })
+                setOrder(data);
+            }
+
+            )
+            .catch(err => {
+                console.log(err)
+            }
+            );
+
+    }, [orderNo, navigation])
+
+    const updateStatus = () => {
+
+        const body = {
+            _id: order._id,
+            Status: order.Status
+        }
+
+        fetch('http://localhost:8080/api/orders/updateStatus', {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+        })
+            .then((res) => {
+                if (res.ok)
+                    alert('Success!');
+                else
+                    alert(res.status);
+            })
+            .catch(() => alert('Something went wrong!'))
+    }
+
     return (
         <div className='container text-start'>
             <div className='row'>
                 <Link to='/staff/orders'>{'<<Back'}</Link>
             </div>
             <div className='row'>
-                <h4>Order # - 0001</h4>
+                <h4>Order # - {order.orderNo}</h4>
             </div>
             <hr />
             <div className='row mb-4'>
                 <div className='col-3'>Order Date</div>
-                <div className='col-9'>03/01/2024</div>
-            </div>
-            <div className='row my-4'>
-                <div className='col-3'>Order Type</div>
-                <div className='col-9'>Delivery</div>
+                <div className='col-9'>{order.orderDate}</div>
             </div>
             <div className='row my-4'>
                 <div className='col-3'>Customer Name</div>
-                <div className='col-9'>Chris Wong</div>
+                <div className='col-9'>{order.CustomerName}</div>
             </div>
             <div className='row my-4'>
                 <div className='col-3'>Customer Contact</div>
-                <div className='col-9'>(999) 999-9999</div>
+                <div className='col-9'>{order['Contact#']}</div>
             </div>
             <div className='row my-4'>
+                <div className='col-3'>Order Type</div>
+                <div className='col-9'>{order.OrderType}</div>
+            </div>
+
+            {order.OrderType === "Delivery" && <div className='row my-4'>
                 <div className='col-3'>Delivery Address</div>
                 <div className='col-9'>
                     <div>
-                        99 Fallsview Rd, Dundas, Ontario
-                    </div>
-                    <div>
-                        L9H 5J8
+                        {order.DeliveryAddress}
                     </div>
                 </div>
-            </div>
+            </div>}
+
+            {order.OrderType === "Pickup" && <div className='row my-4'>
+                <div className='col-3'>Pickup Date</div>
+                <div className='col-9'>
+                    <div>
+                        {order.PickupDateTime}
+                    </div>
+                </div>
+            </div>}
+
             <div className='row my-4'>
                 <div className='col-3'>Status</div>
                 <div className='col-3'>
-                    <select className="form-select" aria-label="Default select example">
-                        <option selected>Processing</option>
-                        <option className="1">Ready</option>
-                        <option className="2">Completed</option>
-                        <option className="3">Cancelled</option>
+                    <select className="form-select" aria-label="Default select example" value={order.Status}
+                        onChange={(e) => setOrder({ ...order, Status: e.target.value })}>
+                        <option value="Processing">Processing</option>
+                        <option value="Ready for Pickup">Ready for Pickup</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
                     </select>
                 </div>
                 <div className='col-3'>
-                    <a href='#' className='align-self-end'>Save</a>
+                    <button className='btn btn-custom-secondary align-self-end' onClick={() => updateStatus()}>Save</button>
                 </div>
             </div>
             <hr />
@@ -63,30 +130,22 @@ const StaffOrderDetail = () => {
                             <th scope='col'>Quantity</th>
                         </tr>
                     </thead>
-                    <tbody className='py-3'>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img src="https://assets.shop.loblaws.ca/products/21121560001/b1/en/front/21121560001_front_a07.png" alt="Logo" width="30" height="24" className="d-inline-block align-text-top mx-3" />
-                                Brocoli Crown
-                            </td>
-                            <td>
-                                $15.18
-                            </td>
-                            <td>
-                            9
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>
-                                <img src="https://assets.shop.loblaws.ca/products/20761372/b1/en/front/20761372_front_a07.png" alt="Logo" width="30" height="24" className="d-inline-block align-text-top mx-3" />
-                                Whole Cremini Mushrooms
-                            </td>
-                            <td>$11.26</td>
-                            <td>10</td>
-                        </tr>
-                    </tbody>
+                    {order.Products && <tbody className='py-3'>
+                        {order.Products.map((product, index) =>
+                            <tr>
+                                <td>{index + 1}</td>
+                                <td>
+                                    <img src={product.picture} alt='Logo' width="30" height="24" className="d-inline-block align-text-top mx-3" />
+                                    {product.ProductName}
+                                </td>
+                                <td>
+                                    ${product.ProductPrice}
+                                </td>
+                                <td>
+                                    {product.Quantity}
+                                </td>
+                            </tr>)}
+                    </tbody>}
                 </table>
             </div>
         </div>

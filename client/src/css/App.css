@@ -30,6 +30,11 @@ footer a {
   --bs-pagination-active-border-color: var(--custom-color-primary-hover);
 }
 
+.staff .pagination {
+  --bs-pagination-active-bg: var(--custom-color-secondary);
+  --bs-pagination-active-border-color: var(--custom-color-secondary);
+}
+
 .btn-custom-primary {
   --bs-btn-bg: var(--custom-color-primary);
   --bs-btn-hover-bg: var(--custom-color-primary-hover);
@@ -67,6 +72,11 @@ footer a {
   border-color: var(--custom-color-primary) !important;
 }
 
+.border-custom-primary-top{
+  border-style: solid;
+  border-color: var(--custom-color-primary) !important;
+}
+
 .btn-outline-custom-primary {
   --bs-btn-color: var(--custom-color-primary);
   --bs-btn-border-color: var(--custom-color-primary);
@@ -98,7 +108,6 @@ footer a {
 
 /*****                Public            ******/
 .public header {
-
   padding: 60px 10px 30px 10px;
   display: flex;
   align-items: center;
@@ -109,14 +118,13 @@ footer a {
   color: var(--custom-color-link-hover);
 }
 
-.public .carousel-button{
+.public .carousel-button {
   text-decoration: none;
 }
 
 .public .carousel-button:hover {
   background-color: var(--bs-dark);
   cursor: pointer;
-  
 }
 
 .public .flickity-cell {
@@ -167,6 +175,47 @@ footer a {
   color: var(--custom-color-primary);
   background-color: var(--custom-light-bg);
 }
+
+/*                  Category dropdown           */
+
+.categories-dropdown-content .dropend {
+  border-bottom: 0.1px #ebebeb solid;
+  color: rgb(41, 41, 41);
+  text-decoration: none;
+  display: block;
+  opacity: 1;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+
+.categories-dropdown:hover > .dropdown-menu
+{
+  display: block;
+  margin-top: 0;
+}
+
+.categories-dropdown .dropdown-item {
+  border-bottom: 0.1px #ebebeb solid;
+  color: rgb(41, 41, 41);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  opacity: 1;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; 
+}
+
+.categories-dropdown .dropdown-item:hover {
+  color: #f1f1f1;
+  background-color: #59b828;
+  border-color: #59b828; 
+  
+}
+
+.categories-dropdown .dropdown-toggle::after
+{
+  display: none;
+}
+
 
 /*****            Staff                 *******/
 .staff .product-thumbnail,

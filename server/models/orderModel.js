@@ -1,23 +1,27 @@
-const mongoose = require("mpngoose");
-import ProductModel from "./productModel";
+const mongoose = require("mongoose");
+
+const { productSchema } = require("./productModel")
 
 const deliveryAddressSchema = mongoose.Schema({
-  address1: { type: String, required: true },
-  city: { type: String, required: false },
-  state: { type: String, required: false },
-  zip: { type: String, required: false },
+  Address1: { type: String, required: true },
+  City: { type: String, required: false },
+  State: { type: String, required: false },
+  ZIP: { type: String, required: false },
+  _id: false
 });
 
 const orderSchema = mongoose.Schema({
+  _id: { type: mongoose.ObjectId, required: true },
   orderNo: { type: Number, required: true },
-  customerId: { type: mongoose.ObjectId, required: true },
-  customerName: { type: String, required: true },
-  deliveryAddress: { type: deliveryAddressSchema, required: true },
-  orderType: { type: String, required: false },
-  contactNo: { type: String, required: false },
-  pickupDateTime: { type: Date, default: Date.now },
-  products: { type: [ProductModel], required: true },
-  status: { type: String, required: true },
+  CustomerId: { type: mongoose.ObjectId, required: true },
+  CustomerName: { type: String, required: true },
+  DeliveryAddress: { type: deliveryAddressSchema, required: true },
+  OrderType: { type: String, required: false },
+  ContactNo: { type: String, required: false },
+  PickupDateTime: { type: Date, default: Date.now },
+  Products: { type: [productSchema], required: true },
+  Status: { type: String, required: true },
+  orderDate: { type: Date, required: true },
 });
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Order", orderSchema, "ORDER");

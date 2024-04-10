@@ -162,7 +162,7 @@ const LoginModal = ({ onClose }) => {
       phoneNumber: phoneNumber
     };
 
-    fetch("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/signup", {
+    fetch("http://localhost:8080/api/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -232,7 +232,7 @@ const LoginModal = ({ onClose }) => {
           isAdmin: adminStaffActiveTab === "admin" ? true : false,
         };
 
-        await fetch("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/signin", {
+        await fetch("http://localhost:8080/api/signin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

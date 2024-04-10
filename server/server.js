@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const { Product } = require("./models/productModel");
 const UserController = require("./controllers/userController");
 const AuthController = require("./controllers/authController");
+const OrderController = require("./controllers/orderController");
+const CategoryController = require("./controllers/categoryController");
 var cors = require("cors");
 const app = express();
 let HTTP_PORT = process.env.PORT || 8080;
@@ -45,6 +47,15 @@ app.get("/products", (req, res) => {
     return res.status(200).json(data);
   });
 });
+
+//Orders APIs
+app.get("/api/orders", OrderController.getAllOrders);
+app.get("/api/orders/order", OrderController.getOrder);
+app.put("/api/orders/updateStatus", OrderController.updateOrderStatus);
+app.get("/api/orders/todayorders", OrderController.getTodaysPickupOrders);
+
+//Categories API
+app.get("/api/categories", CategoryController.getCategories);
 
 app.listen(HTTP_PORT, () => {
   console.log(`Server running on port ${HTTP_PORT}`);
