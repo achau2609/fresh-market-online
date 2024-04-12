@@ -50,7 +50,7 @@ const Navigation = () => {
                 </button>
                 <ul className="dropdown-menu px-2 py-3 border-custom-primary border-5 border-0 border-top rounded-0">
                     {categories.map((parent) =>
-                        <li className='dropend'>
+                        <li className='dropend' key={parent.ParentCategory}>
                             <a className="dropdown-item dropdown-toggle"
                                 href='#'
                                 id={`dropdown-${parent.ParentCategory}`}
@@ -60,7 +60,7 @@ const Navigation = () => {
                                 onMouseLeave={() => toggleSubCategory(`dropdown-${parent.ParentCategory}`)}>
                                 {parent.ParentCategory}
                                 <ul className="dropdown-menu">
-                                    {parent.categories.map((category) => <li><a className="dropdown-item" href='#'>{category}</a></li>
+                                    {parent.categories.map((category) => <li key={category}><a className="dropdown-item" href='#'>{category}</a></li>
                                     )}
                                 </ul>
                             </a>

@@ -17,13 +17,13 @@ const TodayPickupOrders = () => {
     const transformTime = (string) => {
         let date = new Date(string);
         // TODO: fix issue: date retrieve from database seems UTC, system auto convert it to EDT.
-        let hour = date.getHours();
+        let hour = date.getUTCHours();
         let time = 'AM';
         if (hour > 12){
             hour = hour - 12;
             time = 'PM';
         }
-        return `${hour.toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')} ${time}`;
+        return `${hour.toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')} ${time}`;
     }
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const TodayPickupOrders = () => {
                             </tr>
                         )}
                     </tbody>
-                    {orders.length === 0 && <p>No orders found.</p>}
+                    {orders.length === 0 && <div>No orders found.</div>}
                 </table>
             </div>
             <div className='d-flex justify-content-end'>

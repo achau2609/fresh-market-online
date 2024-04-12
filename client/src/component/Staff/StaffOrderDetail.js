@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { alert } from '../../utils/alert';
 
 const StaffOrderDetail = () => {
 
@@ -53,11 +54,11 @@ const StaffOrderDetail = () => {
         })
             .then((res) => {
                 if (res.ok)
-                    alert('Success!');
+                    alert('success', `Order ${orderNo} has been updated successfully.`);
                 else
-                    alert(res.status);
+                    alert('warning', res.status);
             })
-            .catch(() => alert('Something went wrong!'))
+            .catch(() => alert('danger', 'Something went wrong!'))
     }
 
     return (
@@ -116,7 +117,7 @@ const StaffOrderDetail = () => {
                     </select>
                 </div>
                 <div className='col-3'>
-                    <button className='btn btn-custom-secondary align-self-end' onClick={() => updateStatus()}>Save</button>
+                    <button className='btn btn-success align-self-end' onClick={() => updateStatus()}>Save</button>
                 </div>
             </div>
             <hr />
@@ -132,7 +133,7 @@ const StaffOrderDetail = () => {
                     </thead>
                     {order.Products && <tbody className='py-3'>
                         {order.Products.map((product, index) =>
-                            <tr>
+                            <tr key={product._id}>
                                 <td>{index + 1}</td>
                                 <td>
                                     <img src={product.picture} alt='Logo' width="30" height="24" className="d-inline-block align-text-top mx-3" />

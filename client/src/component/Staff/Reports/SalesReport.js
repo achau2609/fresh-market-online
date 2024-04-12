@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, } from "chart.js";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend, Title, Tooltip);
 
-const SalesReport = () => {
+const SalesReport = ({ startDate, endDate }) => {
+
+    const [chartData, setChartData] = useState({});
+    const [isReady, setReady] = useState(false);
 
     const options = {
         responsive: true,
@@ -15,7 +18,7 @@ const SalesReport = () => {
             },
             title: {
                 display: true,
-                text: 'Sales by Order Type',
+                text: 'Monthly Sales by Order Type',
                 font: {
                     size: '20',
                     weight: 'normal'
@@ -24,30 +27,32 @@ const SalesReport = () => {
         },
     };
 
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+    useEffect(() => {
 
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: 'Delivery',
-                data: [30.83, 45.38, 86.36, 76.15, 87.17, 65.57, 75.10],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Pickup',
-                data: [89.62, 72.21, 55.97, 72.73, 93.98, 48.47, 98.62],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-            },
-        ],
-    };
+        if (startDate && endDate){
+            fetch(`http://localhost:8080/api/report/salesReport?startDate=${startDate}&endDate=${endDate}`)
+            .then(res => res.json())
+            .then(data => {
+         //       console.log(data);
+                setChartData({
+                    labels: data.label,
+                    datasets: data.data
+                }
+                );
+                setReady(true);
+            })
+            .catch(err => alert(err));
+        }
+    }, [endDate, startDate])
 
     return (
-
-        <Line options={options} data={data} />
-  
+        <>
+            {isReady && chartData &&
+                <Line options={options} data={chartData} />
+            }
+            {Object.keys(chartData).length === 0 && 
+            <p>No data found.</p>}
+        </>
     )
 }
 

@@ -5,22 +5,13 @@ import ProductReport from "../Staff/Reports/ProductReport";
 
 const StaffReport = () => {
 
-  const [timeframe, setTimeFrame] = useState('1');
-  const [startDate, setStartDate] = useState("2018-07-22");
-  const [endDate, setEndDate] = useState("2018-07-22");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [tab, setTab] = useState(1);
 
   return (
     <React.Fragment>
       <div className="row">
-        <div className="col-auto">
-          <label>Timeframe</label>
-          <select className="form-select" value={timeframe} onChange={e=>setTimeFrame(e.target.value)}>
-            <option value="1">
-              Monthly
-            </option>
-            <option value="2">Yearly</option>
-          </select>
-        </div>
         <div className="col-auto">
           <label htmlFor="start-date">From Date</label>
           <input
@@ -55,6 +46,7 @@ const StaffReport = () => {
               role="tab"
               aria-controls="nav-home"
               aria-selected="true"
+              onClick={()=> setTab(1)}
             >
               Sales
             </button>
@@ -67,6 +59,7 @@ const StaffReport = () => {
               role="tab"
               aria-controls="nav-profile"
               aria-selected="false"
+              onClick={()=> setTab(2)}
             >
               Inventory
             </button>
@@ -79,6 +72,7 @@ const StaffReport = () => {
               role="tab"
               aria-controls="nav-contact"
               aria-selected="false"
+              onClick={()=> setTab(3)}
             >
               Products
             </button>
@@ -92,7 +86,7 @@ const StaffReport = () => {
             aria-labelledby="nav-home-tab"
             tabIndex="0"
           >
-            <SalesReport />
+           { tab === 1 && <SalesReport startDate={startDate} endDate={endDate} />}
           </div>
           <div
             className="tab-pane fade"
@@ -101,7 +95,7 @@ const StaffReport = () => {
             aria-labelledby="nav-profile-tab"
             tabIndex="0"
           >
-            <InventoryReport />
+           {tab === 2 && <InventoryReport />}
           </div>
           <div
             className="tab-pane fade"
@@ -110,7 +104,7 @@ const StaffReport = () => {
             aria-labelledby="nav-contact-tab"
             tabIndex="0"
           >
-            <ProductReport />
+            {tab === 3 && <ProductReport startDate={startDate} endDate={endDate} />}
           </div>
         </div>
       </div>

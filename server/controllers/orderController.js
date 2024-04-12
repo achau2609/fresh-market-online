@@ -99,14 +99,17 @@ const getOrder = (req, res) => {
 
                 } catch (err) {
                     console.log(err);
-                    res.status(500).json({ error: "An error occurred while fetching orders", msg: err })
+                    res.status(500).json({ error: "An error occurred while fetching orders", msg: err });
                 }
             }
-            else res.status(500).json({ error: "Order not found"})
+            else {
+                res.status(500).json({ error: "Order not found"});
+                return ;
+            }
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({ error: "An error occurred while fetching orders", msg: err })
+            res.status(500).json({ error: "An error occurred while fetching orders", msg: err });
         })
 }
 
@@ -140,6 +143,7 @@ const updateOrderStatus = (req, res) => {
                         });
                 } else {
                     res.status(500).json({ error: "Order not found" })
+                    return ;
                 }
             })
             .catch(err => {
@@ -150,6 +154,7 @@ const updateOrderStatus = (req, res) => {
     } else {
         console.log("Missing information");
         res.status(500).json({ error: "Missing information" })
+        return ;
     }
 }
 

@@ -66,8 +66,8 @@ const Orders = () => {
             {/* Search */}
             <div className='container mb-4'>
                 <div className="card border-0">
-                    <h5 class="card-header text-start">Search</h5>
-                    <div claclassNames="card-body">
+                    <h5 className="card-header text-start">Search</h5>
+                    <div className="card-body">
                         <div className='card-text py-3'>
                             <form className='container text-start'>
                                 <div className='row mb-3'>
@@ -79,7 +79,7 @@ const Orders = () => {
                                     </div>
                                     <div className='col'>
                                         <label htmlFor='order-status'>Status</label>
-                                        <select class="form-select" id="order-status"
+                                        <select className="form-select" id="order-status"
                                             value={filter.status}
                                             onChange={e => setFilter({ ...filter, status: e.target.value })}>
                                             <option value="">--All--</option>

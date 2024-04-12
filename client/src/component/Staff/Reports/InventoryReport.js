@@ -1,48 +1,62 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Pagination from '../Helpers/pagination';
 
 const InventoryReport = () => {
-    const products = [{
-        productName: 'Apples',
-        inventory: 100,
-        unitsold: 50,
-        picture: 'https://assets.shop.loblaws.ca/products/20606349001/b1/en/front/20606349001_front_a06.png'
-    }, {
-        productName: 'Free-range Eggs',
-        inventory: 39,
-        unitsold: 76,
-        picture: 'https://grayridge.com/conestogafarms/wp-content/uploads/2017/01/freerangeedit.jpg'
-    }, {
-        productName: 'Bananas',
-        inventory: 99,
-        unitsold: 78,
-        picture: 'https://www.superhealthykids.com/wp-content/uploads/2022/04/ripe-bananas.jpg'
-    }
-    ]
+
+    const [products, setProducts] = useState([]);
+    const [productCount, setProductCount] = useState(0);
+    const [page, setPage] = useState(1);
+
+    const [sort, setSort] = useState(1);
+    const pageLimit = 10;
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/report/inventoryReport?page=${page}&limit=${pageLimit}&sort=${sort}`)
+            .then(res => res.json())
+            .then(data => {
+
+                setProducts(data.data);
+                setProductCount(data.count);
+            })
+            .catch(err => alert(err));
+    }, [page, navigate, sort])
 
     return (
-        <div className='table-responsive'>
-            <table className="table table-striped table-hover">
-                <thead className="table-light">
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Inventory</th>
-                        <th>Unit sold</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product) =>
-                        <tr key={product.productName}>
-                            <td>
-                                <Link to='/staff/products/0001'>{product.productName} </Link>
-                            </td>
-                            <td>{product.inventory}</td>
-                            <td>{product.unitsold}</td>
+        <>
+            <div className='table-responsive'>
+                <table className="table table-striped table-hover">
+                    <thead className="table-light">
+                        <tr>
+                            <th><button className='bg-transparent border-0 fw-bold' onClick={e => setSort(1)}>Product Name</button></th>
+                            <th>Category</th>
+                            <th><button className='bg-transparent border-0 fw-bold' onClick={e => setSort(2)}>Remaining Inventory</button></th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {products && products.map((product) =>
+                            <tr key={product._id}>
+                                <td>
+                                    <Link to={`/admin/products/${product._id}`}>{product.ProductName} </Link>
+                                </td>
+                                <td>{product.CategoryId}</td>
+                                <td>{product.Quantity}</td>
+                            </tr>
+                        )}
+                        {!products && <p>No items found.</p>}
+                    </tbody>
+                </table>
+            </div>
+            <div className='d-flex justify-content-end'>
+                {
+                    productCount > 0 &&
+                    <Pagination itemsCount={productCount} pageSize={pageLimit} currentPage={page} onPageChange={setPage} />
+                }
+
+            </div>
+        </>
     )
 }
 
