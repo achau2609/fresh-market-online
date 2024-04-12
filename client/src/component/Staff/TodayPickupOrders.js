@@ -1,27 +1,53 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Pagination from './Helpers/pagination'
 
 const TodayPickupOrders = () => {
 
-    const [orders] = useState([{
-        orderNo: '0001',
-        status: 'Processing',
-        contactName: 'Chris Wong',
-        contactNo: '(999) 999-9999',
-        pickupTime: '12:30PM'
-    },{
-        orderNo: '0002',
-        status: 'Ready for Pickup',
-        contactName: 'Nanjala Shui',
-        contactNo: '(402) 498-9123',
-        pickupTime: '01:40PM'
-    },{
-        orderNo: '0003',
-        status: 'Processing',
-        contactName: 'Lester Testerman',
-        contactNo: '(812) 743-4740',
-        pickupTime: '05:35 PM'
-    }])
+    const [orders, setOrders] = useState([]);
+    const [page, setPage] = useState(1);
+    const recordPerPage = 10;
+    const [orderCount, setOrderCount] = useState(0);
+    const navigate = useNavigate();
+
+    const changePage = newPage => {
+        setPage(newPage)
+    }
+
+    const transformTime = (string) => {
+        let date = new Date(string);
+        // TODO: fix issue: date retrieve from database seems UTC, system auto convert it to EDT.
+        let hour = date.getUTCHours();
+        let time = 'AM';
+        if (hour > 12){
+            hour = hour - 12;
+            time = 'PM';
+        }
+        return `${hour.toString().padStart(2, '0')}:${date.getUTCMinutes().toString().padStart(2, '0')} ${time}`;
+    }
+
+    useEffect(() => {
+
+        fetch(`http://localhost:8080/api/orders/todayorders?page=${page}&limit=${recordPerPage}`)
+            .then((res) => {
+                if (res.ok)
+                    return res.json();
+                else navigate('*');
+            }
+            )
+            .then(res => {
+                setOrderCount(res['count'])
+                const data = res['data'].map(e => {
+                    e.PickupDateTime = transformTime(e.PickupDateTime);
+                    return e
+                });
+                setOrders(data)
+            })
+            .catch(err => {
+                console.log(err)
+            });
+
+    }, [page, navigate])
 
     return (
         <div className='container'>
@@ -35,36 +61,28 @@ const TodayPickupOrders = () => {
                             <th>Contact</th>
                             <th>Pickup time</th>
                         </tr>
-                    </thead>
+                    </thead>      
                     <tbody>
-                        {orders.map((order) => <tr>
-                            <td><Link to='/staff/orders/0001'>{order.orderNo}</Link></td>
-                            <td>{order.status}</td>
-                            <td>
-                                <div>{order.contactName}</div>
-                                <div>{order.contactNo}</div>
-                            </td>
-                            <td>{order.pickupTime}</td>
-                        </tr>)}       
+                        {orders.map((order) =>
+                            <tr>
+                                <td><Link to={`/staff/orders/${order.orderNo}`}>{order.orderNo}</Link></td>
+                                <td>{order.Status}</td>
+                                <td>
+                                    <div>{order.CustomerName}</div>
+                                    <div>{order['Contact#']}</div>
+                                </td>
+                                <td>{order.PickupDateTime}</td>
+                            </tr>
+                        )}
                     </tbody>
+                    {orders.length === 0 && <div>No orders found.</div>}
                 </table>
             </div>
             <div className='d-flex justify-content-end'>
-                <nav aria-label="" className='border-0'>
-                    <ul className="pagination flex-wrap justify-content-end">
-                        <li className="page-item">
-                            <a className="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li className="page-item active"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item" aria-current="page">
-                            <a className="page-link" href="#">2</a>
-                        </li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item">
-                            <a className="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                {
+                    orderCount > 0 &&
+                    <Pagination itemsCount={orderCount} pageSize={recordPerPage} currentPage={page} onPageChange={changePage} />
+                }
             </div>
         </div>
     )

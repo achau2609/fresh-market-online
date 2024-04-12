@@ -1,4 +1,3 @@
-import * as usersAPI from "./users";
 import _ from "lodash";
 
 const users = [

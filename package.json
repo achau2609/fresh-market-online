@@ -7,4 +7,8 @@
     "mongoose": "^8.2.3",
     "supertest": "^6.3.4"
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> main-server-v2

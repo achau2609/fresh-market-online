@@ -7,4 +7,4 @@ const shoppingCartSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("ShoppingCart", shoppingCartSchema);
+module.exports = mongoose.model("ShoppingCart", shoppingCartSchema, 'SHOPPINGCART');

@@ -22,7 +22,7 @@ const signIn = async (req, res) => {
         .json({ message: "Email or password is not matched" });
     }
 
-    const token = JWT.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = JWT.sign({ userId: user._id }, JWTSecret);
 
     return res.status(201).json({
       message: "Authentication successful",

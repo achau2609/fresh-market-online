@@ -23,4 +23,8 @@ setupTests.js
 
 npm-debug.log*
 yarn-debug.log*
+<<<<<<< HEAD
 yarn-error.log*
+=======
+yarn-error.log*
+>>>>>>> main-server-v2

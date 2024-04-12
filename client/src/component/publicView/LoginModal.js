@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { isNotEmpty, isValidEmailFormat } from "./Validators";
 import RoleContext from "../../context/RoleContext";
 import { useNavigate } from "react-router-dom";
+import { apiUrl } from '../../server-config';
 
 const PasswordInput = ({
   placeholder,
@@ -103,7 +104,7 @@ const LoginModal = ({ onClose }) => {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const {authenticated, setAuthenticated} = useContext(RoleContext);
+  const { authenticated, setAuthenticated } = useContext(RoleContext);
   const navigate = useNavigate();
 
   const validateSignUp = () => {
@@ -159,10 +160,10 @@ const LoginModal = ({ onClose }) => {
       lastName: lastName,
       email: signUpEmail,
       password: signUpPassword,
-      phoneNumber: phoneNumber
+      phoneNumber: phoneNumber,
     };
 
-    fetch("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/signup", {
+    fetch(`${apiUrl}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -222,7 +223,6 @@ const LoginModal = ({ onClose }) => {
     if (!isEmailValid || !isPasswordValid) {
       return;
     }
-
     if (isAdminStaff) {
       try {
         // Admin & Staff Login
@@ -232,7 +232,7 @@ const LoginModal = ({ onClose }) => {
           isAdmin: adminStaffActiveTab === "admin" ? true : false,
         };
 
-        await fetch("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/signin", {
+        await fetch(`${apiUrl}/api/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -263,7 +263,7 @@ const LoginModal = ({ onClose }) => {
                 //setToken(data.token);
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userId", data._id);
-                setAuthenticated({...authenticated, isAdmin: true})
+                setAuthenticated({ ...authenticated, isAdmin: true });
                 navigate("/admin");
                 //onClose(data);
               } else if (
@@ -273,7 +273,7 @@ const LoginModal = ({ onClose }) => {
                 //setToken(data.token);
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userId", data._id);
-                setAuthenticated({...authenticated, isStaff: true})
+                setAuthenticated({ ...authenticated, isStaff: true });
                 navigate("/staff");
                 //onClose(data);
               } else {
@@ -296,7 +296,7 @@ const LoginModal = ({ onClose }) => {
           password: password,
         };
 
-        await fetch("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/signin", {
+        await fetch(`${apiUrl}/api/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -324,7 +324,7 @@ const LoginModal = ({ onClose }) => {
                 //setToken(data.token);
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userId", data._id);
-                setAuthenticated({...authenticated, registered: true})
+                setAuthenticated({ ...authenticated, registered: true });
                 onClose(data);
               }
             } else {
@@ -528,7 +528,6 @@ const LoginModal = ({ onClose }) => {
                   errorMessage={signUpErrors.confirmPassword}
                   isConfirmPassword={true}
                 />
-                
                 <div className="form-button-container">
                   <button
                     type="button"

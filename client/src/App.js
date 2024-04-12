@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./css/App.css";
 import { useEffect, useState } from "react";
 import RoleContext from './context/RoleContext';
-import { logout } from "./utils/auth";
 
 // Components
 import TopBar from "./component/publicView/Topbar";
@@ -37,6 +36,7 @@ import UsersAccounts from "./pages/admin/UsersAccounts";
 import ProductsMaintenancePage from "./pages/admin/ProductsMaintenancePage";
 import ProductDetailPage from "./pages/admin/ProductDetailPage";
 import CategoryMaintenancePage from "./pages/admin/CategoryMaintenancePage";
+import { apiUrl } from './server-config'
 
 function App() {
   const [authenticated, setAuthenticated] = useState({
@@ -51,9 +51,10 @@ function App() {
 
     // fetch if user currently logged in
     if (user_id) {
-      fetch(`http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users/${user_id}`)
+      fetch(`${apiUrl}/users/${user_id}`)
         .then((res) => res.json())
         .then((data) => {
+
           if (data.isAdmin)
             setAuthenticated({ isAdmin: true })
           else if (data.isStaff === true)

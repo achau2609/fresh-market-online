@@ -8,6 +8,7 @@ import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
 import TextAreaInput from "../../component/shared/textAreaInput";
+import { apiUrl } from '../../server-config';
 
 function AddNewUser() {
   const [formData, setFormData] = useState({
@@ -30,17 +31,16 @@ function AddNewUser() {
     e.preventDefault();
 
     try {
-      // Add user in memory
-      addUser(formData);
-      navigate("/admin/users");
-
-      // Call server to add user in database
-      /*await axios.post("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users", formData)
-      .then(res => {
-        console.log(res);
-        navigate("/admin/users");
-      }).catch(err => console.log(err));
-      */
+      await axios
+        .post(`${apiUrl}/api/users`, formData)
+        .then((res) => {
+          console.log(res);
+          navigate("/admin/users");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert(err);
+        });
     } catch (error) {
       console.error("Error adding user: ", error);
     }

@@ -5,50 +5,43 @@ import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
-import TextAreaInput from "../../component/shared/textAreaInput";
+import { apiUrl } from "../../server-config";
+import FormatDate from '../../utils/formatDate';
 
 function UpdateUser() {
-  const { userId } = useParams();
-  const [formData, setFormData] = useState(new FormData());
-
+  const { id } = useParams();
+  const [user, setUser] = useState(new FormData());
   const navigate = useNavigate();
 
   useEffect(() => {
     try {
       // Get user based on Id from server to show in form
-      axios.get(`http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users/${userId}`)
-        .then((res) => {
-          setFormData(res.data[0]);
-        })
-        .catch((err) => console.log(err));
+      axios.get(`${apiUrl}/api/users/${id}`).then((res) => {
+        setUser(res.data);
+      });
     } catch (error) {
-      console.error("Error adding user: ", error);
+      console.log(error);
+      navigate("/admin/users");
     }
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // update manually
-    //updateUser(formData);
-    //navigate("/admin/users");
 
-    // Update user in database
-    // await axios
-    //   .patch(`http://localhost:8080/api/users/${user_id}`, formData)
-    //   .then((res) => {
-    //     console.log(res);
-    //     navigate("/admin/users");
-    //   })
-    //   .catch((err) => console.log(err));
-
-    // try {
-    // } catch (error) {
-    //   console.error("Error adding user: ", error);
-    // }
+    try {
+      await axios
+        .patch(`${apiUrl}/api/users/${id}`, user)
+        .then((res) => {
+          console.log(res);
+          navigate("/admin/users");
+        });
+    } catch (error) {
+      console.error("Error adding user: ", error);
+    }
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   return (
@@ -65,7 +58,7 @@ function UpdateUser() {
         <div className="col-sm-12 col-md-9">
           <div className="card">
             <div className="card-body">
-              {!formData ? (
+              {!user ? (
                 <div>Loading...</div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -76,13 +69,8 @@ function UpdateUser() {
                         type="text"
                         label="First Name"
                         placeholder="Enter First Name"
-                        value={formData.firstName}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
+                        value={user.firstName}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="col-6">
@@ -91,13 +79,8 @@ function UpdateUser() {
                         type="text"
                         label="Last Name"
                         placeholder="Enter Last Name"
-                        value={formData.lastName}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
+                        value={user.lastName}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
@@ -108,75 +91,32 @@ function UpdateUser() {
                         type="email"
                         label="Email Address"
                         placeholder="Sample: yourname@outlook.com"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
+                        value={user.email}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="col-6">
                       <Input
-                        name="password"
-                        type="password"
-                        label="Password"
-                        value={formData.password}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
+                        name="phoneNumber"
+                        type="text"
+                        label="Contact Number"
+                        placeholder="e.g +1(234)567-8965"
+                        value={user.phoneNumber}
+                        onChange={handleChange}
                       />
                     </div>
                   </div>
                   <div className="row mb-3">
                     <div className="col-6">
                       <Input
-                        name="contactNumber"
-                        type="text"
-                        label="Contact Number"
-                        placeholder="e.g +1(234)567-8965"
-                        value={formData.contactNumber}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className="col-6">
-                      <Input
                         name="birthDate"
                         type="date"
                         label="Birth Date"
                         placeholder="mm/dd/yyyy"
-                        value={formData.birthDate}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            [e.target.name]: e.target.value,
-                          })
-                        }
+                        value={FormatDate(user.birthDate)}
+                        onChange={handleChange}
                       />
                     </div>
-                  </div>
-                  <div className="mb-3">
-                    <TextAreaInput
-                      name="address"
-                      type="text"
-                      label="Address"
-                      value={formData.address}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          [e.target.name]: e.target.value,
-                        })
-                      }
-                    />
                   </div>
                   <div className="row justify-content-between">
                     <div className="col col-md-2">
