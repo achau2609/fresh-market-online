@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import "./css/App.css";
 import { useEffect, useState } from "react";
 import RoleContext from './context/RoleContext';
-import { logout } from "./utils/auth";
 
 // Components
 import TopBar from "./component/publicView/Topbar";
@@ -55,6 +54,7 @@ function App() {
       fetch(`${apiUrl}/users/${user_id}`)
         .then((res) => res.json())
         .then((data) => {
+
           if (data.isAdmin)
             setAuthenticated({ isAdmin: true })
           else if (data.isStaff === true)

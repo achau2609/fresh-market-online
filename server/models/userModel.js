@@ -10,15 +10,6 @@ const addressSchema = mongoose.Schema({
   zip: { type: String, required: false },
 });
 
-const customerSchema = mongoose.Schema({
-  address: { type: addressSchema, required: true },
-});
-
-const staffSchema = mongoose.Schema({
-  position: { type: String, required: true },
-  hireDate: { type: String, required: true },
-});
-
 const userSchema = mongoose.Schema(
   {
     firstName: { type: String, required: true },
@@ -49,10 +40,10 @@ const userSchema = mongoose.Schema(
       },
     ],
     isAdmin: { type: Boolean, required: false },
+    isStaff: { type: Boolean, required: false },
     birthDate: { type: Date, required: false },
     phoneNumber: { type: String, required: true },
     address: { type: addressSchema, required: false },
-    staff: { type: staffSchema, required: false },
   },
   { timestamps: true }
 );
@@ -66,4 +57,4 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema, 'users');

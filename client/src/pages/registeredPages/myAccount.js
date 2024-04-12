@@ -4,6 +4,7 @@ import Input from "../../component/shared/input";
 import axios from "axios";
 import AddressInput from "../../component/shared/addressInput";
 import { apiUrl } from '../../server-config';
+import FormatDate from '../../utils/formatDate';
 
 const MyAccount = () => {
   const user_id = localStorage.getItem("userId");
@@ -16,18 +17,18 @@ const MyAccount = () => {
     address: [{ addressLine: "", city: "", state: "", zip: "" }],
   });
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, "0");
+  //   const day = String(date.getDate()).padStart(2, "0");
+  //   return `${year}-${month}-${day}`;
+  // };
 
   useEffect(() => {
     axios
       .get(
-        `${apiUrl}/users/${user_id}`
+        `${apiUrl}/api/users/${user_id}`
       )
       .then((res) => {
         setFormData(res.data);
@@ -41,7 +42,7 @@ const MyAccount = () => {
     try {
       await axios
         .patch(
-          `${apiUrl}/users/${user_id}`,
+          `${apiUrl}/api/users/${user_id}`,
           formData
         )
         .then((res) => {
@@ -112,7 +113,7 @@ const MyAccount = () => {
                   name="birthDate"
                   type="Date"
                   label="Birth Date"
-                  value={formatDate(formData.birthDate)}
+                  value={FormatDate(formData.birthDate)}
                   onChange={handleChange}
                 />
               </div>

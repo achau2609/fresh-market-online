@@ -6,7 +6,7 @@ import LogoutButton from '../shared/LogoutButton';
 
 const StaffHeader = () => {
   return (
-    <div class="container">
+    <div className="container">
       <div className='row'>
         <div className='text-end pt-1'>
           <Link to='/' target="_blank" rel="noopener noreferrer">
@@ -18,21 +18,22 @@ const StaffHeader = () => {
           </Link>
         </div>
       </div>
-      <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <div className="logo col-3">
           <Link to='/'>
             <img src={logo} alt="Logo" className='header-logo'/>
           </Link>
         </div>
 
-        <ul class="nav col-9 col-md-auto mb-2 justify-content-center mb-md-0">
+        <ul className="nav col-9 col-md-auto mb-2 justify-content-center mb-md-0">
           <li><h2>Staff Portal</h2></li>
         </ul>
 
-        <div class="col-md-3 text-end">
+        <div className="col-md-3 text-end">
           <LogoutButton />
         </div>
       </header>
+      <div id="liveAlertPlaceholder"></div>
     </div>
   )
 }

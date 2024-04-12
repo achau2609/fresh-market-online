@@ -1,9 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const { Product } = require("./models/productModel");
+
+//Controllers
 const UserController = require("./controllers/userController");
 const AuthController = require("./controllers/authController");
+const OrderController = require("./controllers/orderController");
+const CategoryController = require("./controllers/categoryController");
+const ReportController = require("./controllers/reportController");
+
 var cors = require("cors");
 const app = express();
 let HTTP_PORT = process.env.PORT || 8080;
@@ -20,31 +25,38 @@ app.use(express.json());
 app.use(cors());
 
 // Users APIs
-app.get("/users", UserController.getAllUsers);
-app.get("/users/:id", UserController.getUserById, UserController.getUser);
-app.post("/addStaff", UserController.createUser);
+app.get("/api/users", UserController.getAllUsers);
+app.get("/api/users/:id", UserController.getUserById, UserController.getUser);
+app.post("/api/addStaff", UserController.createUser);
 app.patch(
-  "/users/:id",
+  "/api/users/:id",
   UserController.getUserById,
   UserController.updateUser
 );
 app.delete(
-  "/users/:id",
+  "/api/users/:id",
   UserController.getUserById,
   UserController.deleteUser
 );
 
 // Auth APIs
-app.post("/signin", AuthController.signIn);
-app.post("/signup", AuthController.signUp);
-app.post("/resetPassword", AuthController.resetPassword);
+app.post("/api/signin", AuthController.signIn);
+app.post("/api/signup", AuthController.signUp);
+app.post("/api/resetPassword", AuthController.resetPassword);
 
-// Products APIs
-app.get("/products", (req, res) => {
-  Product.findOne({}).then((data) => {
-    return res.status(200).json(data);
-  });
-});
+//Orders APIs
+app.get("/api/orders", OrderController.getAllOrders);
+app.get("/api/orders/order", OrderController.getOrder);
+app.put("/api/orders/updateStatus", OrderController.updateOrderStatus);
+app.get("/api/orders/todayorders", OrderController.getTodaysPickupOrders);
+
+//Categories API
+app.get("/api/categories", CategoryController.getCategories);
+
+//Reports
+app.get("/api/report/salesReport", ReportController.getSalesReport);
+app.get("/api/report/inventoryReport", ReportController.getInventoryReport);
+app.get("/api/report/productReport", ReportController.getProductReport);
 
 app.listen(HTTP_PORT, () => {
   console.log(`Server running on port ${HTTP_PORT}`);

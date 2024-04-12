@@ -5,43 +5,35 @@ import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
-import TextAreaInput from "../../component/shared/textAreaInput";
-import { apiUrl } from '../../server-config';
+import { apiUrl } from "../../server-config";
+import FormatDate from '../../utils/formatDate';
 
 function UpdateUser() {
-
   const { id } = useParams();
-  const [formData, setFormData] = useState(new FormData());
-
+  const [user, setUser] = useState(new FormData());
   const navigate = useNavigate();
 
   useEffect(() => {
     try {
       // Get user based on Id from server to show in form
-      axios
-        .get(`${apiUrl}/users/${id}`)
-        .then((res) => {
-          setFormData(res.data[0]);
-        })
-        .catch((err) => console.log(err));
+      axios.get(`${apiUrl}/api/users/${id}`).then((res) => {
+        setUser(res.data);
+      });
     } catch (error) {
-      console.error("Error adding user: ", error);
+      console.log(error);
+      navigate("/admin/users");
     }
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await axios
-        .patch(`${apiUrl}/users/${id}`, formData)
+        .patch(`${apiUrl}/api/users/${id}`, user)
         .then((res) => {
           console.log(res);
           navigate("/admin/users");
-        })
-        .catch((err) => {
-          console.log(err);
-          alert(err);
         });
     } catch (error) {
       console.error("Error adding user: ", error);
@@ -49,7 +41,7 @@ function UpdateUser() {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
   return (
@@ -66,7 +58,7 @@ function UpdateUser() {
         <div className="col-sm-12 col-md-9">
           <div className="card">
             <div className="card-body">
-              {!formData ? (
+              {!user ? (
                 <div>Loading...</div>
               ) : (
                 <form onSubmit={handleSubmit}>
@@ -77,7 +69,7 @@ function UpdateUser() {
                         type="text"
                         label="First Name"
                         placeholder="Enter First Name"
-                        value={formData.firstName}
+                        value={user.firstName}
                         onChange={handleChange}
                       />
                     </div>
@@ -87,7 +79,7 @@ function UpdateUser() {
                         type="text"
                         label="Last Name"
                         placeholder="Enter Last Name"
-                        value={formData.lastName}
+                        value={user.lastName}
                         onChange={handleChange}
                       />
                     </div>
@@ -99,16 +91,17 @@ function UpdateUser() {
                         type="email"
                         label="Email Address"
                         placeholder="Sample: yourname@outlook.com"
-                        value={formData.email}
+                        value={user.email}
                         onChange={handleChange}
                       />
                     </div>
                     <div className="col-6">
                       <Input
-                        name="password"
-                        type="password"
-                        label="Password"
-                        value={formData.password}
+                        name="phoneNumber"
+                        type="text"
+                        label="Contact Number"
+                        placeholder="e.g +1(234)567-8965"
+                        value={user.phoneNumber}
                         onChange={handleChange}
                       />
                     </div>
@@ -116,33 +109,14 @@ function UpdateUser() {
                   <div className="row mb-3">
                     <div className="col-6">
                       <Input
-                        name="contactNumber"
-                        type="text"
-                        label="Contact Number"
-                        placeholder="e.g +1(234)567-8965"
-                        value={formData.contactNumber}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="col-6">
-                      <Input
                         name="birthDate"
                         type="date"
                         label="Birth Date"
                         placeholder="mm/dd/yyyy"
-                        value={formData.birthDate}
+                        value={FormatDate(user.birthDate)}
                         onChange={handleChange}
                       />
                     </div>
-                  </div>
-                  <div className="mb-3">
-                    <TextAreaInput
-                      name="address"
-                      type="text"
-                      label="Address"
-                      value={formData.address}
-                      onChange={handleChange}
-                    />
                   </div>
                   <div className="row justify-content-between">
                     <div className="col col-md-2">

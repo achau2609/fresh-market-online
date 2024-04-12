@@ -57,7 +57,7 @@ const Categories = () => {
         <div className="col-auto">
           <button
             type="button"
-            class="btn btn-success"
+            className="btn btn-success"
             data-bs-toggle="modal"
             data-bs-target="#AddCategoryModal"
           >
@@ -67,7 +67,7 @@ const Categories = () => {
       </div>
       {/* Category List */}
       <div className={showList ? "row my-3" : "row my-3 d-none"}>
-        <ul class="list-group text-start">
+        <ul className="list-group text-start">
           <SortableTree
             removable
             indicator
@@ -78,26 +78,26 @@ const Categories = () => {
       </div>
       {/* Add Category Popup */}
       <div
-        class="modal fade"
+        className="modal fade"
         id="AddCategoryModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
                 Add Category
               </h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form className="container">
                 <div className="row mb-3 gx-0 text-start">
                   <label htmlFor="cat-name">Category Name</label>
@@ -111,17 +111,17 @@ const Categories = () => {
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
               <button
                 type="button"
-                class="btn btn-custom-secondary"
+                className="btn btn-custom-secondary"
                 data-bs-dismiss="modal"
                 onClick={addCat}
               >

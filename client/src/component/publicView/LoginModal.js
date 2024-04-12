@@ -163,7 +163,7 @@ const LoginModal = ({ onClose }) => {
       phoneNumber: phoneNumber,
     };
 
-    fetch(`${apiUrl}/signup`, {
+    fetch(`${apiUrl}/api/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -232,7 +232,7 @@ const LoginModal = ({ onClose }) => {
           isAdmin: adminStaffActiveTab === "admin" ? true : false,
         };
 
-        await fetch(`${apiUrl}/signin`, {
+        await fetch(`${apiUrl}/api/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -296,7 +296,7 @@ const LoginModal = ({ onClose }) => {
           password: password,
         };
 
-        await fetch(`${apiUrl}/signin`, {
+        await fetch(`${apiUrl}/api/signin`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

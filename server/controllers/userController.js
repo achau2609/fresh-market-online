@@ -29,9 +29,9 @@ async function getUser(req, res) {
   const userId = req.params.id;
   try {
     // Validate the ID
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      throw new Error("Invalid product ID");
-    }
+    // if (!mongoose.Types.ObjectId.isValid(userId)) {
+    //   throw new Error("Invalid product ID");
+    // }
 
     // Use Mongoose findById with a query object (prevents injection)
     const user = await User.findById({ _id: userId });

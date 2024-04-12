@@ -3,9 +3,10 @@ import { Link, Navigate } from "react-router-dom";
 import Pagination from "../shared/pagination";
 import { paginate } from "../../utils/paginate";
 import SearchBox from "../shared/searchBox";
-import Select from '../shared/select';
+import Select from "../shared/select";
 import axios from "axios";
-import { apiUrl } from '../../server-config';
+import { apiUrl } from "../../server-config";
+import FormatDate from "../../utils/formatDate";
 
 class Users extends Component {
   state = {
@@ -14,32 +15,34 @@ class Users extends Component {
     searchQuery: "",
     currentPage: 1,
     pageSize: 4,
-    selectedPageSize: null
+    selectedPageSize: null,
   };
 
   async componentDidMount() {
-    const pageSizes = [{_id:"", name:"All Rows"}];
+    const pageSizes = [{ _id: "", name: "All Rows" }];
 
-    await axios.get(`${apiUrl}/users`)
-      .then(res => {
-        this.setState({ users: res.data , pageSizes});
-      }).catch(err => console.log(err));    
+    await axios
+      .get(`${apiUrl}/api/users`)
+      .then((res) => {
+        this.setState({ users: res.data, pageSizes });
+      })
+      .catch((err) => console.log(err));
   }
 
   handleDelete = (user) => {
+    // await axios
+    //   .delete(`${apiUrl}/api/users`)
+    //   .then((res) => {
+    //     this.setState({ users: res.data, pageSizes });
+    //   })
+    //   .catch((err) => console.log(err));
+
     const users = this.state.users.filter((u) => u._id !== user._id);
     this.setState({ users });
   };
 
   handleEdit = async (user) => {
-
-    await axios.get(`${apiUrl}/users/${user._id}`)
-      .then(res => {
-        this.setState({ users: res.data});
-      }).catch(err => console.log(err));
-
     Navigate(`/edit/${user._id}`);
-    //this.setState({ users: getUser(user._id) });
   };
 
   handleUser = (staff) => {
@@ -50,24 +53,40 @@ class Users extends Component {
     this.setState({ currentPage: page });
   };
 
-  handleSearch = query => {
-    this.setState({ searchQuery: query, selectedPageSize:null, currentPage: 1 });
+  handleSearch = (query) => {
+    this.setState({
+      searchQuery: query,
+      selectedPageSize: null,
+      currentPage: 1,
+    });
   };
 
-  handlePageSizeSelect = pageSize => {
-    this.setState({ selectedPageSize: pageSize, searchQuery:"", currentPage: 1 });
+  handlePageSizeSelect = (pageSize) => {
+    this.setState({
+      selectedPageSize: pageSize,
+      searchQuery: "",
+      currentPage: 1,
+    });
   };
 
   getPagedData = () => {
-    const { pageSize, currentPage, selectedPageSize, searchQuery, users: allUsers} = this.state;
+    const {
+      pageSize,
+      currentPage,
+      selectedPageSize,
+      searchQuery,
+      users: allUsers,
+    } = this.state;
 
     let filtered = allUsers;
-    if(searchQuery)
-      filtered = allUsers.filter(u=> u.FirstName.toLowerCase().startsWith(searchQuery.toLowerCase()));
-      
-      const users = paginate(currentPage, pageSize);
-      
-      return {totalCount: filtered.length, data: users};
+    if (searchQuery)
+      filtered = allUsers.filter((u) =>
+        u.FirstName.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+
+    const users = paginate(currentPage, pageSize);
+
+    return { totalCount: filtered.length, data: users };
   };
 
   render() {
@@ -96,8 +115,8 @@ class Users extends Component {
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Birth of date</th>
                 <th>Contact Number</th>
-                <th>User</th>
                 <th></th>
               </tr>
             </thead>
@@ -107,16 +126,8 @@ class Users extends Component {
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>
-                  <td>{user.contactNumber}</td>
-                  <td>
-                    <a
-                      className="btn btn-outline-info btn-sm"
-                      onClick={() => this.handleUser(user.Staff)}
-                      href="#"
-                    >
-                      Info
-                    </a>
-                  </td>
+                  <td>{user.birthDate ? FormatDate(user.birthDate) : ""}</td>
+                  <td>{user.phoneNumber}</td>
                   <td>
                     <Link to={`/admin/edit/${user._id}`}>
                       <button

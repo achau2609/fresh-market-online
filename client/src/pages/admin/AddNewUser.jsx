@@ -33,7 +33,7 @@ function AddNewUser() {
 
     try {
       await axios
-        .post(`${apiUrl}/users`, formData)
+        .post(`${apiUrl}/api/users`, formData)
         .then((res) => {
           console.log(res);
           navigate("/admin/users");

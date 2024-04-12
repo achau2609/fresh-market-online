@@ -2,7 +2,6 @@ import StaffMenu from '../../component/Staff/StaffMenu';
 import StaffHeader from '../../component/Staff/StaffHeader';
 import React from 'react';
 import TodayPickupOrders from '../../component/Staff/TodayPickupOrders';
-import LowInventoryItems from '../../component/Staff/LowInventoryItems';
 
 const Dashboard = () => {
   return (
@@ -15,8 +14,6 @@ const Dashboard = () => {
                 </div>
                 <div class="col-9">
                     <TodayPickupOrders />
-                    <hr />
-                    <LowInventoryItems />
                 </div>
             </div>
         </div>       
