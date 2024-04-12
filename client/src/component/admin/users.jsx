@@ -5,6 +5,7 @@ import { paginate } from "../../utils/paginate";
 import SearchBox from "../shared/searchBox";
 import Select from '../shared/select';
 import axios from "axios";
+import { apiUrl } from '../../server-config';
 
 class Users extends Component {
   state = {
@@ -19,7 +20,7 @@ class Users extends Component {
   async componentDidMount() {
     const pageSizes = [{_id:"", name:"All Rows"}];
 
-    await axios.get("http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users")
+    await axios.get(`${apiUrl}/users`)
       .then(res => {
         this.setState({ users: res.data , pageSizes});
       }).catch(err => console.log(err));    
@@ -32,7 +33,7 @@ class Users extends Component {
 
   handleEdit = async (user) => {
 
-    await axios.get(`http://ec2-3-144-3-89.us-east-2.compute.amazonaws.com:8080/api/users/${user._id}`)
+    await axios.get(`${apiUrl}/users/${user._id}`)
       .then(res => {
         this.setState({ users: res.data});
       }).catch(err => console.log(err));

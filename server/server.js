@@ -20,24 +20,24 @@ app.use(express.json());
 app.use(cors());
 
 // Users APIs
-app.get("/api/users", UserController.getAllUsers);
-app.get("/api/users/:id", UserController.getUserById, UserController.getUser);
-app.post("/api/addStaff", UserController.createUser);
+app.get("/users", UserController.getAllUsers);
+app.get("/users/:id", UserController.getUserById, UserController.getUser);
+app.post("/addStaff", UserController.createUser);
 app.patch(
-  "/api/users/:id",
+  "/users/:id",
   UserController.getUserById,
   UserController.updateUser
 );
 app.delete(
-  "/api/users/:id",
+  "/users/:id",
   UserController.getUserById,
   UserController.deleteUser
 );
 
 // Auth APIs
-app.post("/api/signin", AuthController.signIn);
-app.post("/api/signup", AuthController.signUp);
-app.post("/api/resetPassword", AuthController.resetPassword);
+app.post("/signin", AuthController.signIn);
+app.post("/signup", AuthController.signUp);
+app.post("/resetPassword", AuthController.resetPassword);
 
 // Products APIs
 app.get("/products", (req, res) => {

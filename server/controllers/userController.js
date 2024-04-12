@@ -28,10 +28,18 @@ async function getAllUsers(req, res) {
 async function getUser(req, res) {
   const userId = req.params.id;
   try {
-    const user = await User.findById(userId);
+    // Validate the ID
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      throw new Error("Invalid product ID");
+    }
+
+    // Use Mongoose findById with a query object (prevents injection)
+    const user = await User.findById({ _id: userId });
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+    
     res.json(user);
   } catch (error) {
     res
