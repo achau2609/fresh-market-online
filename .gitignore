@@ -2,10 +2,19 @@
 
 # dependencies
 /node_modules
-/client/node_modules
-/server/node_modules
 /.pnp
 .pnp.js
+
+/server/node_modules
+/server/.pnp
+/server/.pnp.js
+/client/node_modules
+/client/.pnp
+/client/.pnp.js
+
+#configuration
+/server/.env
+/client/src/server-config.js
 
 # testing
 /coverage
