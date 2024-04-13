@@ -31,6 +31,7 @@ const signIn = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         isAdmin: user.isAdmin,
+        isStaff: user.isStaff,
         token: token,
       },
     });
@@ -47,7 +48,7 @@ const signUp = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
-      password: req.body.password,
+      password: req.body.password
     });
 
     var registeredUser = await user.save();

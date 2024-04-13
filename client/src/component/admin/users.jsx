@@ -7,11 +7,18 @@ import Select from "../shared/select";
 import axios from "axios";
 import { apiUrl } from "../../server-config";
 import FormatDate from "../../utils/formatDate";
+import DropDowns from "../shared/dropDowns";
 
 class Users extends Component {
   state = {
     users: [],
     pageSizes: [],
+    userTypes: [
+      { name: "All Users" },
+      { _id: 0, name: "Staff" },
+      { _id: 1, name: "Customer" },
+    ],
+    selectedUserType: "",
     searchQuery: "",
     currentPage: 1,
     pageSize: 4,
@@ -24,21 +31,27 @@ class Users extends Component {
     await axios
       .get(`${apiUrl}/api/users`)
       .then((res) => {
-        this.setState({ users: res.data, pageSizes });
+        this.setState({
+          users: res.data.filter((d) => !(d.isAdmin === true)),
+          pageSizes,
+        });
       })
       .catch((err) => console.log(err));
   }
 
-  handleDelete = (user) => {
-    // await axios
-    //   .delete(`${apiUrl}/api/users`)
-    //   .then((res) => {
-    //     this.setState({ users: res.data, pageSizes });
-    //   })
-    //   .catch((err) => console.log(err));
+  handleDelete = async (user) => {
+    const pageSizes = [{ _id: "", name: "All Rows" }];
 
-    const users = this.state.users.filter((u) => u._id !== user._id);
-    this.setState({ users });
+    await axios
+      .delete(`${apiUrl}/api/users/${user._id}`)
+      .then((res) => {
+        alert(res.data.message);
+        this.setState({
+          users: this.state.users.filter((u) => u._id !== user._id),
+        });
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   handleEdit = async (user) => {
@@ -59,6 +72,10 @@ class Users extends Component {
       selectedPageSize: null,
       currentPage: 1,
     });
+  };
+
+  handleUserTypeSelect = (selectedItem) => {
+    this.setState({ selectedUserType: selectedItem, currentPage: 1 });
   };
 
   handlePageSizeSelect = (pageSize) => {
@@ -91,21 +108,46 @@ class Users extends Component {
 
   render() {
     const { length: count } = this.state.users;
-    const { pageSize, currentPage, searchQuery, users: allUsers } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      selectedUserType,
+      searchQuery,
+      users: allUsers,
+    } = this.state;
 
     if (count === 0) return <p>There are no users in the database.</p>;
 
-    const users = paginate(allUsers, currentPage, pageSize);
+    let filtered = allUsers;
+    if (selectedUserType.name === "Staff") {
+      filtered = allUsers.filter((u) => u.isStaff === true);
+    } else if (selectedUserType.name === "Customer") {
+      filtered = allUsers.filter(
+        (u) => u.isStaff === false || u.isStaff === undefined
+      );
+    } else {
+      filtered = allUsers;
+    }
+
+    const users = paginate(filtered, currentPage, pageSize);
 
     return (
       <React.Fragment>
         <hr />
         <div className="row">
           <div className="col-md-2 col-sm-12">
-            <Select />
+            <DropDowns
+              items={this.state.userTypes}
+              selectedItem={this.state.selectedUserType}
+              onItemSelect={this.handleUserTypeSelect}
+              value="User Types"
+            />
           </div>
-          <div className="col-md-10 col-sm-12 mb-3">
+          <div className="col-md-8 col-sm-12 mb-3">
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          </div>
+          <div className="col-md-2 col-sm-12 mb-3">
+            <Select />
           </div>
         </div>
         <div className="table-responsive">
@@ -117,6 +159,7 @@ class Users extends Component {
                 <th>Email</th>
                 <th>Birth of date</th>
                 <th>Contact Number</th>
+                <th>User Type</th>
                 <th></th>
               </tr>
             </thead>
@@ -128,6 +171,13 @@ class Users extends Component {
                   <td>{user.email}</td>
                   <td>{user.birthDate ? FormatDate(user.birthDate) : ""}</td>
                   <td>{user.phoneNumber}</td>
+                  <td>
+                    {user.isStaff ? (
+                      <span className="badge text-bg-secondary">Staff</span>
+                    ) : (
+                      <span className="badge text-bg-info">Customer</span>
+                    )}
+                  </td>
                   <td>
                     <Link to={`/admin/edit/${user._id}`}>
                       <button
@@ -151,10 +201,12 @@ class Users extends Component {
               ))}
             </tbody>
           </table>
-          <p className="text-center">Showing {count} users in the database.</p>
+          <p className="text-center">
+            Showing {filtered.length} users in the database.
+          </p>
         </div>
         <Pagination
-          itemsCount={count}
+          itemsCount={filtered.length}
           pageSize={pageSize}
           currentPage={currentPage}
           onPageChange={this.handlePageChange}

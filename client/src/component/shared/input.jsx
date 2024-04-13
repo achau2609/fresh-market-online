@@ -26,6 +26,7 @@ const Input = ({
         readOnly={isReadOnly ? true : false}
         disabled={isDisable ? "disabled" : ""}
         placeholder={placeholder}
+        autocomplete="off"
       />
       {error && <div className="alert alert-danger">{error}</div>}
     </div>

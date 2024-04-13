@@ -35,21 +35,10 @@ function UsersAccounts() {
           <div className="card">
             <div className="card-body">
               <div className="row">
-                <div className="col-4">
+                <div className="col-6">
                   <h3>Users Accounts</h3>
                 </div>
-                <div className="col-4">
-                  <select
-                    style={{ Width: "100%" }}
-                    className="form-select mb-3"
-                    aria-label="Large select example"
-                  >
-                    <option selected>Choose an option</option>
-                    <option value="1">Staffs</option>
-                    <option value="2">Customers</option>
-                  </select>
-                </div>
-                <div className="col-4">
+                <div className="col-6">
                   <Link to="/admin/add">
                     <button
                       type="button"
