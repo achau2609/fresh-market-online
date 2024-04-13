@@ -5,7 +5,7 @@ import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
 import PasswordInput from "../../component/shared/passwordInput";
-import { apiUrl } from '../../server-config';
+import { apiUrl } from "../../server-config";
 import axios from "axios";
 import _ from "lodash";
 
@@ -17,7 +17,8 @@ function AddNewUser() {
     firstName: "",
     lastName: "",
     birthDate: "",
-    phoneNumber: ""
+    phoneNumber: "",
+    isStaff: true,
   });
 
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ function AddNewUser() {
           <div className="card">
             <h5 className="card-header">Add New User</h5>
             <div className="card-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} autocomplete="off">
                 <div className="row mb-3">
                   <div className="col-6">
                     <Input
@@ -87,7 +88,7 @@ function AddNewUser() {
                     />
                   </div>
                   <div className="col-6">
-                  <PasswordInput
+                    <PasswordInput
                       name="confirmPassword"
                       type="password"
                       label="Confirm Password"

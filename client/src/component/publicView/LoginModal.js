@@ -160,7 +160,7 @@ const LoginModal = ({ onClose }) => {
       lastName: lastName,
       email: signUpEmail,
       password: signUpPassword,
-      phoneNumber: phoneNumber,
+      phoneNumber: phoneNumber
     };
 
     fetch(`${apiUrl}/api/signup`, {
@@ -253,11 +253,6 @@ const LoginModal = ({ onClose }) => {
               const data = d.data;
               // Check the role (admin or staff) and redirect accordingly
 
-              if (data.isAdmin === undefined) {
-                alert("Invalid User!");
-                return;
-              }
-
               if (data.isAdmin === true && adminStaffActiveTab === "admin") {
                 console.log(data.token);
                 //setToken(data.token);
@@ -267,7 +262,7 @@ const LoginModal = ({ onClose }) => {
                 navigate("/admin");
                 //onClose(data);
               } else if (
-                data.isAdmin === false &&
+                data.isStaff === true &&
                 adminStaffActiveTab === "staff"
               ) {
                 //setToken(data.token);

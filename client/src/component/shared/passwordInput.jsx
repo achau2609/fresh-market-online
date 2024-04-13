@@ -24,12 +24,13 @@ const PasswordInput = ({
         onChange={onChange}
         placeholder={placeholder}
         className="form-control"
+        autocomplete="off"
       />
-      <InputIcon
+      {/* <InputIcon
         className={iconClassName}
         onClick={passwordIconOnClick}
         showPassword={showPassword}
-      />
+      /> */}
     </div>
   );
 };
