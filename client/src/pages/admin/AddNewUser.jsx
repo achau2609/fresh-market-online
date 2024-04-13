@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import _ from "lodash";
-import { addUser } from "../../services/users";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
-import TextAreaInput from "../../component/shared/textAreaInput";
+import PasswordInput from "../../component/shared/passwordInput";
 import { apiUrl } from '../../server-config';
+import axios from "axios";
+import _ from "lodash";
 
 function AddNewUser() {
   const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
     firstName: "",
     lastName: "",
-    email: "",
     birthDate: "",
-    phoneNumber: "",
-    birthDate: "",
-    address: {
-      addressLine: "",
-      city: "",
-      state: [""],
-      zip: "",
-    },
+    phoneNumber: ""
   });
 
   const navigate = useNavigate();
@@ -33,7 +27,7 @@ function AddNewUser() {
 
     try {
       await axios
-        .post(`${apiUrl}/api/users`, formData)
+        .post(`${apiUrl}/api/addStaff`, formData)
         .then((res) => {
           console.log(res);
           navigate("/admin/users");
@@ -70,6 +64,42 @@ function AddNewUser() {
                 <div className="row mb-3">
                   <div className="col-6">
                     <Input
+                      name="email"
+                      type="email"
+                      label="Email Address"
+                      isReadOnly={false}
+                      isDisable={false}
+                      placeholder="Sample: yourname@outlook.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <div className="col-6">
+                    <PasswordInput
+                      name="password"
+                      type="password"
+                      label="Password"
+                      placeholder=""
+                      value={formData.password}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-6">
+                  <PasswordInput
+                      name="confirmPassword"
+                      type="password"
+                      label="Confirm Password"
+                      placeholder=""
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="row mb-3">
+                  <div className="col-6">
+                    <Input
                       name="firstName"
                       type="text"
                       label="First Name"
@@ -92,34 +122,11 @@ function AddNewUser() {
                 <div className="row mb-3">
                   <div className="col-6">
                     <Input
-                      name="email"
-                      type="email"
-                      label="Email Address"
-                      isReadOnly={true}
-                      isDisable={true}
-                      placeholder="Sample: yourname@outlook.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="col-6">
-                    <Input
-                      name="password"
-                      type="password"
-                      label="Password"
-                      value={formData.password}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-                <div className="row mb-3">
-                  <div className="col-6">
-                    <Input
-                      name="contactNumber"
+                      name="phoneNumber"
                       type="text"
                       label="Contact Number"
                       placeholder="e.g +1(234)567-8965"
-                      value={formData.contactNumber}
+                      value={formData.phoneNumber}
                       onChange={handleChange}
                     />
                   </div>
@@ -133,15 +140,6 @@ function AddNewUser() {
                       onChange={handleChange}
                     />
                   </div>
-                </div>
-                <div className="mb-3">
-                  <TextAreaInput
-                    name="address"
-                    type="text"
-                    label="Address"
-                    value={formData.address}
-                    onChange={handleChange}
-                  />
                 </div>
                 <div className="row justify-content-between">
                   <div className="col col-md-2">

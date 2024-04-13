@@ -6,7 +6,7 @@ import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
 import { apiUrl } from "../../server-config";
-import FormatDate from '../../utils/formatDate';
+import FormatDate from "../../utils/formatDate";
 
 function UpdateUser() {
   const { id } = useParams();
@@ -29,12 +29,10 @@ function UpdateUser() {
     e.preventDefault();
 
     try {
-      await axios
-        .patch(`${apiUrl}/api/users/${id}`, user)
-        .then((res) => {
-          console.log(res);
-          navigate("/admin/users");
-        });
+      await axios.patch(`${apiUrl}/api/users/${id}`, user).then((res) => {
+        console.log(res);
+        navigate("/admin/users");
+      });
     } catch (error) {
       console.error("Error adding user: ", error);
     }
@@ -65,6 +63,20 @@ function UpdateUser() {
                   <div className="row mb-3">
                     <div className="col-6">
                       <Input
+                        name="email"
+                        type="email"
+                        label="Email Address"
+                        isReadOnly={true}
+                        isDisable={true}
+                        placeholder="Sample: yourname@outlook.com"
+                        value={user.email}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <div className="col-6">
+                      <Input
                         name="firstName"
                         type="text"
                         label="First Name"
@@ -87,16 +99,6 @@ function UpdateUser() {
                   <div className="row mb-3">
                     <div className="col-6">
                       <Input
-                        name="email"
-                        type="email"
-                        label="Email Address"
-                        placeholder="Sample: yourname@outlook.com"
-                        value={user.email}
-                        onChange={handleChange}
-                      />
-                    </div>
-                    <div className="col-6">
-                      <Input
                         name="phoneNumber"
                         type="text"
                         label="Contact Number"
@@ -105,8 +107,6 @@ function UpdateUser() {
                         onChange={handleChange}
                       />
                     </div>
-                  </div>
-                  <div className="row mb-3">
                     <div className="col-6">
                       <Input
                         name="birthDate"
