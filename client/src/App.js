@@ -52,7 +52,7 @@ function App() {
 
     // fetch if user currently logged in
     if (user_id) {
-      fetch(`${apiUrl}/users/${user_id}`)
+      fetch(`${apiUrl}/api/users/${user_id}`)
         .then((res) => res.json())
         .then((data) => {
 
@@ -107,14 +107,14 @@ function App() {
 
             {/*Staff Pages*/}
             {authenticated.isStaff ? <>
-              < Route exact path="/staff" element={<Dashboard />} />
+              < Route path="/staff" element={<Dashboard />} />
               <Route
-                exact
+                
                 path="/staff/orders"
                 element={<OrdersMaintenancePage />}
               />
               <Route
-                exact
+                
                 path="/staff/orders/:orderId"
                 element={<OrderDetailPage />}
               />
@@ -134,12 +134,10 @@ function App() {
                 element={<CategoryMaintenancePage />}
               />
               <Route
-                exact
                 path="/admin/products"
                 element={<ProductsMaintenancePage />}
               />
               <Route
-                exact
                 path="/admin/products/:productId"
                 element={<ProductDetailPage />}
               />

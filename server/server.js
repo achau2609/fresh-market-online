@@ -46,18 +46,19 @@ app.post("/api/signup", AuthController.signUp);
 app.post("/api/resetPassword", AuthController.resetPassword);
 
 //Orders APIs
-app.get("/api/orders", OrderController.getAllOrders);
-app.get("/api/orders/order", OrderController.getOrder);
-app.put("/api/orders/updateStatus", OrderController.updateOrderStatus);
-app.get("/api/orders/todayorders", OrderController.getTodaysPickupOrders);
+app.get("/api/orders", AuthController.auth, OrderController.getAllOrders);
+app.get("/api/orders/order", AuthController.auth, OrderController.getOrder);
+app.put("/api/orders/updateStatus", AuthController.auth, OrderController.updateOrderStatus);
+app.get("/api/orders/todayorders", AuthController.auth, OrderController.getTodaysPickupOrders);
 
 //Categories API
 app.get("/api/categories", CategoryController.getCategories);
 
 //Reports
-app.get("/api/report/salesReport", ReportController.getSalesReport);
-app.get("/api/report/inventoryReport", ReportController.getInventoryReport);
-app.get("/api/report/productReport", ReportController.getProductReport);
+app.get("/api/report/salesReport", AuthController.auth, ReportController.getSalesReport);
+app.get("/api/report/inventoryReport" ,AuthController.auth, ReportController.getInventoryReport);
+app.get("/api/report/productReport", AuthController.auth, ReportController.getProductReport);
+
 
 //Products
 app.get('/api/products', ProductController.getAllProducts);

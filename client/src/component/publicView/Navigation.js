@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaBars, FaArrowDown, FaUser, FaAngleDown } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { apiUrl } from '../../server-config'
 
 const Navigation = () => {
     const [showCategories, setShowCategories] = useState(false);
@@ -10,11 +11,11 @@ const Navigation = () => {
 
     useEffect(() => {
 
-        fetch(`http://localhost:8080/api/categories`)
+        fetch(`${apiUrl}/api/categories`)
             .then(res => res.json())
             .then(data => setCategories(data))
             .catch((err) => console.log(err));
-        //<div className="categories-dropdown">
+
     }, [])
 
     const toggleSubCategory = (elementId) => {

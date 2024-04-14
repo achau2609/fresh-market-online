@@ -16,7 +16,8 @@ const alert = (type, message) => {
         // remove alert after 3 seconds
         setTimeout(()=>{
             const closeBtn = alertPlaceholder.getElementsByClassName('btn-close');
-            closeBtn[0].click();
+            if (closeBtn.length !== 0)
+                closeBtn[0].click();
         }, 3000)
     }
 

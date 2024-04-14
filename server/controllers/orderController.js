@@ -6,6 +6,10 @@ const addOrder = () => {
 }
 
 const getAllOrders = (req, res) => {
+
+    if (!req.isStaff && !req.isAdmin)
+        return res.status(401).json({ error: "You are not allowed to perform the action." })
+
     let criteria = {};
     if (req.query.orderNo)
         criteria = { ...criteria, orderNo: req.query.orderNo }
@@ -37,11 +41,14 @@ const getAllOrders = (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            res.status(500).json({ error: "An error occurred while fetching orders", msg: err })
+            return res.status(500).json({ error: "An error occurred while fetching orders", msg: err })
         })
 }
 
 const getTodaysPickupOrders = (req, res) => {
+
+    if (!req.isStaff && !req.isAdmin)
+        return res.status(401).json({ error: "You are not allowed to perform the action." })
 
     let date = new Date().toDateString();
     date = new Date(date);
@@ -65,7 +72,8 @@ const getTodaysPickupOrders = (req, res) => {
             Order.find(criteria)
                 .countDocuments({})
                 .then(count => {
-                    res.json({
+
+                    return res.json({
                         count: count,
                         data: data
                     }
@@ -74,11 +82,14 @@ const getTodaysPickupOrders = (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            res.status(500).json({ error: "An error occurred while fetching orders", msg: err })
+            return res.status(500).json({ error: "An error occurred while fetching orders" })
         })
 }
 
 const getOrder = (req, res) => {
+
+    if (!req.isStaff && !req.isAdmin)
+        return res.status(401).json({ error: "You are not allowed to perform the action." })
 
     let selectColumns = ['_id', 'orderNo', 'CustomerName', 'DeliveryAddress', 'OrderType', 'Contact#', 'Products', 'Status', 'orderDate', 'PickupDateTime']
 
@@ -99,21 +110,23 @@ const getOrder = (req, res) => {
 
                 } catch (err) {
                     console.log(err);
-                    res.status(500).json({ error: "An error occurred while fetching orders", msg: err });
+                    return res.status(500).json({ error: "An error occurred while fetching orders" });
                 }
             }
-            else {
-                res.status(500).json({ error: "Order not found"});
-                return ;
-            }
+            else
+                return res.status(500).json({ error: "Order not found" });
+
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({ error: "An error occurred while fetching orders", msg: err });
+            return res.status(500).json({ error: "An error occurred while fetching orders" });
         })
 }
 
 const updateOrderStatus = (req, res) => {
+
+    if (!req.isStaff && !req.isAdmin)
+        return res.status(401).json({ error: "You are not allowed to perform the action." })
 
     const newOrder = req.body;
     let valid = true;
@@ -138,24 +151,21 @@ const updateOrderStatus = (req, res) => {
                         .then(() => res.json({ message: 'Order updated successfully' })
                         )
                         .catch(err => {
-
-                            res.status(500).json({ error: "1An error occurred while fetching orders", msg: err })
+                            console.log(err);
+                            return res.status(500).json({ error: "1An error occurred while fetching orders" })
                         });
-                } else {
+                } else
                     res.status(500).json({ error: "Order not found" })
-                    return ;
-                }
             })
             .catch(err => {
-                res.status(500).json({ error: "2An error occurred while fetching orders", msg: err })
+                console.log(err);
+                return res.status(500).json({ error: "2An error occurred while fetching orders" })
             }
             );
 
-    } else {
-        console.log("Missing information");
-        res.status(500).json({ error: "Missing information" })
-        return ;
-    }
+    } else
+        return res.status(500).json({ error: "Missing information" })
+
 }
 
 module.exports = { addOrder, getAllOrders, getTodaysPickupOrders, getOrder, updateOrderStatus }

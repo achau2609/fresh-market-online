@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Pagination from './Helpers/pagination';
+import { apiUrl } from '../../server-config'
 
 const Orders = () => {
 
@@ -27,7 +28,7 @@ const Orders = () => {
 
     const getOrders = ({ orderNo, status, orderDate}) => {
 
-        let url = `http://localhost:8080/api/orders?page=${page}&limit=${recordPerPage}`
+        let url = `${apiUrl}/api/orders?page=${page}&limit=${recordPerPage}`
         if(orderNo)
             url += `&orderNo=${orderNo}`
         if(status)
@@ -35,7 +36,11 @@ const Orders = () => {
         if(orderDate)
             url += `&orderDate=${orderDate}`
 
-        fetch(url)
+        fetch(url, {
+            headers: {
+                "authorization": localStorage.getItem('token'),
+              }
+        })
             .then((res) => res.json())
             .then(res => {
                 setOrderCount(res['count'])

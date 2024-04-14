@@ -130,9 +130,41 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const auth = async (req, res, next) => {
+  try {
+
+    const token = req.headers.authorization;
+
+    if (!token)
+      return res.status(401).json({ error: "Authentication failed try Again" });
+
+    const decodedToken = JWT.verify(token, JWTSecret);
+
+    const user = await User.findOne({ _id: decodedToken.userId });
+
+    if (!user) {
+      return res.status(401).json({ error: "Authentication failed try Again" });
+    }
+
+    req.isRegistered = true;
+
+    if (user.isStaff)
+      req.isStaff = true;
+
+    if (user.isAdmin)
+      req.isAdmin = true;
+
+    next();
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ error: "Authentication failed try Again" });
+  }
+};
+
 module.exports = {
   signIn,
   signUp,
   requestPasswordReset,
   resetPassword,
+  auth
 };
