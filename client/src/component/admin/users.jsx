@@ -3,7 +3,6 @@ import { Link, Navigate } from "react-router-dom";
 import Pagination from "../shared/pagination";
 import { paginate } from "../../utils/paginate";
 import SearchBox from "../shared/searchBox";
-import Select from "../shared/select";
 import axios from "axios";
 import { apiUrl } from "../../server-config";
 import FormatDate from "../../utils/formatDate";
@@ -13,20 +12,26 @@ class Users extends Component {
   state = {
     users: [],
     pageSizes: [],
-    userTypes: [
-      { name: "All Users" },
-      { _id: 0, name: "Staff" },
-      { _id: 1, name: "Customer" },
-    ],
+    userTypes: [],
     selectedUserType: "",
     searchQuery: "",
     currentPage: 1,
-    pageSize: 4,
+    pageSize: "",
     selectedPageSize: null,
   };
 
   async componentDidMount() {
-    const pageSizes = [{ _id: "", name: "All Rows" }];
+    const pageSizes = [
+      { _id: 0, name: "All Rows" },
+      { _id: 1, name: "5" },
+      { _id: 2, name: "10" },
+      { _id: 3, name: "50" },
+    ];
+    const userTypes = [
+      { name: "All Users" },
+      { _id: 0, name: "Staff" },
+      { _id: 1, name: "Customer" },
+    ];
 
     await axios
       .get(`${apiUrl}/api/users`)
@@ -34,14 +39,15 @@ class Users extends Component {
         this.setState({
           users: res.data.filter((d) => !(d.isAdmin === true)),
           pageSizes,
+          userTypes,
+          pageSize: "5",
+          selectedPageSize: "5",
         });
       })
       .catch((err) => console.log(err));
   }
 
   handleDelete = async (user) => {
-    const pageSizes = [{ _id: "", name: "All Rows" }];
-
     await axios
       .delete(`${apiUrl}/api/users/${user._id}`)
       .then((res) => {
@@ -58,52 +64,20 @@ class Users extends Component {
     Navigate(`/edit/${user._id}`);
   };
 
-  handleUser = (staff) => {
-    console.log("handle User event");
-  };
-
   handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
 
-  handleSearch = (query) => {
-    this.setState({
-      searchQuery: query,
-      selectedPageSize: null,
-      currentPage: 1,
-    });
+  handleSearch = (value) => {
+    this.setState({ searchQuery: value });
   };
 
   handleUserTypeSelect = (selectedItem) => {
     this.setState({ selectedUserType: selectedItem, currentPage: 1 });
   };
 
-  handlePageSizeSelect = (pageSize) => {
-    this.setState({
-      selectedPageSize: pageSize,
-      searchQuery: "",
-      currentPage: 1,
-    });
-  };
-
-  getPagedData = () => {
-    const {
-      pageSize,
-      currentPage,
-      selectedPageSize,
-      searchQuery,
-      users: allUsers,
-    } = this.state;
-
-    let filtered = allUsers;
-    if (searchQuery)
-      filtered = allUsers.filter((u) =>
-        u.FirstName.toLowerCase().startsWith(searchQuery.toLowerCase())
-      );
-
-    const users = paginate(currentPage, pageSize);
-
-    return { totalCount: filtered.length, data: users };
+  handlePageSizeSelect = (selectedItem) => {
+    this.setState({ selectedPageSize: selectedItem });
   };
 
   render() {
@@ -114,6 +88,7 @@ class Users extends Component {
       selectedUserType,
       searchQuery,
       users: allUsers,
+      selectedPageSize,
     } = this.state;
 
     if (count === 0) return <p>There are no users in the database.</p>;
@@ -129,6 +104,15 @@ class Users extends Component {
       filtered = allUsers;
     }
 
+    if (searchQuery)
+      filtered = this.state.users.filter((item) =>
+        Object.values(item).some((value) =>
+          value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
+
+    //this.state.pageSize = selectedPageSize.name;
+
     const users = paginate(filtered, currentPage, pageSize);
 
     return (
@@ -143,21 +127,26 @@ class Users extends Component {
               value="User Types"
             />
           </div>
-          <div className="col-md-8 col-sm-12 mb-3">
+          <div className="col-md-10 col-sm-12 mb-3">
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
           </div>
-          <div className="col-md-2 col-sm-12 mb-3">
-            <Select />
-          </div>
+          {/* <div className="col-md-2 col-sm-12 mb-3">
+            <DropDowns
+              items={this.state.pageSizes}
+              selectedItem={this.state.pageSize}
+              onItemSelect={this.handlePageSizeSelect}
+              value="Pages Size"
+            />
+          </div> */}
         </div>
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
               <tr>
+                <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Email</th>
-                <th>Birth of date</th>
+                <th>Birth of Date</th>
                 <th>Contact Number</th>
                 <th>User Type</th>
                 <th></th>
@@ -166,9 +155,13 @@ class Users extends Component {
             <tbody>
               {users.map((user) => (
                 <tr key={user._id}>
+                  <td>
+                    <Link to={`/admin/edit/${user._id}`}>
+                      <a onClick={() => this.handleEdit(user)}>{user.email}</a>
+                    </Link>
+                  </td>
                   <td>{user.firstName}</td>
                   <td>{user.lastName}</td>
-                  <td>{user.email}</td>
                   <td>{user.birthDate ? FormatDate(user.birthDate) : ""}</td>
                   <td>{user.phoneNumber}</td>
                   <td>
@@ -179,20 +172,10 @@ class Users extends Component {
                     )}
                   </td>
                   <td>
-                    <Link to={`/admin/edit/${user._id}`}>
-                      <button
-                        type="button"
-                        onClick={() => this.handleEdit(user)}
-                        className="btn btn-outline-warning btn-sm"
-                      >
-                        Edit
-                      </button>
-                    </Link>
-                    <span>&nbsp;</span>
                     <button
                       type="button"
                       onClick={() => this.handleDelete(user)}
-                      className="btn btn-outline-danger btn-sm"
+                      className="btn btn-danger btn-sm"
                     >
                       Delete
                     </button>
