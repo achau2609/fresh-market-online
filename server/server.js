@@ -8,6 +8,7 @@ const AuthController = require("./controllers/authController");
 const OrderController = require("./controllers/orderController");
 const CategoryController = require("./controllers/categoryController");
 const ReportController = require("./controllers/reportController");
+const ProductController = require("./controllers/productController");
 
 var cors = require("cors");
 const app = express();
@@ -57,6 +58,12 @@ app.get("/api/categories", CategoryController.getCategories);
 app.get("/api/report/salesReport", ReportController.getSalesReport);
 app.get("/api/report/inventoryReport", ReportController.getInventoryReport);
 app.get("/api/report/productReport", ReportController.getProductReport);
+
+//Products
+app.get('/api/products', ProductController.getAllProducts);
+app.get('/api/products/:name', ProductController.getProductByName);
+
+
 
 app.listen(HTTP_PORT, () => {
   console.log(`Server running on port ${HTTP_PORT}`);

@@ -6,16 +6,17 @@ import LoginModal from "./LoginModal";
 import "../../css/Public.css";
 import { logout } from "../../utils/auth";
 import RoleContext from "../../context/RoleContext";
-
+import { useCart } from '../CartContext';
 
 const Header = () => {
 
     const [searchTerm, setSearchTerm] = React.useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [username, setUsername] = useState("");
     const [showModal, setShowModal] = useState(false); // for login modal
     const { setAuthenticated } = useContext(RoleContext);
     const navigate = useNavigate();
+    const { cartItems } = useCart(); // Access cart items
+
 
     useEffect(() => {
         const userId = localStorage.getItem('userId')
@@ -45,14 +46,10 @@ const Header = () => {
         if (!d) {
             return;
         }
-
         setIsLoggedIn(true);
-        setUsername(d.firstName);
     };
 
     const handleLogout = () => {
-
-        setUsername("");
 
         logout(setAuthenticated);
         setIsLoggedIn(false);
@@ -60,12 +57,12 @@ const Header = () => {
 
     };
 
-    const itemCount = 3; // This should be dynamic based on cart contents
-    const totalCost = 15.00; // This should be dynamic based on cart contents
+    const itemCount = cartItems.reduce((total, item) => total + item.Quantity, 0);
+    const totalCost = cartItems.reduce((total, item) => total + item.ProductPrice * item.Quantity, 0);
 
     return (
         <header className='row py-2'>
-            {/* logo */}
+            {/* Logo */}
             <div className="col-12 col-sm-2 logo">
                 <Link to="/"><img src={logo} alt="Logo" className='ps-4' /></Link>
             </div>
@@ -80,25 +77,28 @@ const Header = () => {
                     </div>
                 </form>
             </div>
-            {/* Shopping Cart */}
-            <div className='col-12 col-sm-1 shopping-cart-container d-flex justify-content-start'>
-                <Link to="/shoppingCart" className="row text-decoration-none text-dark align-items-center">
-                    <div className='col-6'>
-                        <button className="btn bg-custom-light p-3 rounded-circle position-relative">
-                            <FaShoppingCart />
-                            <span className="position-absolute top-0 start-100 translate-middle-x badge rounded-pill bg-custom-primary">
-                                {itemCount}
-                            </span>
-                        </button>
-                    </div>
-                    <div className='cart-total-cost col-6'><span>${totalCost.toFixed(2)}</span></div>
-                </Link>
-            </div>
+
+            {/* Conditionally display the shopping cart only when logged in */}
+            {isLoggedIn && (
+                <div className='col-12 col-sm-1 shopping-cart-container d-flex justify-content-start'>
+                    <Link to="/shoppingCart" className="row text-decoration-none text-dark align-items-center">
+                        <div className='col-6'>
+                            <button className="btn bg-custom-light p-3 rounded-circle position-relative">
+                                <FaShoppingCart />
+                                <span className="position-absolute top-0 start-100 translate-middle-x badge rounded-pill bg-custom-primary">
+                                    {itemCount}
+                                </span>
+                            </button>
+                        </div>
+                        <div className='cart-total-cost col-6'><span>${totalCost.toFixed(2)}</span></div>
+                    </Link>
+                </div>
+            )}
 
             <div className='col-12 col-sm-1 text-start'>
                 <div
                     className="btn btn-custom-primary"
-                    onClick={e => handleAccountInfoClick()}
+                    onClick={handleAccountInfoClick}
                 >
                     {isLoggedIn ? 'Logout' : "Login"}
                 </div>
@@ -112,7 +112,7 @@ const Header = () => {
                     }}
                 />
             )}
-        </header >
+        </header>
     );
 };
 

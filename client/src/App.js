@@ -19,6 +19,7 @@ import OrderHistory from "./pages/registeredPages/OrderHistory";
 import OrderDetail from "./pages/registeredPages/OrderDetail";
 // Public Pages
 import ShoppingCart from "./pages/publicPages/ShoppingCart";
+import CartProvider from "./component/CartContext";
 //Staff pages
 import Dashboard from "./pages/Staff/Dashboard";
 import OrdersMaintenancePage from "./pages/Staff/OrdersMaintenancePage";
@@ -66,7 +67,9 @@ function App() {
 
   return (
     <div>
+      
       <RoleContext.Provider value={{ authenticated, setAuthenticated }}>
+      <CartProvider> 
         <Routes errorElement={<p>Oops! Something Went Wrong</p>}>
           {/*Pages that show topbar footer*/}
           <Route element={<TopBar />}>
@@ -78,10 +81,9 @@ function App() {
               <Route path="/404" element={<PageNotFound />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/resetpassword" element={<PasswordReset />} />
-              <Route exact path="/productlist" element={<ProductListPage />} />
+              <Route path="/productlist" element={<ProductListPage />} />
               <Route
-                exact
-                path="/productlist/:productId"
+                path="/productlist/:name"
                 element={<ProductDetails />}
               />
 
@@ -150,6 +152,7 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
+        </CartProvider> 
       </RoleContext.Provider>
     </div>
   );
