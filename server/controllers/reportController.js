@@ -2,12 +2,15 @@ const Order = require("../models/orderModel");
 const { Product } = require("../models/productModel");
 
 const getSalesReport = (req, res) => {
+
+  if (!req.isAdmin)
+    return res.status(401).json({ error: "You are not allowed to perform the action." });
+
   const startDate = new Date(req.query.startDate);
   let endDate = new Date(req.query.endDate);
 
   if (isNaN(startDate) || isNaN(endDate)) {
-    res.status(406).json({ error: "Invalid parameters" });
-    return;
+    return res.status(406).json({ error: "Invalid parameters" });
   }
 
   // endDate = 00:00 of the next month
@@ -27,9 +30,9 @@ const getSalesReport = (req, res) => {
 
   xAxis = xAxis.map((i) => {
     let temp = new Date(Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), 1));
- //   console.log('temp: ' + temp.toUTCString());
+
     temp.setUTCMonth(temp.getUTCMonth() + i);
-  //  console.log(`temp i: ${i} date: ${temp.toUTCString()}`);
+
     let month = temp.getUTCMonth() + 1;
     return `${temp.getUTCFullYear()}-${month.toString().padStart(2, '0')}`;
   });
@@ -139,9 +142,11 @@ const getSalesReport = (req, res) => {
 
 const getInventoryReport = (req, res) => {
 
+  if (!req.isAdmin)
+    return res.status(401).json({ error: "You are not allowed to perform the action." });
+
   if (!req.query.limit || !req.query.page) {
-    res.status(406).json({ error: "Invalid parameters" });
-    return;
+    return res.status(406).json({ error: "Invalid parameters" });
   }
 
   let sort = { 'ProductName': 1, 'Quantity': 1 };
@@ -172,12 +177,14 @@ const getInventoryReport = (req, res) => {
 
 const getProductReport = (req, res) => {
 
+  if (!req.isAdmin)
+    return res.status(401).json({ error: "You are not allowed to perform the action." });
+
   const startDate = new Date(req.query.startDate);
   const endDate = new Date(req.query.endDate);
 
   if (isNaN(startDate) || isNaN(endDate)) {
-    res.status(406).json({ error: "Invalid parameters" });
-    return;
+    return res.status(406).json({ error: "Invalid parameters" });
   }
 
   const pipeline = [
@@ -241,8 +248,7 @@ const getProductReport = (req, res) => {
       if (data) {
         return res.json(data);
       } else {
-        res.status(404).json({ error: "Not found." });
-        return;
+        return res.status(404).json({ error: "Not found." });
       }
     })
     .catch(err => res.status(500).json({ error: "Something went wrong." }))

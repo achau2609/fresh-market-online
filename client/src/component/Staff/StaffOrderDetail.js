@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { alert } from '../../utils/alert';
+import { apiUrl } from '../../server-config'
 
 const StaffOrderDetail = () => {
 
@@ -9,7 +10,11 @@ const StaffOrderDetail = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/orders/order?orderNo=${orderNo}`)
+        fetch(`${apiUrl}/api/orders/order?orderNo=${orderNo}`, {
+            headers: {
+                "authorization": localStorage.getItem('token'),
+            }
+        })
             .then((res) => {
                 if (!res.ok)
                     navigation('/*');
@@ -45,10 +50,11 @@ const StaffOrderDetail = () => {
             Status: order.Status
         }
 
-        fetch('http://localhost:8080/api/orders/updateStatus', {
+        fetch(`${apiUrl}/api/orders/updateStatus`, {
             method: 'PUT',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "authorization": localStorage.getItem('token'),
             },
             body: JSON.stringify(body)
         })

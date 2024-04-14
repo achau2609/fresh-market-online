@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, } from "chart.js";
+import { apiUrl } from '../../../server-config'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Legend, Title, Tooltip);
 
@@ -30,7 +31,11 @@ const SalesReport = ({ startDate, endDate }) => {
     useEffect(() => {
 
         if (startDate && endDate){
-            fetch(`http://localhost:8080/api/report/salesReport?startDate=${startDate}&endDate=${endDate}`)
+            fetch(`${apiUrl}/api/report/salesReport?startDate=${startDate}&endDate=${endDate}`,{
+                headers: {
+                    "authorization": localStorage.getItem('token'),
+                  }
+            })
             .then(res => res.json())
             .then(data => {
          //       console.log(data);

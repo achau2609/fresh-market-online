@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Pagination from '../Helpers/pagination';
+import { apiUrl } from '../../../server-config'
 
 const InventoryReport = () => {
 
@@ -14,7 +15,11 @@ const InventoryReport = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/report/inventoryReport?page=${page}&limit=${pageLimit}&sort=${sort}`)
+        fetch(`${apiUrl}/api/report/inventoryReport?page=${page}&limit=${pageLimit}&sort=${sort}`, {
+            headers: {
+                "authorization": localStorage.getItem('token'),
+            }
+        })
             .then(res => res.json())
             .then(data => {
 

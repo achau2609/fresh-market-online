@@ -19,6 +19,7 @@ import OrderHistory from "./pages/registeredPages/OrderHistory";
 import OrderDetail from "./pages/registeredPages/OrderDetail";
 // Public Pages
 import ShoppingCart from "./pages/publicPages/ShoppingCart";
+import CartProvider from "./component/CartContext";
 //Staff pages
 import Dashboard from "./pages/Staff/Dashboard";
 import OrdersMaintenancePage from "./pages/Staff/OrdersMaintenancePage";
@@ -51,7 +52,7 @@ function App() {
 
     // fetch if user currently logged in
     if (user_id) {
-      fetch(`${apiUrl}/users/${user_id}`)
+      fetch(`${apiUrl}/api/users/${user_id}`)
         .then((res) => res.json())
         .then((data) => {
 
@@ -66,7 +67,9 @@ function App() {
 
   return (
     <div>
+      
       <RoleContext.Provider value={{ authenticated, setAuthenticated }}>
+      <CartProvider> 
         <Routes errorElement={<p>Oops! Something Went Wrong</p>}>
           {/*Pages that show topbar footer*/}
           <Route element={<TopBar />}>
@@ -78,10 +81,9 @@ function App() {
               <Route path="/404" element={<PageNotFound />} />
               <Route path="/shoppingcart" element={<ShoppingCart />} />
               <Route path="/resetpassword" element={<PasswordReset />} />
-              <Route exact path="/productlist" element={<ProductListPage />} />
+              <Route path="/productlist" element={<ProductListPage />} />
               <Route
-                exact
-                path="/productlist/:productId"
+                path="/productlist/:name"
                 element={<ProductDetails />}
               />
 
@@ -105,14 +107,14 @@ function App() {
 
             {/*Staff Pages*/}
             {authenticated.isStaff ? <>
-              < Route exact path="/staff" element={<Dashboard />} />
+              < Route path="/staff" element={<Dashboard />} />
               <Route
-                exact
+                
                 path="/staff/orders"
                 element={<OrdersMaintenancePage />}
               />
               <Route
-                exact
+                
                 path="/staff/orders/:orderId"
                 element={<OrderDetailPage />}
               />
@@ -132,12 +134,10 @@ function App() {
                 element={<CategoryMaintenancePage />}
               />
               <Route
-                exact
                 path="/admin/products"
                 element={<ProductsMaintenancePage />}
               />
               <Route
-                exact
                 path="/admin/products/:productId"
                 element={<ProductDetailPage />}
               />
@@ -150,6 +150,7 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
+        </CartProvider> 
       </RoleContext.Provider>
     </div>
   );

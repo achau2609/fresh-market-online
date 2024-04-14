@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Pagination from './Helpers/pagination'
+import { apiUrl } from '../../server-config'
 
 const TodayPickupOrders = () => {
 
@@ -19,7 +20,7 @@ const TodayPickupOrders = () => {
         // TODO: fix issue: date retrieve from database seems UTC, system auto convert it to EDT.
         let hour = date.getUTCHours();
         let time = 'AM';
-        if (hour > 12){
+        if (hour > 12) {
             hour = hour - 12;
             time = 'PM';
         }
@@ -28,14 +29,20 @@ const TodayPickupOrders = () => {
 
     useEffect(() => {
 
-        fetch(`http://localhost:8080/api/orders/todayorders?page=${page}&limit=${recordPerPage}`)
+        fetch(`${apiUrl}/api/orders/todayorders?page=${page}&limit=${recordPerPage}`,
+            {
+                headers: {
+                    "authorization": localStorage.getItem('token'),
+                }
+            })
             .then((res) => {
                 if (res.ok)
                     return res.json();
-                else navigate('*');
+                else navigate('/*');
             }
             )
             .then(res => {
+
                 setOrderCount(res['count'])
                 const data = res['data'].map(e => {
                     e.PickupDateTime = transformTime(e.PickupDateTime);
@@ -45,6 +52,7 @@ const TodayPickupOrders = () => {
             })
             .catch(err => {
                 console.log(err)
+                navigate('/*')
             });
 
     }, [page, navigate])
@@ -61,7 +69,7 @@ const TodayPickupOrders = () => {
                             <th>Contact</th>
                             <th>Pickup time</th>
                         </tr>
-                    </thead>      
+                    </thead>
                     <tbody>
                         {orders.map((order) =>
                             <tr>

@@ -1,12 +1,22 @@
 import React from 'react'
+import { useCart } from './CartContext'
 
 const ShoppingCartItem = ({ product }) => {
+    const { addToCart, removeFromCart } = useCart();
+
+    const handleAddToCart = () => {
+        addToCart(product);
+    };
+
+    const handleRemoveFromCart = () => {
+        removeFromCart(product);
+    };
 
     return (
         <div className='container'>
             <div className='row'>
                 <div className='col-12 col-sm-3'>
-                    <img src={product.Picture} alt={product.ProductName} className='product-thumbnail' />
+                    <img src={product.Picture[0]} alt={product.ProductName} className='product-thumbnail' />
                 </div>
                 <div className='col-12 col-sm-4'>
                     <div className='row mb-2'>
@@ -17,7 +27,7 @@ const ShoppingCartItem = ({ product }) => {
                     </div>
                 </div>
                 <div className='col-12 col-sm-3'>
-                    <button className='rounded-circle border border-custom-primary bg-light-subtle text-custom-primary me-3 p-1 px-2'>
+                <button className='rounded-circle border border-custom-primary bg-light-subtle text-custom-primary me-3 p-1 px-2' onClick={handleRemoveFromCart}>
                         {product.Quantity === 1 ?
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
@@ -28,7 +38,7 @@ const ShoppingCartItem = ({ product }) => {
                             </svg>}
                     </button>
                     {product.Quantity}
-                    <button className='rounded-circle border border-custom-primary bg-light-subtle text-custom-primary ms-3 p-1 px-2'>
+                    <button className='rounded-circle border border-custom-primary bg-light-subtle text-custom-primary ms-3 p-1 px-2' onClick={handleAddToCart}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
                         </svg>
@@ -36,7 +46,7 @@ const ShoppingCartItem = ({ product }) => {
                 </div>
                 <div className='col-12 col-sm-2'>
                     <div className='row justify-content-center'>
-                        ${product.ProductPrice * product.Quantity}
+                    ${Math.round((product.ProductPrice * product.Quantity + Number.EPSILON) * 100) / 100}
                     </div>
                 </div>
             </div>

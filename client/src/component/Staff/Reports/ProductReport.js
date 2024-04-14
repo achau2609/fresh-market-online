@@ -4,6 +4,7 @@ import {
 } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import Pagination from '../Helpers/pagination';
+import { apiUrl } from '../../../server-config'
 
 ChartJS.register(ArcElement, Tooltip, Legend, Colors);
 
@@ -29,7 +30,11 @@ const ProductReport = ({ startDate, endDate }) => {
 
     useEffect(() => {
         if (startDate && endDate) {
-            fetch(`http://localhost:8080/api/report/productReport?startDate=${startDate}&endDate=${endDate}`)
+            fetch(`${apiUrl}/api/report/productReport?startDate=${startDate}&endDate=${endDate}`, {
+                headers: {
+                    "authorization": localStorage.getItem('token'),
+                }
+            })
                 .then(res => res.json())
                 .then(data => {
                     setProducts(data);
