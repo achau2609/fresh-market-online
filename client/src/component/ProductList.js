@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { apiUrl } from '../server-config';
 
-const ProductList = ({ category }) => {
+const ProductList = ({ category, handleClickProduct }) => {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
+    const [sort, setSort] = useState("1");
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -40,11 +41,12 @@ const ProductList = ({ category }) => {
     useEffect(() => {
         // Define the function to fetch products
         const fetchProducts = async () => {
+            let query = `?sort=${sort}`
 
-            const param = category? `/?category=${encodeURIComponent(category)}` : '';
+            query = category? `${query}&category=${encodeURIComponent(category)}` : query;
 
             try {
-                const response = await fetch(`${apiUrl}/api/products${param}`);  // Use the apiUrl from server-config
+                const response = await fetch(`${apiUrl}/api/products${query}`);  // Use the apiUrl from server-config
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -56,7 +58,7 @@ const ProductList = ({ category }) => {
         };
 
         fetchProducts(); // Execute the fetch operation
-    }, [category]); // Empty dependency array means this effect will only run once, after initial render
+    }, [category, sort]); // Empty dependency array means this effect will only run once, after initial render
 
     return (
         <div className="container text-center">
@@ -65,11 +67,12 @@ const ProductList = ({ category }) => {
                     <label htmlFor='price-range'>Sort by:</label>
                 </div>
                 <div className="col-12 col-md-auto">
-                    <select className="form-select" id="order-status">
-                        <option selected>Price (Low to High)</option>
-                        <option value="1">Price (High to Low)</option>
-                        <option value="2">A-Z</option>
-                        <option value="3">Newest to Oldest</option>
+                    <select className="form-select" id="order-status"
+                    value={sort}
+                    onChange={e => setSort(e.target.value)}>
+                        <option value="1">A-Z</option>
+                        <option value="2">Price (Low to High)</option>
+                        <option value="3">Price (High to Low)</option>
                     </select>
                 </div>
             </div>
@@ -78,11 +81,11 @@ const ProductList = ({ category }) => {
                 {currentItems.map((product) =>  // Use currentItems here instead of products
                     <div className='col m-2' key={product.ProductName}>
                         <div className="card border-0">
-                            <Link to={`/productlist/${encodeURIComponent(product.ProductName)}`}>
+                            <button className="btn" onClick={e => handleClickProduct(product._id)}>
                                 <div className='product-thumbnail justify-content-center'>
                                     <img src={product.Picture && product.Picture.length > 0 ? product.Picture[0] : undefined} className="card-img-top" alt={product.ProductName} />
                                 </div>
-                            </Link>
+                            </button>
                             <div className="card-body">
                                 <p className="card-title">{product.ProductName}</p>
                                 <p className="card-text">${product.ProductPrice.toFixed(2)}</p>

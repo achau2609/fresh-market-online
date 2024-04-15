@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import TwoThumbs from "../Staff/Helpers/RangeSlider/RangeSlider";
 import ProductList from "../ProductList";
@@ -10,6 +10,7 @@ const Products = () => {
 
   const [searchPrices, setSearchPrices] = useState([0, 50]);
   const [searchInventory, setSearchInventory] = useState([0, 100]);
+  const navigate = useNavigate();
 
   useEffect(()=> {
     // fetch categories
@@ -26,6 +27,10 @@ const Products = () => {
     .catch(err => alert(err));
 
 }, [])
+
+  const redirect = (productId) => {
+    navigate(`/admin/products/${encodeURIComponent(productId)}`)
+  }
 
   return (
     <div>
@@ -112,7 +117,7 @@ const Products = () => {
       </div>
       {/* Table */}
       <div>
-        <ProductList />
+        <ProductList handleClickProduct={redirect}/>
       </div>
     </div>
   );

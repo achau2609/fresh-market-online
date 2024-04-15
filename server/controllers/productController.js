@@ -8,7 +8,18 @@ const getAllProducts = (req, res) => {
         query.CategoryId = req.query.category;
     }
 
+    let sort = {}
+    if (req.query.sort) {
+        if (req.query.sort === "1")
+            sort = { ProductName: 1 };
+        if (req.query.sort === "2")
+            sort = { ProductPrice: 1 };
+        if (req.query.sort === "3")
+            sort = { ProductPrice: -1 };
+    }
+
     Product.find(query)
+        .sort(sort)
         .then(products => {
             res.json(products);
         })
@@ -62,9 +73,9 @@ const getProductById = (req, res) => {
     if (!req.query.id)
         return res.status(400).json({ err: 'Invalid Parameter' });
 
-    if(!mongoose.isValidObjectId(req.query.id))
+    if (!mongoose.isValidObjectId(req.query.id))
         return res.json({});
-    
+
     Product.findById(req.query.id)
         .then(data => res.json(data))
         .catch(err => {
