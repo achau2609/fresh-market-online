@@ -52,10 +52,13 @@ const createOrUpdateProduct = (req, res) => {
 
     let newProduct = req.body;
 
-    if (!newProduct.ProductName || !newProduct.ProductDescription || !newProduct.ProductPrice || !newProduct.Quantity ||
+    if (!newProduct.ProductName || !newProduct.ProductPrice || !newProduct.Quantity ||
         !newProduct.CategoryId || !newProduct.Picture)
         return res.status(400).json({ err: 'Invalid Parameter' });
 
+    let inValidPictures = newProduct.Picture.filter((value) => !validatePicture(value));
+    if (inValidPictures.length >= 1)
+        return res.status(400).json({ err: 'Invalid Parameter' });
 
     Product.findByIdAndUpdate(newProduct._id, newProduct, {
         upsert: true
@@ -67,6 +70,21 @@ const createOrUpdateProduct = (req, res) => {
             console.log(err)
             return res.status(500).json({ err: 'Something went wrong' })
         });
+}
+
+const validatePicture = (url) => {
+
+    let valid = true;
+    url = url.toLowerCase();
+
+    // check url format
+    const splitedString = url.split('.');
+    const format = splitedString[splitedString.length - 1];
+    if (!(format === 'jpg' || format === 'jpeg' || format === 'png'))
+        valid = false;
+
+
+    return valid;
 }
 
 const getProductById = (req, res) => {
@@ -90,6 +108,9 @@ const deleteProduct = (req, res) => {
         return res.status(401).json({ error: "You are not allowed to perform the action." })
 
     if (!req.query.id)
+        return res.status(400).json({ err: 'Invalid Parameter' });
+
+    if (!mongoose.isValidObjectId(req.query.id))
         return res.status(400).json({ err: 'Invalid Parameter' });
 
     Product.findByIdAndDelete(req.query.id)

@@ -79,7 +79,7 @@ const ProductList = ({ category, handleClickProduct }) => {
             {currentItems.length !== 0 && <>
             <div className='row row-cols-1 row-cols-sm-4 row-cols-md-6'>
                 {currentItems.map((product) =>  // Use currentItems here instead of products
-                    <div className='col m-2' key={product.ProductName}>
+                    <div className='col m-2' key={product._id}>
                         <div className="card border-0">
                             <button className="btn" onClick={e => handleClickProduct(product._id)}>
                                 <div className='product-thumbnail justify-content-center'>

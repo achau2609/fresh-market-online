@@ -98,6 +98,14 @@ const ProductDetail = () => {
   };
 
   const addImage = () => {
+    
+    // get the file extension of the new image
+    let splitedArray = newImage.split('.')
+    const format = splitedArray[splitedArray.length - 1]
+    if(format !== 'jpg' && splitedArray[splitedArray.length - 1] !== 'jpeg' && splitedArray[splitedArray.length - 1] !== 'png'){
+      alert('This format is not accpeted')
+      return 
+    }
     const oldPicture = product.Picture;
     oldPicture.push(newImage);
     setProduct({ ...product, Picture: oldPicture });
@@ -190,9 +198,9 @@ const ProductDetail = () => {
 
             <div className="input-group mb-3">
               <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
-              <input type="text" className="form-control" placeholder="" 
+              <input type="text" className="form-control" placeholder="JPG, JPEG, PNG supported" 
               value={newImage}
-              onChange={(e) => setNewImage(e.target.value)}/>
+              onChange={(e) => setNewImage(e.target.value.toLowerCase())}/>
               <button className="btn btn-outline-primary" type="button" id="button-addon2"
               onClick={()=> addImage()}>Add</button>
             </div>
