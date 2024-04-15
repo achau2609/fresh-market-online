@@ -1,53 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SortableTree from "../Staff/Helpers/SortableTree/SortableTree";
+import { apiUrl } from '../../server-config'
 
 const Categories = () => {
-  const [categories, setCategories] = useState([
-    {
-      id: "Frozen",
-      children: [
-        { id: "Ice Cream", children: [] },
-        { id: "Frozen Meat & Seafood", children: [] },
-      ],
-    },
-    {
-      id: "Dairy & Eggs",
-      children: [
-        { id: "Milk", children: [] },
-        { id: "Egg", children: [] },
-        { id: "Cheese", children: [] },
-      ],
-    },
-    {
-      id: "Fruits & Vegetables",
-      children: [
-        { id: "Fresh Vegetables", children: [] },
-        { id: "Fresh Fruits", children: [] },
-        { id: "Herbs", children: [] },
-        { id: "Dried Fruits & Nuts", children: [] },
-      ],
-    },
-  ]);
-
-  const onItemChange = (newItems) => {
-    setCategories(newItems);
-  };
-
+  const [categories, setCategories] = useState([]);
   const [newCat, setNewCat] = useState("");
   const [showList, setShowList] = useState(true);
 
-  const addCat = () => {
-    const newState = [
-      ...categories,
-      {
-        id: newCat,
-        children: [],
+  useEffect(() => {
+    fetch(`${apiUrl}/api/categories`)
+      .then((res) => res.json())
+      .then(data => {
+        let localCategories = []
+        data.forEach(element => {
+          let item = { id: element.ParentCategory, children: [] };
+
+          element.categories.forEach(children => {
+            item.children.push({
+              id: children,
+              children: []
+            })
+          })
+
+          localCategories.push(item);
+        })
+        setCategories(localCategories);
+      })
+      .catch(err => alert(err));
+  }, [])
+
+
+  const onItemChange = (newItems) => {
+    fetch(`${apiUrl}/api/categories/`, {
+      method: 'PUT',
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": localStorage.getItem('token'),
       },
-    ];
-    setCategories(newState);
-    setNewCat("");
-    setShowList(false);
-    setShowList(true);
+      body: JSON.stringify({categories: newItems})
+    })
+    setCategories(newItems);
+  };
+
+  const addCat = () => {
+
+    const newCategory = {
+      categoryName: newCat
+    }
+
+    fetch(`${apiUrl}/api/categories`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": localStorage.getItem('token'),
+      },
+      body: JSON.stringify(newCategory)
+    })
+      .then(res => {
+        setNewCat("");
+        setShowList(false);
+        setShowList(true);
+        if (!res.ok)
+          alert('Something went wrong');
+      })
+
+
   };
 
   return (
@@ -66,16 +83,17 @@ const Categories = () => {
         </div>
       </div>
       {/* Category List */}
-      <div className={showList ? "row my-3" : "row my-3 d-none"}>
-        <ul className="list-group text-start">
-          <SortableTree
-            removable
-            indicator
-            defaultItems={categories}
-            Dragged={onItemChange}
-          />
-        </ul>
-      </div>
+      {showList &&
+        <div className="row my-3">
+          <ul className="list-group text-start">
+            <SortableTree
+              removable
+              indicator
+              defaultItems={categories}
+              Dragged={onItemChange}
+            />
+          </ul>
+        </div>}
       {/* Add Category Popup */}
       <div
         className="modal fade"

@@ -1,34 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import TwoThumbs from '../../component/Staff/Helpers/RangeSlider/RangeSlider';
 import ProductList from '../../component/ProductList';
+import { apiUrl } from '../../server-config';
 
 const ProductListPage = () => {
 
-    const categories = [
-        {
-            cat: 'Meat',
-            key: 'Meat'
-        },
-        {
-            cat: 'Dairy & Eggs',
-            key: 'Dairy & Eggs'
-        }, {
-            cat: 'Pantry',
-            key: 'Rice'
-        }, {
-            cat: 'Pantry',
-            key: 'Baking'
-        }, {
-            cat: 'Fruits & Vegetables',
-            key: 'Herbs'
-        }, {
-            cat: 'Fruits & Vegetables',
-            key: 'Fresh Vegetables'
-        },
-    ]
+    const [categories, setCategories] = useState([]);
 
     const [searchPrices, setSearchPrices] = useState([0, 50])
+
+    const {state} = useLocation();
+
+    useEffect(()=> {
+        // fetch categories
+        fetch(`${apiUrl}/api/categories`)
+        .then(res => res.json())
+        .then(data => {
+            let newCategories = [];
+            data.forEach(element => {
+                element.categories.forEach((child) => newCategories.push({CategoryName: child, ParentCategory: element.ParentCategory}))
+            });
+
+            setCategories(newCategories);
+        })
+        .catch(err => alert(err));
+
+    }, [])
 
     return (
         <div className='container public'>
@@ -46,8 +45,8 @@ const ProductListPage = () => {
                                         <div className='col-12'>
                                             <label htmlFor='order-status'>Category</label>
                                             <Multiselect
-                                                displayValue="key"
-                                                groupBy="cat"
+                                                displayValue="CategoryName"
+                                                groupBy="ParentCategory"
                                                 hideSelectedList
                                                 onKeyPressFn={function noRefCheck() { }}
                                                 onRemove={function noRefCheck() { }}
@@ -76,7 +75,7 @@ const ProductListPage = () => {
                 </div>
                 {/* Table */}
                 <div className='col-12 col-md-9'>
-                    <ProductList />
+                    <ProductList category={state.category} />
                 </div>
             </div>
         </div>

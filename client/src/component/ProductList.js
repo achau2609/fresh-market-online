@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { apiUrl } from '../server-config';  
+import { apiUrl } from '../server-config';
 
-const ProductList = () => {
+const ProductList = ({ category }) => {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
@@ -16,11 +16,11 @@ const ProductList = () => {
     const handlePreviousClick = () => {
         setCurrentPage(prev => prev > 1 ? prev - 1 : prev);
     };
-    
+
     const handleNextClick = () => {
         setCurrentPage(prev => prev < totalPages ? prev + 1 : prev);
     };
-    
+
     const handlePageClick = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -40,8 +40,11 @@ const ProductList = () => {
     useEffect(() => {
         // Define the function to fetch products
         const fetchProducts = async () => {
+
+            const param = category? `/?category=${encodeURIComponent(category)}` : '';
+
             try {
-                const response = await fetch(`${apiUrl}/api/products`);  // Use the apiUrl from server-config
+                const response = await fetch(`${apiUrl}/api/products${param}`);  // Use the apiUrl from server-config
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -53,7 +56,7 @@ const ProductList = () => {
         };
 
         fetchProducts(); // Execute the fetch operation
-    }, []); // Empty dependency array means this effect will only run once, after initial render
+    }, [category]); // Empty dependency array means this effect will only run once, after initial render
 
     return (
         <div className="container text-center">
@@ -70,11 +73,12 @@ const ProductList = () => {
                     </select>
                 </div>
             </div>
+            {currentItems.length !== 0 && <>
             <div className='row row-cols-1 row-cols-sm-4 row-cols-md-6'>
                 {currentItems.map((product) =>  // Use currentItems here instead of products
                     <div className='col m-2' key={product.ProductName}>
                         <div className="card border-0">
-                        <Link to={`/productlist/${encodeURIComponent(product.ProductName)}`}>
+                            <Link to={`/productlist/${encodeURIComponent(product.ProductName)}`}>
                                 <div className='product-thumbnail justify-content-center'>
                                     <img src={product.Picture && product.Picture.length > 0 ? product.Picture[0] : undefined} className="card-img-top" alt={product.ProductName} />
                                 </div>
@@ -100,6 +104,9 @@ const ProductList = () => {
                     </ul>
                 </nav>
             </div>
+            </>
+            }
+            {currentItems.length === 0 && <p>No items found.</p>}
         </div>
     );
 }

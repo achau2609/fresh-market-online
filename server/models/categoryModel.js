@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 
 const categorySchema = mongoose.Schema({
-  _id: { type: mongoose.ObjectId, required: true },
-  parentCategory: { type: String, required: false },
-  categoryName: { type: String, required: true },
+  // error: _id must be defined   if _id specified here
+ // _id: { type: mongoose.ObjectId },
+  ParentCategory: { type: String, required: false },
+  CategoryName: { type: String, required: true },
 });
 
 

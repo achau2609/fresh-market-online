@@ -53,17 +53,21 @@ app.get("/api/orders/todayorders", AuthController.auth, OrderController.getToday
 
 //Categories API
 app.get("/api/categories", CategoryController.getCategories);
+app.post("/api/categories", AuthController.auth, CategoryController.addCategory);
+app.put("/api/categories", AuthController.auth, CategoryController.updateCategories);
 
 //Reports
 app.get("/api/report/salesReport", AuthController.auth, ReportController.getSalesReport);
-app.get("/api/report/inventoryReport" ,AuthController.auth, ReportController.getInventoryReport);
+app.get("/api/report/inventoryReport",AuthController.auth, ReportController.getInventoryReport);
 app.get("/api/report/productReport", AuthController.auth, ReportController.getProductReport);
 
 
 //Products
 app.get('/api/products', ProductController.getAllProducts);
 app.get('/api/products/:name', ProductController.getProductByName);
-
+app.get('/api/product', ProductController.getProductById);
+app.post('/api/products', AuthController.auth, ProductController.createOrUpdateProduct);
+app.delete('/api/product', AuthController.auth, ProductController.deleteProduct);
 
 
 app.listen(HTTP_PORT, () => {

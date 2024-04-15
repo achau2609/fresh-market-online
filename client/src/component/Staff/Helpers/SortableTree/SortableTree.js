@@ -141,8 +141,6 @@ export default function SortableTree({
     },
   };
 
-  console.log(`Sortable Tree rendered`)
- // console.log(items)
   return (
     <DndContext
       accessibility={{ announcements }}

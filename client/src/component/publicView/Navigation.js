@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FaBars, FaArrowDown, FaUser, FaAngleDown } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { apiUrl } from '../../server-config'
 
 const Navigation = () => {
     const [showCategories, setShowCategories] = useState(false);
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
 
     const isLoggedIn = localStorage.getItem('userId');
 
@@ -17,6 +18,12 @@ const Navigation = () => {
             .catch((err) => console.log(err));
 
     }, [])
+
+    const chooseCategory = (cat) =>{
+        navigate('/productlist', {
+            state: {category: cat}
+        })
+    }
 
     const toggleSubCategory = (elementId) => {
         let element = document.getElementById(elementId);
@@ -43,7 +50,7 @@ const Navigation = () => {
         <nav className="navigation">
             {/* Category Menu */}
             <div className="dropdown categories-dropdown">
-                <button className="btn categories-dropbtn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
+                <button className="btn categories-dropbtn" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
                     onMouseEnter={() => setShowCategories(true)}
                 >
                     {showCategories ? <FaArrowDown /> : <FaBars />}
@@ -52,19 +59,18 @@ const Navigation = () => {
                 <ul className="dropdown-menu px-2 py-3 border-custom-primary border-5 border-0 border-top rounded-0">
                     {categories.map((parent) =>
                         <li className='dropend' key={parent.ParentCategory}>
-                            <a className="dropdown-item dropdown-toggle"
-                                href='#'
+                            <button className="dropdown-item"
                                 id={`dropdown-${parent.ParentCategory}`}
-                                data-bs-toggle='dropdown'
-                                role='button'
                                 onMouseEnter={() => toggleSubCategory(`dropdown-${parent.ParentCategory}`)}
                                 onMouseLeave={() => toggleSubCategory(`dropdown-${parent.ParentCategory}`)}>
                                 {parent.ParentCategory}
                                 <ul className="dropdown-menu">
-                                    {parent.categories.map((category) => <li key={category}><a className="dropdown-item" href='#'>{category}</a></li>
+                                    {parent.categories.map((category) => <li key={category}>
+                                        <button className="dropdown-item" onClick={()=>chooseCategory(category)}>{category}</button>
+                                    </li>
                                     )}
                                 </ul>
-                            </a>
+                            </button>
                         </li>)}
                 </ul>
             </div>
