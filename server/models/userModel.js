@@ -42,7 +42,7 @@ const userSchema = mongoose.Schema(
     isAdmin: { type: Boolean, required: false },
     isStaff: { type: Boolean, required: false },
     birthDate: { type: Date, required: false },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: String, required: false },
     address: { type: addressSchema, required: false },
   },
   { timestamps: true }
