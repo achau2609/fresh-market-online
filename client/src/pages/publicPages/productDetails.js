@@ -68,7 +68,7 @@ const ProductDetails = ({ authenticated }) => {
         <div className='container text-start'>
             <div className='row justify-content-between'>
                 <div className='col-auto'>
-                    <button className="btn btn-outline-secondary" onClick={() => navigate(-1)}>{'<< Back'}</button>
+                    <button className="btn btn-outline-secondary" onClick={() => navigate('/productlist')}>{'<< Back'}</button>
                 </div>
             </div>
             <div className='row'>

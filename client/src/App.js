@@ -142,11 +142,13 @@ function App() {
                 element={<ProductDetailPage />}
               />
 
-              {/*Checkout Page*/}
-              <Route path="/checkout" element={<Checkout />} />
+              
             </>
               : <></>
             }
+
+            {/*Checkout Page*/}
+            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
