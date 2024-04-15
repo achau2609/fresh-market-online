@@ -156,8 +156,8 @@ class Users extends Component {
               {users.map((user) => (
                 <tr key={user._id}>
                   <td>
-                    <Link to={`/admin/edit/${user._id}`}>
-                      <a onClick={() => this.handleEdit(user)}>{user.email}</a>
+                    <Link to={`/admin/edit/${user._id}`} className="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+                      <p>{user.email}</p>
                     </Link>
                   </td>
                   <td>{user.firstName}</td>
@@ -168,7 +168,7 @@ class Users extends Component {
                     {user.isStaff ? (
                       <span className="badge text-bg-secondary">Staff</span>
                     ) : (
-                      <span className="badge text-bg-info">Customer</span>
+                      <span className="badge text-bg-warning">Customer</span>
                     )}
                   </td>
                   <td>

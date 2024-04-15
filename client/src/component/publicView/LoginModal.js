@@ -244,7 +244,7 @@ const LoginModal = ({ onClose }) => {
               alert(
                 `Status: ${response.status}, ${response.statusText} - Invalid email or address!`
               );
-              onClose();
+              //onClose();
             }
             return response.json();
           })
