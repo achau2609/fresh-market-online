@@ -25,7 +25,6 @@ function AddNewUser() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await axios
         .post(`${apiUrl}/api/addStaff`, formData)
@@ -43,6 +42,7 @@ function AddNewUser() {
   };
 
   const handleChange = (e) => {
+    formData.isStaff = true;
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -151,12 +151,15 @@ function AddNewUser() {
                     </Link>
                   </div>
                   <div className="col col-md-2 text-end">
+                    <input type="hidden" name="isStaff" value={formData.isStaff} onChange={handleChange} />
                     <button
                       className="btn btn-success"
                       disabled={
                         formData.email === "" ||
+                        formData.password === "" ||
+                        formData.confirmPassword === "" ||
                         formData.firstName === "" ||
-                        formData.email === ""
+                        formData.lastName === ""
                       }
                     >
                       Create
