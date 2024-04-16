@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const FAQ = () => {
     const [selectedQuestion, setSelectedQuestion] = useState('');
+    
 
     const questionsAnswers = {
         "qr-payments": "QR Payments are available at all of our partnered stores and websites.",
