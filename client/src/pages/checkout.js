@@ -5,6 +5,7 @@ import { apiUrl } from "../server-config";
 import axios from "axios";
 import SelectStateDropDown from "../component/shared/selectStateDropDown";
 import Input from "../component/shared/input";
+import SelectMonthDropDown from "../component/shared/selectMonthDropDown";
 
 const Checkout = () => {
 
@@ -13,27 +14,23 @@ const Checkout = () => {
     const user_id = localStorage.getItem("userId");
     const [ orderCount, setOrderCount ] = useState();
     const [ fulfillMethod, setFulfillMethod ] = useState('Delivery');
+    const pickupDate = new Date();
+    const today = new Date();
 
-    const [userData, setUserData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        birthDate: "",
-        phoneNumber: "",
-        address: [{ addressLine: '', city: '', state: '', zip: '' }],
-    });
+    const [userData, setUserData] = useState();
     const [address, setAddress] = useState({
-        addressLine:'',
-        city:'',
-        state:'',
-        zip:''
-    })
+        addressLine: '',
+        city: '',
+        state: '',
+        zip: ''
+    });
+    const [pickup, setPickup] = useState();
     const [payment, setPayment] = useState({
-        cardNo: "",
-        cardName:"",
-        expMonth:"",
-        expYr:"",
-        CVV:""
+        cardNo: '',
+        cardName: '',
+        expMonth: '',
+        expYr: '',
+        CVV: ''
     });
 
     // costs
@@ -56,39 +53,53 @@ const Checkout = () => {
       }, []);
 
     // get orderNo.
-    /*
+    
     useEffect(() => {
-        const orderCounting = await orderModel
-    }, []);*/
+        axios
+            .get(
+                `${apiUrl}/api/orders/amount`
+            ).then((res) => {
+                setOrderCount(res.data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    // initial pickupDate
+    useEffect(() => {
+        setPickup(today);
+    }, [])
 
     // create response
     const createOrderResponse = () => {
+        let order = '';
         if (fulfillMethod === 'Delivery') {
-            const order = {
+            order = {
+                orderId: orderCount + 1,
                 customerId: user_id,
-                customerName: userData.firstName + userData.lastName,
-                contactNo: userData.contactNo,
+                customerName: userData.firstName + " " + userData.lastName,
+                contactNo: userData.phoneNumber,
                 orderType: fulfillMethod,
-                deliveryAddress: userData.address.addressLine + ", " + userData.address.city + ", " + userData.address.state + ", " + userData.address.zip,
+                deliveryAddress: address.addressLine + ", " + address.city + ", " + address.state + ", " + address.zip,
                 products: cartItems,
                 status: "Processing",
-                orderDate: Date.now
+                orderDate: today
             }
         } else {
-            const order = {
+            order = {
+                orderId: orderCount + 1,
                 customerId: user_id,
-                customerName: userData.firstName + userData.lastName,
-                contactNo: userData.contactNo,
+                customerName: userData.firstName + " " + userData.lastName,
+                contactNo: userData.phoneNumber,
                 orderType: fulfillMethod,
-                pickupDateTime: Date.now,
+                pickupDateTime: pickup,
                 products: cartItems,
                 status: "Processing",
-                orderDate: Date.now
+                orderDate: today
             }
         }
         
         alert("a ok");
-        return;
+        return order;
     }
 
     // validation
@@ -97,17 +108,13 @@ const Checkout = () => {
         let validation = { validate: true, msg: "" };
         // validate address if delivery
         if (fulfillMethod === 'Delivery') {
-            if (userData.address.addressLine === '' || userData.address.city === '' || userData.address.state === '' || userData.address.zip === '') {
+            if (address.addressLine === '' || address.city === '' || address.state === '' || address.zip === '') {
                 validation.validate = false;
                 validation.msg = "Missing address!"; 
             }
         }
-        
-        // validate payment
-        if (payment.cardNo === '' || payment.cardName === '' || payment.expMonth === '' || payment.expYr === '' || payment.CVV === '') {
-            validation.validate = false;
-            validation.msg = "Missing payment info!"; 
-        }
+
+        return validation;
     }
 
     // send order to server
@@ -119,11 +126,11 @@ const Checkout = () => {
             // create the body
             const orderBody = createOrderResponse();
             // send the order to backend
-
+            console.log(orderBody);
             // alert customer order has been placed
             alert('Order has been placed. You will be redirected to the homepage.')
             // erase order from localStorage
-            emptyCart();
+            // emptyCart();
             // go back to homepage
             navigate("/");
         } else {
@@ -133,13 +140,29 @@ const Checkout = () => {
     }
 
     // change address details
-    const handleChange = (e) => {
+    const handleChangeAddress = (e) => {
         setAddress({ ...address, [e.target.name]: e.target.value });
     };
 
-    // debug
-    console.log(address)
+    // change payment details
+    const handleChangePayment = (e) => {
+        setPayment({ ...payment, [e.target.name]: e.target.value });
+    };
 
+    const handlePickupDate = (e) => {
+        if (e === 0) {
+            setPickup(today);
+        } else if (e === 1) {
+            pickupDate.setDate(today.getDate() + 1)
+            setPickup(pickupDate);
+        } else {
+            pickupDate.setDate(today.getDate() + 2)
+            setPickup(pickupDate);
+        }
+    }
+    // debug
+    
+    console.log(address)
 
     return (
         <div>
@@ -162,15 +185,11 @@ const Checkout = () => {
                         <hr />
                         <div className="form-check d-flex align-items-center">
                             <input className="form-check-input mx-2" type="radio" name="method" id="delivery" checked={fulfillMethod === 'Delivery'} onChange={() => setFulfillMethod('Delivery')} />
-                            <label className="form-check-label" htmlFor="address1">
-                                Delivery
-                            </label>
+                            <label className="form-check-label">Delivery</label>
                         </div>
                         <div className="form-check d-flex align-items-center">
                             <input className="form-check-input mx-2" type="radio" name="method" id="pickup" checked={fulfillMethod === 'Pickup'} onChange={() => setFulfillMethod('Pickup')} />
-                            <label className="form-check-label" htmlFor="address2">
-                                Pickup
-                            </label>
+                            <label className="form-check-label">Pickup</label>
                         </div>
                     </div>
                     {/* Address box */}
@@ -185,7 +204,7 @@ const Checkout = () => {
                                 type="text"
                                 label="Address Line"
                                 value={address.addressLine}
-                                onChange={handleChange}
+                                onChange={handleChangeAddress}
                             />
                         </div>
                         <div className="col-md-6">
@@ -194,7 +213,7 @@ const Checkout = () => {
                                 type="text"
                                 label="City"
                                 value={address.city}
-                                onChange={handleChange}
+                                onChange={handleChangeAddress}
                             />
                         </div>
                         <div className="col-md-4">
@@ -202,7 +221,7 @@ const Checkout = () => {
                                 name="state"
                                 label="State"
                                 value={address.state}
-                                onChange={handleChange}
+                                onChange={handleChangeAddress}
                             />
                         </div>
                         <div className="col-md-2">
@@ -211,90 +230,80 @@ const Checkout = () => {
                                 type="text"
                                 label="Zip"
                                 value={address.zip}
-                                onChange={handleChange}
+                                onChange={handleChangeAddress}
                             />
                         </div>
                     
                     </> : <>
                         Choose pickup date and time:
+                        <hr />
+                        <div className="form-check d-flex align-items-center">
+                            <input className="form-check-input mx-2" type="radio" name="pickupDate" id="pickup" checked={pickup.getDate() === today.getDate()} onChange={() => handlePickupDate(0)} />
+                            <label className="form-check-label">{today.toLocaleString('default', {month: 'short'})} {today.getDate()}</label>
+                        </div>
+                        <div className="form-check d-flex align-items-center">
+                            <input className="form-check-input mx-2" type="radio" name="pickupDate" id="pickup" checked={pickup.getDate() === (today.getDate() + 1)} onChange={() => handlePickupDate(1)} />
+                            <label className="form-check-label">{today.toLocaleString('default', {month: 'short'})} {today.getDate() + 1}</label>
+                        </div>
+                        <div className="form-check d-flex align-items-center">
+                            <input className="form-check-input mx-2" type="radio" name="pickupDate" id="pickup" checked={pickup.getDate() === (today.getDate() + 2)} onChange={() => handlePickupDate(2)} />
+                            <label className="form-check-label">{today.toLocaleString('default', {month: 'short'})} {today.getDate() + 2}</label>
+                        </div>
 
                     </>}
                     </div>
 
                     
-
-                    {/* Payment box */}
-                    <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary">
-                        Choose a payment method
-
-                        <div className="form-check d-flex align-items-center">
-                            <input className="form-check-input mx-2" type="radio" name="payment" id="payment1" />
-                            <label className="form-check-label" htmlFor="payment1">
-                                Visa debit ending in  4093
-                            </label>
-                        </div>
-
-                        <div className="form-check d-flex align-items-center">
-                            <input className="form-check-input mx-2" type="radio" name="payment" id="payment2" />
-                            <label className="form-check-label" htmlFor="payment2">
-                                Credit card ending in  3203
-                            </label>
-                        </div>
-
-                        <div className="form-check d-flex align-items-center">
-                            <input className="form-check-input mx-2" type="radio" name="payment" id="payment3" />
-                            <label className="form-check-label" htmlFor="payment3">
-                                Mastercard ending in  8912
-                            </label>
-                        </div>
-
-                        <div className="form-check d-flex align-items-center">
-                            <input className="form-check-input mx-2" type="radio" name="payment" id="payment4" />
-                            <label className="form-check-label" htmlFor="payment4">
-                                America Express ending in  2569
-                            </label>
-                        </div>
-                    </div>
-
                     {/* items box */}
                     <div className="p-4 my-4 w-75 rounded-4 border-1 border-custom-primary">
                         <div>Confirm items</div>
-                        <div className='table-responsive mt-3'>
-                            <table className="table table-striped table-hover text-start table-custom">
-                                <thead>
-                                    <tr>
-                                        <th scope='col'>#</th>
-                                        <th scope='col'>Product</th>
-                                        <th scope='col'>Unit Price</th>
-                                        <th scope='col'>Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody className='py-3'>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <img src="https://assets.shop.loblaws.ca/products/21121560001/b1/en/front/21121560001_front_a07.png" alt="Logo" width="30" height="24" className="d-inline-block align-text-top mx-3" />
-                                            Brocoli Crown
-                                        </td>
-                                        <td>
-                                            $15.18
-                                        </td>
-                                        <td>
-                                            9
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>
-                                            <img src="https://assets.shop.loblaws.ca/products/20761372/b1/en/front/20761372_front_a07.png" alt="Logo" width="30" height="24" className="d-inline-block align-text-top mx-3" />
-                                            Whole Cremini Mushrooms
-                                        </td>
-                                        <td>$11.26</td>
-                                        <td>10</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <hr />
+                        <div className="row">
+                                <div className='col-12 col-sm-3'>
+                                    
+                                </div>
+                                <div className='col-12 col-sm-4'>
+                                    <div className='row mb-2'>
+                                        Name
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-4'>
+                                    <div className='row mb-2'>
+                                        Quantity
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-4'>
+                                    <div className='row mb-2'>
+                                        Unit price
+                                    </div>
+                                </div>
+                            </div>
+                        {cartItems.map((product) => (
+                            <div className="row">
+                                <div className='col-12 col-sm-3'>
+                                    <img src={product.Picture[0]} alt={product.ProductName} className='product-thumbnail' />
+                                </div>
+                                <div className='col-12 col-sm-4'>
+                                    <div className='row mb-2'>
+                                        {product.ProductName}
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-4'>
+                                    <div className='row mb-2'>
+                                        {product.Quantity}
+                                    </div>
+                                </div>
+                                <div className='col-12 col-sm-4'>
+                                    <div className='row mb-2'>
+                                        ${product.ProductPrice}/each
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            
+                        ))}
+                        
                     </div>
                 </div>
 

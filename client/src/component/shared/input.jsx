@@ -7,6 +7,8 @@ const Input = ({
   value,
   error,
   placeholder = "",
+  maxlength,
+  pattern,
   isReadOnly,
   isDisable,
   onChange,
@@ -26,6 +28,8 @@ const Input = ({
         readOnly={isReadOnly ? true : false}
         disabled={isDisable ? "disabled" : ""}
         placeholder={placeholder}
+        maxlength={maxlength}
+        pattern={pattern}
         autocomplete="off"
       />
       {error && <div className="alert alert-danger">{error}</div>}

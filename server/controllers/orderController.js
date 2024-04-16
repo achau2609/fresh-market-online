@@ -5,6 +5,8 @@ const addOrder = () => {
     return
 }
 
+
+
 const getAllOrders = (req, res) => {
 
     if (!req.isStaff && !req.isAdmin)
@@ -211,4 +213,19 @@ const getOrderByOrderNo = (req, res) => {
         });
 };
 
-module.exports = { addOrder, getAllOrders, getTodaysPickupOrders, getOrder, updateOrderStatus,getOrdersByCustomerId,getOrderByOrderNo }
+const getNumberOfOrders = (req, res) => {
+    Order.countDocuments()
+        .then((count) => {
+            if (!count) {
+                return res.status(404).json({ error: "Could not count" });
+            }
+            return res.json(count);
+        })
+        .catch(err => {
+            console.error("Error fetching number of orders", err);
+            return res.status(500).json({ error: "An error occurred while fetching number of orders", msg: err.message });
+        });
+
+}
+
+module.exports = { addOrder, getAllOrders, getTodaysPickupOrders, getOrder, updateOrderStatus,getOrdersByCustomerId,getOrderByOrderNo, getNumberOfOrders}

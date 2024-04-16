@@ -51,7 +51,9 @@ app.get("/api/orders/order", AuthController.auth, OrderController.getOrder);
 app.put("/api/orders/updateStatus", AuthController.auth, OrderController.updateOrderStatus);
 app.get("/api/orders/todayorders", AuthController.auth, OrderController.getTodaysPickupOrders);
 app.get("/api/orders/customer/:customerId", OrderController.getOrdersByCustomerId);
+app.get("/api/orders/amount", OrderController.getNumberOfOrders);
 app.get("/api/orders/:orderNo", OrderController.getOrderByOrderNo);
+
 
 
 //Categories API
