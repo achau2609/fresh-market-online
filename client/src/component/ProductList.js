@@ -4,7 +4,7 @@ import { apiUrl } from '../server-config';
 
 const ProductList = ({ handleClickProduct }) => {
     const location = useLocation();
-    
+
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
@@ -48,7 +48,7 @@ const ProductList = ({ handleClickProduct }) => {
     };
 
     useEffect(() => {
-        
+
         const fetchProducts = async () => {
             const searchParams = new URLSearchParams(location.search);
             searchParams.set('sort', sort)
@@ -109,7 +109,13 @@ const ProductList = ({ handleClickProduct }) => {
                                     </button>
                                     <div className="card-body">
                                         <p className="card-title">{product.ProductName}</p>
-                                        <p className="card-text">${product.ProductPrice.toFixed(2)}</p>
+                                        {product.DiscountPrice ?
+                                            <>
+                                                <p className="card-text text-danger fw-bold d-inline me-3">${product.DiscountPrice.toFixed(2)}</p>
+                                                <p className="card-text d-inline text-decoration-line-through">${product.ProductPrice.toFixed(2)}</p>
+                                            </> :
+                                            <p className="card-text">${product.ProductPrice.toFixed(2)}</p>
+                                        }
                                     </div>
                                 </div>
                             </div>

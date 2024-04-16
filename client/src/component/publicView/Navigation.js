@@ -50,6 +50,7 @@ const Navigation = () => {
             <div className="dropdown categories-dropdown">
                 <button className="btn categories-dropbtn" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside"
                     onMouseEnter={() => setShowCategories(true)}
+                    onMouseLeave={() => setShowCategories(false)}
                 >
                     {showCategories ? <FaArrowDown /> : <FaBars />}
                     Category
