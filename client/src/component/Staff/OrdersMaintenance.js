@@ -26,22 +26,28 @@ const Orders = () => {
         getOrders({});
     }
 
-    const getOrders = ({ orderNo, status, orderDate}) => {
+    const getOrders = ({ orderNo, status, orderDate }) => {
 
         let url = `${apiUrl}/api/orders?page=${page}&limit=${recordPerPage}`
-        if(orderNo)
+        if (orderNo){
             url += `&orderNo=${orderNo}`
-        if(status)
+        }
+            
+        if (status)
             url += `&status=${status}`
-        if(orderDate)
+        if (orderDate)
             url += `&orderDate=${orderDate}`
 
         fetch(url, {
             headers: {
                 "authorization": localStorage.getItem('token'),
-              }
+            }
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (res.ok)
+                    return res.json()
+            }
+            )
             .then(res => {
                 setOrderCount(res['count'])
                 const data = res['data'].map(e => {

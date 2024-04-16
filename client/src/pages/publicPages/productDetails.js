@@ -20,14 +20,14 @@ const ProductDetails = ({ authenticated }) => {
 
         const fetchProductDetails = async () => {
             try {
-                const response = await fetch(`${apiUrl}/api/products/${decodedName}`);
+                const response = await fetch(`${apiUrl}/api/product?id=${decodedName}`);
                 if (!response.ok) {
                     throw new Error(`Failed to fetch details for ${decodedName}`);
                 }
                 const data = await response.json();
-                if (data && data.length > 0) {
-                    setProduct(data[0]);
-                    setPreviewImage(data[0].Picture && data[0].Picture.length > 0 ? data[0].Picture[0] : 'path/to/default/image.jpg');
+                if (data) {
+                    setProduct(data);
+                    setPreviewImage(data.Picture && data.Picture.length > 0 ? data.Picture[0] : 'path/to/default/image.jpg');
                 }
             } catch (error) {
                 navigate('/error');

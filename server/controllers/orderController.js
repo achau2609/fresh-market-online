@@ -12,12 +12,20 @@ const getAllOrders = (req, res) => {
 
     let criteria = {};
     if (req.query.orderNo)
-        criteria = { ...criteria, orderNo: req.query.orderNo }
+
+        if (isNaN(req.query.orderNo))
+            return res.status(400).json({ error: 'Invalid Parameters' })
+        else
+            criteria = { ...criteria, orderNo: req.query.orderNo }
     if (req.query.status)
         criteria = { ...criteria, Status: req.query.status }
     if (req.query.orderDate) {
         let date = new Date(req.query.orderDate)
         let tmr = new Date(req.query.orderDate)
+
+        if (isNaN(date) || isNaN(tmr))
+            return res.status(400).json({ error: 'Invalid Parameters' })
+
         tmr.setDate(date.getDate() + 1)
         criteria = { ...criteria, orderDate: { $gte: date, $lt: tmr } }
     }

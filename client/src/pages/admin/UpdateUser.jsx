@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { apiUrl } from "../../server-config";
 import axios from "axios";
 import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
-import { apiUrl } from "../../server-config";
 import FormatDate from "../../utils/formatDate";
 
 function UpdateUser() {
   const { id } = useParams();
-  const [user, setUser] = useState(new FormData());
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function UpdateUser() {
       console.log(error);
       navigate("/admin/users");
     }
-  }, []);
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();

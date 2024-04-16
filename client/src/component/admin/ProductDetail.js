@@ -1,80 +1,90 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { apiUrl } from "../../server-config";
 
 const ProductDetail = () => {
-  const categories = [
-    {
-      cat: "Meat",
-      key: "Meat",
-    },
-    {
-      cat: "Dairy & Eggs",
-      key: "Dairy & Eggs",
-    },
-    {
-      cat: "Pantry",
-      key: "Rice",
-    },
-    {
-      cat: "Pantry",
-      key: "Baking",
-    },
-    {
-      cat: "Fruits & Vegetables",
-      key: "Herbs",
-    },
-    {
-      cat: "Fruits & Vegetables",
-      key: "Fresh Vegetables",
-    },
-    {
-      cat: "Fruits & Vegetables",
-      key: "Fresh Fruits",
-    },
-  ];
 
+  const navigate = useNavigate();
+  const productId = useParams().productId;
+  const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState({
-    ProductName: "Organic Apples",
-    ProductDescription: "Organic Fresh Apples (Bag 2lb)",
-    ProductPrice: 5.99,
-    Quantity: 150,
-    CategoryId: "Fresh Fruits",
-    Picture: [
-      "https://assets.shop.loblaws.ca/products/20606349001/b1/en/front/20606349001_front_a06.png",
-      "https://theproduceguyz.com/cdn/shop/products/image_38f13c69-1f3b-4a3f-86d5-14a06180efa8.jpg?v=1603080352",
-      "https://meridianfarmmarket.ca/cdn/shop/products/Apples-5lb.jpg?v=1673029747",
-      "https://voila.ca/images-v3/2d92d19c-0354-49c0-8a91-5260ed0bf531/bffcf967-09f4-4b0f-8b39-9fc65641cd57/500x500.jpg",
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-Mq0gUqWH4geNQrBCTVqwjMOqsHRybLsUqw&usqp=CAU",
-    ],
+    "_id": '',
+    "ProductName": '',
+    "ProductDescription": "",
+    "ProductPrice": 0,
+    "Quantity": 0,
+    "CategoryId": "",
+    "Picture": []
   });
 
-  const [hasDiscount, setHasDiscount] = useState(false);
 
+  useEffect(() => {
+
+    // get product
+    if (productId) {
+      fetch(`${apiUrl}/api/product?id=${productId}`)
+        .then(res => res.json())
+        .then(data => {
+
+          if (data) {
+            setProduct(data)
+            if (data.Picture)
+              setPreviewImage(data.Picture[0])
+            if (data.DiscountPrice)
+              setHasDiscount(true)
+          } else navigate('/admin/products')
+
+        })
+        .catch(err => alert(err));
+    }
+
+    //get categories
+    // fetch categories
+    fetch(`${apiUrl}/api/categories`)
+      .then(res => res.json())
+      .then(data => {
+        let newCategories = [];
+        data.forEach(element => {
+          element.categories.forEach((child) => newCategories.push({ CategoryName: child, ParentCategory: element.ParentCategory }))
+        });
+
+        setCategories(newCategories);
+      })
+      .catch(err => alert(err));
+
+  }, [productId, navigate])
+
+  // Discounts
+
+  const [hasDiscount, setHasDiscount] = useState(false);
   const toggleHasDiscount = () => {
     setHasDiscount(!hasDiscount);
+    if (product.DiscountPrice) {
+      delete product.DiscountPrice
+    }
   };
 
-  const [orgPrice, setOrgPrice] = useState(product.ProductPrice);
-  const [discountNumber, setDiscountNumber] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
 
   const changeOrgPrice = (e) => {
-    setOrgPrice(e.target.value);
-    setDiscountPercentage(((discountNumber / orgPrice) * 100).toFixed(2));
-    setDiscountNumber((orgPrice * discountPercentage).toFixed(2));
+    setProduct({ ...product, ProductPrice: e.target.value })
+    setDiscountPercentage(((product.DiscountPrice / product.ProductPrice) * 100).toFixed(2));
   };
 
   const changeDiscountNumber = (e) => {
-    setDiscountNumber(e.target.value);
-    setDiscountPercentage(Math.round((discountNumber / orgPrice) * 100));
+    setProduct({ ...product, DiscountPrice: e.target.value })
+    setDiscountPercentage(Math.round((e.target.value / product.ProductPrice) * 100));
   };
 
   const changeDiscountPercentage = (e) => {
     setDiscountPercentage(e.target.value);
-    setDiscountNumber((orgPrice * discountPercentage).toFixed(2));
+    let discountPrice = (product.ProductPrice * e.target.value / 100).toFixed(2);
+    setProduct({ ...product, DiscountPrice: discountPrice });
   };
 
-  const [previewImage, setPreviewImage] = useState(product.Picture[0]);
+  // Images
+  const [previewImage, setPreviewImage] = useState('');
+  const [newImage, setNewImage] = useState("");
   const clickImage = (e) => {
     setPreviewImage(e.target.src);
   };
@@ -86,6 +96,59 @@ const ProductDetail = () => {
     const newProduct = { ...product, Picture: oldPicture };
     setProduct(newProduct);
   };
+
+  const addImage = () => {
+    
+    // get the file extension of the new image
+    let splitedArray = newImage.split('.')
+    const format = splitedArray[splitedArray.length - 1]
+    if(format !== 'jpg' && splitedArray[splitedArray.length - 1] !== 'jpeg' && splitedArray[splitedArray.length - 1] !== 'png'){
+      alert('This format is not accpeted')
+      return 
+    }
+    const oldPicture = product.Picture;
+    oldPicture.push(newImage);
+    setProduct({ ...product, Picture: oldPicture });
+    setNewImage('');
+  }
+
+  const saveProduct = () => {
+    fetch(`${apiUrl}/api/products`, {
+      method: 'POST',
+      body: JSON.stringify(product),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": localStorage.getItem('token'),
+      }
+    })
+      .then(res => {
+        if (res.ok)
+          alert('Product saved successfully')
+        else
+          alert('Something went wrong')
+      })
+      .catch(err => alert(err));
+  }
+
+  const deleteProduct = () => {
+    fetch(`${apiUrl}/api/product?id=${product._id}`, {
+      method: 'DELETE',
+      body: JSON.stringify(product),
+      headers: {
+        "Content-Type": "application/json",
+        "authorization": localStorage.getItem('token'),
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          alert('Product deleted successfully');
+          navigate('/admin/products');
+        }
+        else
+          alert('Something went wrong')
+      })
+  }
+
   return (
     <div className="container text-start">
       <div className="row justify-content-between">
@@ -93,7 +156,7 @@ const ProductDetail = () => {
           <Link to="/admin/products">{"<<Back"}</Link>
         </div>
         <div className="col-auto">
-          <button type="button" className="btn btn-success">
+          <button type="button" className="btn btn-success" onClick={saveProduct}>
             Save
           </button>
         </div>
@@ -106,8 +169,8 @@ const ProductDetail = () => {
             <img src={previewImage} alt="preview" />
           </div>
           <div className="row row-cols-1 row-cols-md-4 justify-content-start gx-5">
-            {product.Picture.map((source, index) => (
-              <div className="col m-2">
+            {product.Picture && product.Picture.map((source, index) => (
+              <div className="col m-2" key={source}>
                 <button
                   type="button"
                   className="btn p-0 m-0 position-relative"
@@ -118,55 +181,34 @@ const ProductDetail = () => {
                     className="card-img-top"
                     alt={product.ProductName}
                   />
-                  <button
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger border-0"
-                    onClick={() => removeImage(index)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="currentColor"
-                      class="bi bi-x-lg"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                    </svg>
-                    <span class="visually-hidden">Remove</span>
-                  </button>
                 </button>
               </div>
             ))}
-            {/* Upload image */}
-            <div className="col m-2">
-              <label
-                htmlFor="img-upload"
-                className="card-img-top btn w-100 h-100 border-info rounded-top text-info pe-auto"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="50"
-                  height="50"
-                  fill="currentColor"
-                  class="bi bi-upload mt-2"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
-                  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
-                </svg>
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                className="btn form-control d-none"
-                id="img-upload"
-                name="img-upload"
-              />
+          </div>
+          {/* modify image */}
+          <div className="row my-2">
+            {product.Picture && product.Picture.map((src, index) =>
+              <div className="input-group mb-3" key={src}>
+                <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
+                <input type="text" className="form-control" placeholder="" value={src} />
+                <button className="btn btn-outline-danger" type="button" id="button-addon2"
+                onClick={() => removeImage(index)}>Delete</button>
+              </div>
+            )}
+
+            <div className="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
+              <input type="text" className="form-control" placeholder="JPG, JPEG, PNG supported" 
+              value={newImage}
+              onChange={(e) => setNewImage(e.target.value.toLowerCase())}/>
+              <button className="btn btn-outline-primary" type="button" id="button-addon2"
+              onClick={()=> addImage()}>Add</button>
             </div>
           </div>
           {/* Delete Button */}
-          <div className="row">
-            <button type="button" className="btn btn-outline-danger">
+          {product._id && <div className="row">
+            <button type="button" className="btn btn-outline-danger"
+              onClick={deleteProduct}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -180,7 +222,7 @@ const ProductDetail = () => {
               </svg>
               Delete this product
             </button>
-          </div>
+          </div>}
         </div>
         {/* Edit product form */}
         <div className="col-6">
@@ -192,26 +234,15 @@ const ProductDetail = () => {
                 type="text"
                 className="form-control"
                 value={product.ProductName}
-              />
-            </div>
-            <div className="row mb-3 gx-0">
-              <label htmlFor="product-brand">Brand</label>
-              <input
-                id="product-brand"
-                type="text"
-                className="form-control"
-                value="ABC"
+                onChange={(e) => setProduct({ ...product, ProductName: e.target.value })}
               />
             </div>
             <div className="row mb-3 gx-0">
               <label htmlFor="product-category">Category</label>
-              <select className="form-select" id="product-category">
-                {categories.map((category) =>
-                  category.key === product.CategoryId ? (
-                    <option selected>{category.key}</option>
-                  ) : (
-                    <option>{category.key}</option>
-                  )
+              <select className="form-select" id="product-category" value={product.CategoryId}
+                onChange={(e) => setProduct({ ...product, CategoryId: e.target.value })}>
+                {categories.map(category =>
+                  <option key={category.CategoryName}>{category.CategoryName}</option>
                 )}
               </select>
             </div>
@@ -222,6 +253,7 @@ const ProductDetail = () => {
                 placeholder="Description"
                 id="product-description"
                 value={product.ProductDescription}
+                onChange={(e) => setProduct({ ...product, ProductDescription: e.target.value })}
               ></textarea>
             </div>
             <div className="row mb-3 gx-0">
@@ -233,6 +265,7 @@ const ProductDetail = () => {
                   className="form-control"
                   id="org-price"
                   onChange={changeOrgPrice}
+                  value={product.ProductPrice}
                 />
               </div>
             </div>
@@ -241,9 +274,10 @@ const ProductDetail = () => {
                 <label htmlFor="product-inventory">Inventory</label>
                 <input
                   id="product-inventory"
-                  type="text"
+                  type="number"
                   className="form-control"
-                  value="50"
+                  value={product.Quantity}
+                  onChange={(e) => setProduct({ ...product, Quantity: e.target.value })}
                 />
               </div>
             </div>
@@ -266,10 +300,10 @@ const ProductDetail = () => {
                 <div className="input-group">
                   <span className="input-group-text">$</span>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="discount-number"
-                    value={discountNumber}
+                    value={product.DiscountPrice}
                     onChange={changeDiscountNumber}
                   />
                 </div>
@@ -277,7 +311,7 @@ const ProductDetail = () => {
               <div className="col-auto col-md-5">
                 <div className="input-group">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="discount-precentage"
                     value={discountPercentage}

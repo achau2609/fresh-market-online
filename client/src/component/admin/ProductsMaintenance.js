@@ -1,39 +1,36 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import TwoThumbs from "../Staff/Helpers/RangeSlider/RangeSlider";
 import ProductList from "../ProductList";
+import { apiUrl } from "../../server-config";
 
 const Products = () => {
-  const categories = [
-    {
-      cat: "Meat",
-      key: "Meat",
-    },
-    {
-      cat: "Dairy & Eggs",
-      key: "Dairy & Eggs",
-    },
-    {
-      cat: "Pantry",
-      key: "Rice",
-    },
-    {
-      cat: "Pantry",
-      key: "Baking",
-    },
-    {
-      cat: "Fruits & Vegetables",
-      key: "Herbs",
-    },
-    {
-      cat: "Fruits & Vegetables",
-      key: "Fresh Vegetables",
-    },
-  ];
+  const [categories, setCategories] = useState([]);
 
   const [searchPrices, setSearchPrices] = useState([0, 50]);
   const [searchInventory, setSearchInventory] = useState([0, 100]);
+  const navigate = useNavigate();
+
+  useEffect(()=> {
+    // fetch categories
+    fetch(`${apiUrl}/api/categories`)
+    .then(res => res.json())
+    .then(data => {
+        let newCategories = [];
+        data.forEach(element => {
+            element.categories.forEach((child) => newCategories.push({CategoryName: child, ParentCategory: element.ParentCategory}))
+        });
+
+        setCategories(newCategories);
+    })
+    .catch(err => alert(err));
+
+}, [])
+
+  const redirect = (productId) => {
+    navigate(`/admin/products/${encodeURIComponent(productId)}`)
+  }
 
   return (
     <div>
@@ -43,7 +40,7 @@ const Products = () => {
           <div className="row card-header text-start">
             <h5 class="col-10 ">Search</h5>
             <div className="col-2">
-              <Link to="/admin/products/0001">
+              <Link to="/admin/products/0">
                 <button type="button" className="btn btn-success">
                   Add Product
                 </button>
@@ -65,8 +62,8 @@ const Products = () => {
                   <div className="col">
                     <label htmlFor="order-status">Category</label>
                     <Multiselect
-                      displayValue="key"
-                      groupBy="cat"
+                      displayValue="CategoryName"
+                      groupBy="ParentCategory"
                       hideSelectedList
                       onKeyPressFn={function noRefCheck() {}}
                       onRemove={function noRefCheck() {}}
@@ -120,7 +117,7 @@ const Products = () => {
       </div>
       {/* Table */}
       <div>
-        <ProductList />
+        <ProductList handleClickProduct={redirect}/>
       </div>
     </div>
   );

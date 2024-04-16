@@ -31,7 +31,10 @@ const Header = () => {
 
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-        console.log('Searching for:', searchTerm);
+    if (searchTerm.trim() !== '') {
+        // Redirect to product list page with search query as URL parameter
+        navigate(`/productList?query=${encodeURIComponent(searchTerm.trim())}`);
+    }
     };
 
     const handleAccountInfoClick = () => {
@@ -71,7 +74,7 @@ const Header = () => {
             <div className='col-12 col-sm-7'>
                 <form onSubmit={handleSearchSubmit} className='d-flex'>
                     <div className="input-group">
-                        <input type="search" className="form-control py-2 rounded-0" placeholder="Search for Products" value={searchTerm}
+                        <input type="search" className="form-control py-2 rounded-0" placeholder="Search in products..." value={searchTerm}
                             onChange={handleSearchChange} />
                         <button className="btn pb-2 rounded-0 border" type="button" id="button-addon2"><FaSearch className="search-icon" /></button>
                     </div>
