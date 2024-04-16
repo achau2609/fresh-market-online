@@ -94,7 +94,7 @@ function App() {
                 <Route path="/myAccount/orderhistory" element={<OrderHistory />} />
                 <Route
                   exact
-                  path="/myAccount/orderhistory/:orderId"
+                  path="/myAccount/orderhistory/:orderNo"
                   element={<OrderDetail />}
                 />
               </> : <></>
@@ -142,13 +142,11 @@ function App() {
                 element={<ProductDetailPage />}
               />
 
-              
+              {/*Checkout Page*/}
+              <Route path="/checkout" element={<Checkout />} />
             </>
               : <></>
             }
-
-            {/*Checkout Page*/}
-            <Route path="/checkout" element={<Checkout />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>

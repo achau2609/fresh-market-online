@@ -28,7 +28,7 @@ const getAllProducts = (req, res) => {
         });
 };
 
-// Get a single product by ID
+// Get a single product by name
 const getProductByName = (req, res) => {
     const productName = req.params.name;
 

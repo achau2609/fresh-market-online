@@ -193,20 +193,22 @@ const getOrdersByCustomerId = (req, res) => {
 };
 
 const getOrderByOrderNo = (req, res) => {
-    const orderNo = parseInt(req.params.orderNo);  
+    const orderNo = parseInt(req.params.orderNo);
+    if (isNaN(orderNo)) {
+        return res.status(400).json({ error: "Invalid order number provided" });
+    }
 
     Order.findOne({ orderNo: orderNo })
         .then(order => {
             if (!order) {
-                return res.status(404).json({ message: "Order not found" });
+                return res.status(404).json({ error: "Order not found" });
             }
             res.json(order);
         })
         .catch(err => {
             console.error("Error fetching order by orderNo:", err);
-            res.status(500).json({ error: "An error occurred while fetching the order", msg: err });
+            res.status(500).json({ error: "An error occurred while fetching the order", msg: err.message });
         });
 };
-
 
 module.exports = { addOrder, getAllOrders, getTodaysPickupOrders, getOrder, updateOrderStatus,getOrdersByCustomerId,getOrderByOrderNo }
