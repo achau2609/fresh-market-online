@@ -65,6 +65,14 @@ const Checkout = () => {
     // create response
     const createOrderResponse = () => {
         let order = '';
+
+        const orderAddress = {
+            Address1: address.addressLine,
+            City: address.city,
+            State: address.state,
+            ZIP: address.zip
+        }
+
         if (fulfillMethod === 'Delivery') {
             order = {
                 orderNo: orderCount + 1,
@@ -72,7 +80,8 @@ const Checkout = () => {
                 CustomerName: userData.firstName + " " + userData.lastName,
                 ContactNo: userData.phoneNumber,
                 OrderType: fulfillMethod,
-                DeliveryAddress: address.addressLine + ", " + address.city + ", " + address.state + ", " + address.zip,
+                //DeliveryAddress: address.addressLine + ", " + address.city + ", " + address.state + ", " + address.zip,
+                DeliveryAddress: orderAddress,
                 Products: cartItems,
                 Status: "Processing",
                 orderDate: today
@@ -110,7 +119,7 @@ const Checkout = () => {
     }
 
     const sendOrder = (e) => {
-        console.log(e)
+
         fetch(`${apiUrl}/api/orders/add`, {
             method: "POST",
             headers: {
@@ -127,7 +136,7 @@ const Checkout = () => {
                     // alert customer order has been placed
                     alert('Order has been placed. You will be redirected to the homepage.')
                     // erase order from localStorage
-                    // emptyCart();
+                    emptyCart();
                     // go back to homepage
                     navigate("/");
                 }
