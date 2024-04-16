@@ -28,9 +28,9 @@ const Checkout = () => {
 
     // costs
     const subtotal = cartItems.reduce((total, item) => total + item.ProductPrice * item.Quantity, 0);
-    const deliveryFee = cartItems.length > 0 ? 1.49 : 0; // Set delivery fee to $1.49 if there are items, otherwise $0
+    const deliveryFee = fulfillMethod === 'Delivery' ? 1.49 : 0; // Set delivery fee to $1.49 if there are items, otherwise $0
     const taxRate = 0.13;
-    const taxAmount = subtotal * taxRate;
+    const taxAmount = (subtotal + deliveryFee) * taxRate;
     const total = subtotal + deliveryFee + taxAmount;
 
     // fetch userData
