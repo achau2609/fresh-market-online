@@ -168,4 +168,37 @@ const updateOrderStatus = (req, res) => {
 
 }
 
-module.exports = { addOrder, getAllOrders, getTodaysPickupOrders, getOrder, updateOrderStatus }
+const getOrdersByCustomerId = (req, res) => {
+    const customerId = req.params.customerId;
+
+    Order.find({ CustomerId: customerId })
+        .then(orders => {
+            if (orders.length === 0) {
+                return res.status(404).json({ message: "No orders found for this customer." });
+            }
+            res.json(orders);
+        })
+        .catch(err => {
+            console.error("Error fetching orders by CustomerId:", err);
+            res.status(500).json({ error: "An error occurred while fetching orders", msg: err });
+        });
+};
+
+const getOrderByOrderNo = (req, res) => {
+    const orderNo = parseInt(req.params.orderNo);  
+
+    Order.findOne({ orderNo: orderNo })
+        .then(order => {
+            if (!order) {
+                return res.status(404).json({ message: "Order not found" });
+            }
+            res.json(order);
+        })
+        .catch(err => {
+            console.error("Error fetching order by orderNo:", err);
+            res.status(500).json({ error: "An error occurred while fetching the order", msg: err });
+        });
+};
+
+
+module.exports = { addOrder, getAllOrders, getTodaysPickupOrders, getOrder, updateOrderStatus,getOrdersByCustomerId,getOrderByOrderNo }

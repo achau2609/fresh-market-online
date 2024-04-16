@@ -38,7 +38,6 @@ const ProductList = () => {
     };
 
     useEffect(() => {
-        // Define the function to fetch products
         const fetchProducts = async () => {
             try {
                 const response = await fetch(`${apiUrl}/api/products`);  // Use the apiUrl from server-config
@@ -52,8 +51,8 @@ const ProductList = () => {
             }
         };
 
-        fetchProducts(); // Execute the fetch operation
-    }, []); // Empty dependency array means this effect will only run once, after initial render
+        fetchProducts(); 
+    }, []); 
 
     return (
         <div className="container text-center">
