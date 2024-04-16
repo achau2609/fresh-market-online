@@ -10,16 +10,19 @@ const ProductList = ({ category, handleClickProduct }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
     const [sort, setSort] = useState("1");
-    const [searchQuery, setSearchQuery] = useState(searchParams.get('query'));
+    const [searchQuery, setSearchQuery] = useState(searchParams !== "" ? searchParams.get('query') : null);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
 
     // Filter the products based on the search query
-    const filteredProducts = products.filter((product) =>
-    product.ProductName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    let filteredProducts = products;
+    if(searchQuery){
+        filteredProducts = products.filter((product) =>
+        product.ProductName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+    }
 
     // Get the current items based on pagination
     const currentItems = filteredProducts.slice(
