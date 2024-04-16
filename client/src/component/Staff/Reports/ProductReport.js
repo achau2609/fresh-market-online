@@ -25,7 +25,6 @@ const ProductReport = ({ startDate, endDate }) => {
         const startRecord = (pageNum - 1) * recordPerPage;
 
         setTableData(products.slice(startRecord, startRecord + recordPerPage));
-        console.log([startRecord, recordPerPage])
     }
 
     useEffect(() => {

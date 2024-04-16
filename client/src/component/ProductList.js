@@ -2,30 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { apiUrl } from '../server-config';
 
-const ProductList = ({ category, handleClickProduct }) => {
+const ProductList = ({ handleClickProduct }) => {
     const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
 
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
     const [sort, setSort] = useState("1");
-    const [searchQuery, setSearchQuery] = useState(searchParams !== "" ? searchParams.get('query') : null);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
 
-    // Filter the products based on the search query
-    let filteredProducts = products;
-    if(searchQuery){
-        filteredProducts = products.filter((product) =>
-        product.ProductName.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-    }
-
     // Get the current items based on pagination
-    const currentItems = filteredProducts.slice(
+    const currentItems = products.slice(
         indexOfFirstItem,
         indexOfLastItem
     );
@@ -44,10 +34,6 @@ const ProductList = ({ category, handleClickProduct }) => {
         setCurrentPage(pageNumber);
     };
 
-    const handleSearchInputChange = (event) => {
-        setSearchQuery(event.target.value);
-        setCurrentPage(1);
-    };
 
     const renderPagination = () => {
         let pages = [];
@@ -62,13 +48,16 @@ const ProductList = ({ category, handleClickProduct }) => {
     };
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            let query = `?sort=${sort}`
 
-            query = category? `${query}&category=${encodeURIComponent(category)}` : query;
+        const fetchProducts = async () => {
+            const searchParams = new URLSearchParams(location.search);
+            searchParams.set('sort', sort)
+
+            const url = new URL(`${apiUrl}/api/products`)
+            url.search = searchParams
 
             try {
-                const response = await fetch(`${apiUrl}/api/products${query}`);  // Use the apiUrl from server-config
+                const response = await fetch(url);  // Use the apiUrl from server-config
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -80,13 +69,13 @@ const ProductList = ({ category, handleClickProduct }) => {
         };
 
         fetchProducts(); // Execute the fetch operation
-    }, [category, sort]); // Empty dependency array means this effect will only run once, after initial render
+    }, [location, sort]); // Empty dependency array means this effect will only run once, after initial render
 
     return (
-        <div className="card m-3">
+        <div className="card m-3 border-0">
             <div className="card-body">
                 <div className="row justify-content-end mb-4 align-items-center">
-                    <div className="col-12 col-md-8">
+                    {/***                 <div className="col-12 col-md-8">
                         <input
                         type="text"
                         className="form-control"
@@ -94,14 +83,14 @@ const ProductList = ({ category, handleClickProduct }) => {
                         value={searchQuery}
                         onChange={handleSearchInputChange}
                         />
-                    </div>
+                    </div>*/}
                     <div className="col-12 col-md-auto">
                         <label htmlFor='price-range'>Sort by:</label>
                     </div>
                     <div className="col-12 col-md-auto">
-                    <select className="form-select" id="order-status"
-                        value={sort}
-                        onChange={e => setSort(e.target.value)}>
+                        <select className="form-select" id="order-status"
+                            value={sort}
+                            onChange={e => setSort(e.target.value)}>
                             <option value="1">A-Z</option>
                             <option value="2">Price (Low to High)</option>
                             <option value="3">Price (High to Low)</option>
@@ -109,23 +98,29 @@ const ProductList = ({ category, handleClickProduct }) => {
                     </div>
                 </div>
                 {currentItems.length !== 0 && <>
-                <div className='row row-cols-1 row-cols-sm-4 row-cols-md-6'>
-                    {currentItems.map((product) =>  // Use currentItems here instead of products
-                        <div className='col m-2' key={product._id}>
-                            <div className="card border-0">
-                                <button className="btn" onClick={e => handleClickProduct(product._id)}>
-                                    <div className='product-thumbnail justify-content-center'>
-                                        <img src={product.Picture && product.Picture.length > 0 ? product.Picture[0] : undefined} className="card-img-top" alt={product.ProductName} />
+                    <div className='row row-cols-1 row-cols-sm-4 row-cols-md-6'>
+                        {currentItems.map((product) =>  // Use currentItems here instead of products
+                            <div className='col m-2' key={product._id}>
+                                <div className="card border-0">
+                                    <button className="btn" onClick={e => handleClickProduct(product._id)}>
+                                        <div className='product-thumbnail justify-content-center'>
+                                            <img src={product.Picture && product.Picture.length > 0 ? product.Picture[0] : undefined} className="card-img-top" alt={product.ProductName} />
+                                        </div>
+                                    </button>
+                                    <div className="card-body">
+                                        <p className="card-title">{product.ProductName}</p>
+                                        {product.DiscountPrice ?
+                                            <>
+                                                <p className="card-text text-danger fw-bold d-inline me-3">${product.DiscountPrice.toFixed(2)}</p>
+                                                <p className="card-text d-inline text-decoration-line-through">${product.ProductPrice.toFixed(2)}</p>
+                                            </> :
+                                            <p className="card-text">${product.ProductPrice.toFixed(2)}</p>
+                                        }
                                     </div>
-                                </button>
-                                <div className="card-body">
-                                    <p className="card-title">{product.ProductName}</p>
-                                    <p className="card-text">${product.ProductPrice.toFixed(2)}</p>
                                 </div>
                             </div>
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
                     <div className='d-flex justify-content-end'>
                         <nav className='border-0'>
                             <ul className="pagination">

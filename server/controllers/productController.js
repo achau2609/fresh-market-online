@@ -3,11 +3,30 @@ const mongoose = require('mongoose')
 
 // Get all products
 const getAllProducts = (req, res) => {
+
     let query = {};
     if (req.query.category) {
         query.CategoryId = req.query.category;
     }
 
+    if (req.query.Name)
+        query.ProductName = { '$regex': `${req.query.Name}`, '$options' : 'i' };
+
+    if (req.query.minPrice)
+        query.ProductPrice = { '$gte': req.query.minPrice };
+    if (req.query.maxPrice)
+        query.ProductPrice = { ...query.ProductPrice, '$lte': req.query.maxPrice };
+
+    if (req.query.minInventory)
+        query.Quantity = { '$gte': req.query.minInventory };
+    if (req.query.maxInventory)
+        query.Quantity = { ...query.Quantity, '$lte': req.query.maxInventory };
+
+    if (req.query.category){
+        let arr = req.query.category.split(',');
+        query.CategoryId = {'$in': arr};
+    }
+        
     let sort = {}
     if (req.query.sort) {
         if (req.query.sort === "1")
