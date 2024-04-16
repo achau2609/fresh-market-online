@@ -5,7 +5,6 @@ import { apiUrl } from "../server-config";
 import axios from "axios";
 import SelectStateDropDown from "../component/shared/selectStateDropDown";
 import Input from "../component/shared/input";
-import SelectMonthDropDown from "../component/shared/selectMonthDropDown";
 
 const Checkout = () => {
 
@@ -25,13 +24,7 @@ const Checkout = () => {
         zip: ''
     });
     const [pickup, setPickup] = useState();
-    const [payment, setPayment] = useState({
-        cardNo: '',
-        cardName: '',
-        expMonth: '',
-        expYr: '',
-        CVV: ''
-    });
+
 
     // costs
     const subtotal = cartItems.reduce((total, item) => total + item.ProductPrice * item.Quantity, 0);
@@ -74,31 +67,30 @@ const Checkout = () => {
         let order = '';
         if (fulfillMethod === 'Delivery') {
             order = {
-                orderId: orderCount + 1,
-                customerId: user_id,
-                customerName: userData.firstName + " " + userData.lastName,
-                contactNo: userData.phoneNumber,
-                orderType: fulfillMethod,
-                deliveryAddress: address.addressLine + ", " + address.city + ", " + address.state + ", " + address.zip,
-                products: cartItems,
-                status: "Processing",
+                orderNo: orderCount + 1,
+                CustomerId: user_id,
+                CustomerName: userData.firstName + " " + userData.lastName,
+                ContactNo: userData.phoneNumber,
+                OrderType: fulfillMethod,
+                DeliveryAddress: address.addressLine + ", " + address.city + ", " + address.state + ", " + address.zip,
+                Products: cartItems,
+                Status: "Processing",
                 orderDate: today
             }
         } else {
             order = {
-                orderId: orderCount + 1,
-                customerId: user_id,
-                customerName: userData.firstName + " " + userData.lastName,
-                contactNo: userData.phoneNumber,
-                orderType: fulfillMethod,
-                pickupDateTime: pickup,
-                products: cartItems,
-                status: "Processing",
+                orderNo: orderCount + 1,
+                CustomerId: user_id,
+                CustomerName: userData.firstName + " " + userData.lastName,
+                ContactNo: userData.phoneNumber,
+                OrderType: fulfillMethod,
+                PickupDateTime: pickup,
+                Products: cartItems,
+                Status: "Processing",
                 orderDate: today
             }
         }
         
-        alert("a ok");
         return order;
     }
 
@@ -117,6 +109,35 @@ const Checkout = () => {
         return validation;
     }
 
+    const sendOrder = (e) => {
+        console.log(e)
+        fetch(`${apiUrl}/api/orders/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body:JSON.stringify(e),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    console.error("Failed to send order to server", data.message);
+                    alert("Failed to send order to server")
+                } else {
+                    // alert customer order has been placed
+                    alert('Order has been placed. You will be redirected to the homepage.')
+                    // erase order from localStorage
+                    // emptyCart();
+                    // go back to homepage
+                    navigate("/");
+                }
+            }).catch((error) => {
+                console.error("Error:", error);
+                alert("An error occurred while sending order. Please try again.");
+            })
+        
+    }
+
     // send order to server
     const handlePlaceOrder = () => {
 
@@ -126,15 +147,9 @@ const Checkout = () => {
             // create the body
             const orderBody = createOrderResponse();
             // send the order to backend
-            console.log(orderBody);
-            // alert customer order has been placed
-            alert('Order has been placed. You will be redirected to the homepage.')
-            // erase order from localStorage
-            // emptyCart();
-            // go back to homepage
-            navigate("/");
+            sendOrder(orderBody);
         } else {
-            alert(validation.msg)
+            alert(validation.msg);
         }
         
     }
@@ -142,11 +157,6 @@ const Checkout = () => {
     // change address details
     const handleChangeAddress = (e) => {
         setAddress({ ...address, [e.target.name]: e.target.value });
-    };
-
-    // change payment details
-    const handleChangePayment = (e) => {
-        setPayment({ ...payment, [e.target.name]: e.target.value });
     };
 
     const handlePickupDate = (e) => {
@@ -162,7 +172,7 @@ const Checkout = () => {
     }
     // debug
     
-    console.log(address)
+    //console.log(address)
 
     return (
         <div>

@@ -1,8 +1,16 @@
 const Order = require("../models/orderModel");
 const mongoose = require("mongoose");
 
-const addOrder = () => {
-    return
+const addOrder = async (req, res) => {
+    try {
+        const newOrder = new Order(req.body)
+        const saveOrder = await newOrder.save();
+        res.status(201).json(saveOrder)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "An error occured while saving the order. "});
+    }
+ 
 }
 
 
