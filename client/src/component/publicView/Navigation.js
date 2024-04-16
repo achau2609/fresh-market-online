@@ -19,10 +19,8 @@ const Navigation = () => {
 
     }, [])
 
-    const chooseCategory = (cat) =>{
-        navigate('/productlist', {
-            state: {category: cat}
-        })
+    const chooseCategory = (cat) => {
+        navigate(`/productlist?category=${cat}`)
     }
 
     const toggleSubCategory = (elementId) => {
@@ -66,7 +64,7 @@ const Navigation = () => {
                                 {parent.ParentCategory}
                                 <ul className="dropdown-menu">
                                     {parent.categories.map((category) => <li key={category}>
-                                        <button className="dropdown-item" onClick={()=>chooseCategory(category)}>{category}</button>
+                                        <button className="dropdown-item" onClick={() => chooseCategory(category)}>{category}</button>
                                     </li>
                                     )}
                                 </ul>

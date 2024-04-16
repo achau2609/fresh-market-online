@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Multiselect from "multiselect-react-dropdown";
 import TwoThumbs from "../../component/Staff/Helpers/RangeSlider/RangeSlider";
 import ProductList from "../../component/ProductList";
@@ -7,10 +7,17 @@ import { apiUrl } from "../../server-config";
 
 const ProductListPage = () => {
   const [categories, setCategories] = useState([]);
+  const query = useParams();
 
-  const [searchPrices, setSearchPrices] = useState([0, 50]);
+  const [searchPrices, setSearchPrices] = useState([0, 30]);
+  const [filter, setFilter] = useState({
+    minPrice: 0,
+    maxPrice: 30,
+    category: []
+  })
 
-  const { state } = useLocation();
+  const multiselect = useRef(null);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,17 +38,61 @@ const ProductListPage = () => {
         setCategories(newCategories);
       })
       .catch((err) => alert(err));
-  }, []);
+
+      setFilter({
+        minPrice: 0,
+        maxPrice: 30,
+        category: []
+      });
+  }, [query]);
+
+  const changeSearchPrice = (newPrices) => {
+    setSearchPrices(newPrices);
+    setFilter({
+      ...filter,
+      minPrice: newPrices[0],
+      maxPrice: newPrices[1]
+    })
+  }
+
+  const selectCategory = (arr) => {
+    let selectedCategories = arr.map((element) => element.CategoryName);
+    setFilter({
+      ...filter,
+      category: selectedCategories
+    })
+  
+  }
+
+  const clearFilter = () => {
+    setFilter({
+      minPrice: 0,
+      maxPrice: 30,
+      category: []
+    });
+    setSearchPrices([0, 30]);
+    multiselect.current.resetSelectedValues();
+    search({
+      minPrice: 0,
+      maxPrice: 30,
+      category: []
+    })
+  }
 
   const redirect = (productId) => {
     navigate(`/productlist/${encodeURIComponent(productId)}`);
   };
 
+  const search = (F=filter) => {
+    let search = new URLSearchParams(F)
+    navigate(`/productlist?${search.toString()}`)
+  }
+
   return (
     <div className="row public">
       {/* Search */}
       <div className="col-12 col-md-3 border-end">
-        <div className="card m-3">
+        <div className="card m-3 border-0">
           <div className="card-body">
             <div className="card-header">Filters</div>
             <form className="container text-start p-2">
@@ -51,13 +102,18 @@ const ProductListPage = () => {
                   <Multiselect
                     displayValue="CategoryName"
                     groupBy="ParentCategory"
-                    hideSelectedList
-                    onKeyPressFn={function noRefCheck() {}}
-                    onRemove={function noRefCheck() {}}
-                    onSearch={function noRefCheck() {}}
-                    onSelect={function noRefCheck() {}}
+                    onKeyPressFn={function noRefCheck() { }}
+                    onRemove={selectCategory}
+                    onSearch={function noRefCheck() { }}
+                    onSelect={selectCategory}
                     options={categories}
                     showCheckbox
+                    ref={multiselect}
+                    style={{
+                      chips: {
+                        background: '#59b828'
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -67,17 +123,17 @@ const ProductListPage = () => {
                   <TwoThumbs
                     STEP={0.01}
                     MIN={0}
-                    MAX={50}
+                    MAX={30}
                     values={searchPrices}
-                    setValues={setSearchPrices}
+                    setValues={changeSearchPrice}
                     dp={2}
                   />
                 </div>
                 <div className="col-12 d-grid gap-2">
-                  <button type="button" className="btn btn-custom-primary">
+                  <button type="button" className="btn btn-custom-primary" onClick={()=>search()}>
                     Search
                   </button>
-                  <button type="button" className="btn btn-light">
+                  <button type="button" className="btn btn-light" onClick={clearFilter}>
                     Clear
                   </button>
                 </div>
@@ -89,7 +145,6 @@ const ProductListPage = () => {
       {/* Table */}
       <div className="col-12 col-md-9">
         <ProductList
-          category={state ? state.category : ""}
           handleClickProduct={redirect}
         />
       </div>

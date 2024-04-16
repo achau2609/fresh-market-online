@@ -24,17 +24,12 @@ const Header = () => {
             setIsLoggedIn(true);
     }, [])
 
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
-
-
     const handleSearchSubmit = (event) => {
         event.preventDefault();
-    if (searchTerm.trim() !== '') {
-        // Redirect to product list page with search query as URL parameter
-        navigate(`/productList?query=${encodeURIComponent(searchTerm.trim())}`);
-    }
+        if (searchTerm.trim() !== '') {
+            // Redirect to product list page with search query as URL parameter
+            navigate(`/productlist?Name=${encodeURIComponent(searchTerm.trim())}`);
+        }
     };
 
     const handleAccountInfoClick = () => {
@@ -72,11 +67,15 @@ const Header = () => {
 
             {/* Search bar */}
             <div className='col-12 col-sm-7'>
-                <form onSubmit={handleSearchSubmit} className='d-flex'>
+                <form className='d-flex'>
                     <div className="input-group">
                         <input type="search" className="form-control py-2 rounded-0" placeholder="Search in products..." value={searchTerm}
-                            onChange={handleSearchChange} />
-                        <button className="btn pb-2 rounded-0 border" type="button" id="button-addon2"><FaSearch className="search-icon" /></button>
+                            onChange={(e) => setSearchTerm(e.target.value)} />
+                        <button className="btn pb-2 rounded-0 border" type="button" id="button-addon2"
+                            onClick={handleSearchSubmit}
+                        >
+                            <FaSearch className="search-icon" />
+                        </button>
                     </div>
                 </form>
             </div>
