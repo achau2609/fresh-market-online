@@ -89,6 +89,9 @@ const updateCategories = async (req, res) => {
   if (!newCategories)
     return res.status(400).json({ err: 'Invalid Parameter' });
 
+  if (newCategories.length === 0)
+    return res.status(400).json({ err: 'Invalid Parameter' });
+
   await Category.deleteMany({});
 
   let categoriesToAdd = []
