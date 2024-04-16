@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { apiUrl } from '../server-config';
 
 const ProductList = ({ category, handleClickProduct }) => {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(20);
     const [sort, setSort] = useState("1");
+    const [searchQuery, setSearchQuery] = useState(searchParams.get('query'));
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
+
+    // Filter the products based on the search query
+    const filteredProducts = products.filter((product) =>
+    product.ProductName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Get the current items based on pagination
+    const currentItems = filteredProducts.slice(
+        indexOfFirstItem,
+        indexOfLastItem
+    );
 
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
@@ -24,6 +39,11 @@ const ProductList = ({ category, handleClickProduct }) => {
 
     const handlePageClick = (pageNumber) => {
         setCurrentPage(pageNumber);
+    };
+
+    const handleSearchInputChange = (event) => {
+        setSearchQuery(event.target.value);
+        setCurrentPage(1);
     };
 
     const renderPagination = () => {
@@ -61,55 +81,66 @@ const ProductList = ({ category, handleClickProduct }) => {
     }, [category, sort]); // Empty dependency array means this effect will only run once, after initial render
 
     return (
-        <div className="container text-center">
-            <div className="row justify-content-end mb-4 align-items-center">
-                <div className="col-12 col-md-auto">
-                    <label htmlFor='price-range'>Sort by:</label>
-                </div>
-                <div className="col-12 col-md-auto">
+        <div className="card m-3">
+            <div className="card-body">
+                <div className="row justify-content-end mb-4 align-items-center">
+                    <div className="col-12 col-md-8">
+                        <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by product name..."
+                        value={searchQuery}
+                        onChange={handleSearchInputChange}
+                        />
+                    </div>
+                    <div className="col-12 col-md-auto">
+                        <label htmlFor='price-range'>Sort by:</label>
+                    </div>
+                    <div className="col-12 col-md-auto">
                     <select className="form-select" id="order-status"
-                    value={sort}
-                    onChange={e => setSort(e.target.value)}>
-                        <option value="1">A-Z</option>
-                        <option value="2">Price (Low to High)</option>
-                        <option value="3">Price (High to Low)</option>
-                    </select>
+                        value={sort}
+                        onChange={e => setSort(e.target.value)}>
+                            <option value="1">A-Z</option>
+                            <option value="2">Price (Low to High)</option>
+                            <option value="3">Price (High to Low)</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            {currentItems.length !== 0 && <>
-            <div className='row row-cols-1 row-cols-sm-4 row-cols-md-6'>
-                {currentItems.map((product) =>  // Use currentItems here instead of products
-                    <div className='col m-2' key={product.ProductName}>
-                        <div className="card border-0">
-                            <button className="btn" onClick={e => handleClickProduct(product._id)}>
-                                <div className='product-thumbnail justify-content-center'>
-                                    <img src={product.Picture && product.Picture.length > 0 ? product.Picture[0] : undefined} className="card-img-top" alt={product.ProductName} />
+                {currentItems.length !== 0 && <>
+                <div className='row row-cols-1 row-cols-sm-4 row-cols-md-6'>
+                    {currentItems.map((product) =>  // Use currentItems here instead of products
+                        <div className='col m-2' key={product._id}>
+                            <div className="card border-0">
+                                <button className="btn" onClick={e => handleClickProduct(product._id)}>
+                                    <div className='product-thumbnail justify-content-center'>
+                                        <img src={product.Picture && product.Picture.length > 0 ? product.Picture[0] : undefined} className="card-img-top" alt={product.ProductName} />
+                                    </div>
+                                </button>
+                                <div className="card-body">
+                                    <p className="card-title">{product.ProductName}</p>
+                                    <p className="card-text">${product.ProductPrice.toFixed(2)}</p>
                                 </div>
-                            </button>
-                            <div className="card-body">
-                                <p className="card-title">{product.ProductName}</p>
-                                <p className="card-text">${product.ProductPrice.toFixed(2)}</p>
                             </div>
                         </div>
+                    )}
+                </div>
+                    <div className='d-flex justify-content-end'>
+                        <nav className='border-0'>
+                            <ul className="pagination">
+                                <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                    <a onClick={handlePreviousClick} className="page-link" href="#">Previous</a>
+                                </li>
+                                {renderPagination()}
+                                <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                    <a onClick={handleNextClick} className="page-link" href="#">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                )}
+                </>
+                }
+                {currentItems.length === 0 && <p>No items found.</p>}
             </div>
-            <div className='d-flex justify-content-end'>
-                <nav className='border-0'>
-                    <ul className="pagination">
-                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                            <a onClick={handlePreviousClick} className="page-link" href="#">Previous</a>
-                        </li>
-                        {renderPagination()}
-                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                            <a onClick={handleNextClick} className="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            </>
-            }
-            {currentItems.length === 0 && <p>No items found.</p>}
         </div>
     );
 }
