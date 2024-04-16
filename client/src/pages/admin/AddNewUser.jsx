@@ -4,6 +4,7 @@ import Header from "../../component/admin/header";
 import Sidebar from "../../component/admin/sidebar";
 import Footer from "../../component/admin/footer";
 import Input from "../../component/shared/input";
+import SwitchInput from "../../component/shared/switchInput";
 import PasswordInput from "../../component/shared/passwordInput";
 import { apiUrl } from "../../server-config";
 import axios from "axios";
@@ -42,8 +43,11 @@ function AddNewUser() {
   };
 
   const handleChange = (e) => {
-    formData.isStaff = true;
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleCheckboxChange = (e) => {
+    setFormData({ ...formData, isStaff: e.target.checked });
   };
 
   return (
@@ -73,6 +77,14 @@ function AddNewUser() {
                       placeholder="Sample: yourname@outlook.com"
                       value={formData.email}
                       onChange={handleChange}
+                    />
+                  </div>
+                  <div className="col-6 form-check form-switch">
+                    <SwitchInput
+                      name="isStaff"
+                      label="Is Staff?"
+                      checked={formData.isStaff}
+                      onChange={handleCheckboxChange}
                     />
                   </div>
                 </div>
@@ -151,7 +163,12 @@ function AddNewUser() {
                     </Link>
                   </div>
                   <div className="col col-md-2 text-end">
-                    <input type="hidden" name="isStaff" value={formData.isStaff} onChange={handleChange} />
+                    <input
+                      type="hidden"
+                      name="isStaff"
+                      value={formData.isStaff}
+                      onChange={handleChange}
+                    />
                     <button
                       className="btn btn-success"
                       disabled={
@@ -166,6 +183,7 @@ function AddNewUser() {
                     </button>
                   </div>
                 </div>
+                <input type="hidden" name="isStaff" value={true} />
               </form>
             </div>
           </div>
