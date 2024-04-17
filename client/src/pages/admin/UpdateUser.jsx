@@ -23,7 +23,7 @@ function UpdateUser() {
       console.log(error);
       navigate("/admin/users");
     }
-  });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
