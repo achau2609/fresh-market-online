@@ -16,11 +16,12 @@ const MyAccountNavBar = ({ active }) => {
                     My Account
                 </button>
             </Link>
+            {/*
             <Link to="/myaccount/changepw" className='text-decoration-none'>
                 <button className={classNames("nav-link", active === 3 ? 'active' : '')} id="nav-account-tab" data-bs-toggle="tab" data-bs-target="#nav-change-password" type="button" role="tab" aria-controls="nav-account" aria-selected="false">
                     Change Password
                 </button>
-            </Link>
+            </Link> */}
         </div>
     )
 
