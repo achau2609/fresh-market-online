@@ -118,6 +118,7 @@ const MyAccount = () => {
                   onChange={handleChange}
                 />
               </div>
+              {/*
               <br />
               <h5>Address Information</h5>
               <div className="col-12">
@@ -125,7 +126,7 @@ const MyAccount = () => {
                   value={formData.address}
                   onAddressChange={handleAddressChange}
                 />
-              </div>
+              </div>*/}
               <br />
               <div className="col-12">
                 <span className="float-end">
