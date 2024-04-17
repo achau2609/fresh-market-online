@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div className="public">
             <Banner />
-            <ItemsCarousel />
+            {/*<ItemsCarousel />*/}
         </div>
     );
 };

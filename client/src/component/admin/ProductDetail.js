@@ -149,6 +149,12 @@ const ProductDetail = () => {
       })
   }
 
+  const changeProductPicrure = (index, newValue) => {
+    let newArr = product.Picture;
+    newArr[index] = newValue;
+    setProduct({...product, Picture: newArr});
+  }
+
   return (
     <div className="container text-start">
       <div className="row justify-content-between">
@@ -190,7 +196,7 @@ const ProductDetail = () => {
             {product.Picture && product.Picture.map((src, index) =>
               <div className="input-group mb-3" key={src}>
                 <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
-                <input type="text" className="form-control" placeholder="" value={src} />
+                <input type="text" className="form-control" placeholder="" value={src} onChange={(e)=> changeProductPicrure(index, e.target.value)}/>
                 <button className="btn btn-outline-danger" type="button" id="button-addon2"
                 onClick={() => removeImage(index)}>Delete</button>
               </div>

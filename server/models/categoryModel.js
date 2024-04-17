@@ -5,6 +5,7 @@ const categorySchema = mongoose.Schema({
  // _id: { type: mongoose.ObjectId },
   ParentCategory: { type: String, required: false },
   CategoryName: { type: String, required: true },
+  del: {type: Boolean, required: false}
 });
 
 

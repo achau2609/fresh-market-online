@@ -39,11 +39,23 @@ const ProductListPage = () => {
       })
       .catch((err) => alert(err));
 
-      setFilter({
-        minPrice: 0,
-        maxPrice: 30,
-        category: []
-      });
+    if (window.location.search) {
+      let newFilter = {}
+      let urlSearch = window.location.search;
+      urlSearch = urlSearch.slice(1, urlSearch.length).split('&');
+      let params = urlSearch.reduce((acc, element) => {
+        let key = element.split('=')[0]
+        let value = element.split('=')[1]
+        acc[key] = value;
+        return acc;
+      }, {})
+      if (params.minPrice)
+        newFilter.minPrice = params.minPrice;
+      if (params.maxPrice)
+        newFilter.maxPrice = params.maxPrice;
+      if (params.category)
+        newFilter.category = params.category;
+    }
   }, [query]);
 
   const changeSearchPrice = (newPrices) => {
@@ -61,7 +73,7 @@ const ProductListPage = () => {
       ...filter,
       category: selectedCategories
     })
-  
+
   }
 
   const clearFilter = () => {
@@ -83,8 +95,9 @@ const ProductListPage = () => {
     navigate(`/productlist/${encodeURIComponent(productId)}`);
   };
 
-  const search = (F=filter) => {
+  const search = (F = filter) => {
     let search = new URLSearchParams(F)
+
     navigate(`/productlist?${search.toString()}`)
   }
 
@@ -130,7 +143,7 @@ const ProductListPage = () => {
                   />
                 </div>
                 <div className="col-12 d-grid gap-2">
-                  <button type="button" className="btn btn-custom-primary" onClick={()=>search()}>
+                  <button type="button" className="btn btn-custom-primary" onClick={() => search()}>
                     Search
                   </button>
                   <button type="button" className="btn btn-light" onClick={clearFilter}>

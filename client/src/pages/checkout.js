@@ -150,6 +150,10 @@ const Checkout = () => {
     // send order to server
     const handlePlaceOrder = () => {
 
+        if (cartItems.length === 0) {
+            alert("Your cart is empty. Please add some products before checking out.");
+            return; // Exit the function early if the cart is empty
+        }
         // validate if address and payment are filled
         const validation = validateOrder();
         if (validation.validate) {

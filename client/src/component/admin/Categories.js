@@ -6,7 +6,8 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [newCat, setNewCat] = useState("");
   const [showList, setShowList] = useState(true);
-
+  const [refresh, setRefresh] = useState(false);
+  
   useEffect(() => {
     fetch(`${apiUrl}/api/categories`)
       .then((res) => res.json())
@@ -27,10 +28,11 @@ const Categories = () => {
         setCategories(localCategories);
       })
       .catch(err => alert(err));
-  }, [])
+  }, [refresh])
 
 
   const onItemChange = (newItems) => {
+
     fetch(`${apiUrl}/api/categories/`, {
       method: 'PUT',
       headers: {
@@ -64,7 +66,7 @@ const Categories = () => {
           alert('Something went wrong');
       })
 
-
+      setRefresh(!refresh);
   };
 
   return (

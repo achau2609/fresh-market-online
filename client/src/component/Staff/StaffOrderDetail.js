@@ -142,7 +142,7 @@ const StaffOrderDetail = () => {
                             <tr key={product._id}>
                                 <td>{index + 1}</td>
                                 <td>
-                                    <img src={product.picture} alt='Logo' width="30" height="24" className="d-inline-block align-text-top mx-3" />
+                                    <img src={product.Picture} alt='Logo' width="30" height="24" className="d-inline-block align-text-top mx-3" />
                                     {product.ProductName}
                                 </td>
                                 <td>
