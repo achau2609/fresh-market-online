@@ -11,7 +11,7 @@ const deliveryAddressSchema = mongoose.Schema({
 });
 
 const orderSchema = mongoose.Schema({
-  _id: { type: mongoose.ObjectId, required: true },
+  //_id: { type: mongoose.ObjectId, required: true },
   orderNo: { type: Number, required: true },
   CustomerId: { type: mongoose.ObjectId, required: true },
   CustomerName: { type: String, required: true },
