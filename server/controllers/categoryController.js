@@ -46,7 +46,7 @@ const getCategories = (req, res) => {
     })
 }
 
-const addCategory = (req, res) => {
+const addCategory = async (req, res) => {
 
   if (!req.isAdmin)
     return res.status(401).json({ err: 'Unauthorized' });
@@ -56,27 +56,34 @@ const addCategory = (req, res) => {
   if (!newCategory)
     return res.status(400).json({ err: 'Invalid Parameter' });
 
-  let existCat = findCategoryByName(newCategory)
-  if (existCat)
-    return res.status(400).json({ err: 'Category exists' });
+  findCategoryByName(newCategory).then(existCat => {
+
+    console.log(`existCat = ${existCat}`)
+    if (existCat)
+      return res.status(400).json({ err: 'Category exists' });
 
 
-  Category.create({ CategoryName: newCategory })
-    .then((data) => res.json({ msg: 'Success' }))
-    .catch(err => {
-      console.log(err);
-      return res.status(500).json({ error: err })
-    })
+
+    Category.create({ CategoryName: newCategory })
+      .then((data) => res.json({ msg: 'Success' }))
+      .catch(err => {
+        console.log(err);
+        return res.status(500).json({ error: err })
+      })
+  });
+
 }
 
-const findCategoryByName = (name) => {
+const findCategoryByName = name => {
 
-  let cat = {};
-  Category.findOne({ 'CategoryName': name })
-    .then(data => {
-      cat = data
-    });
-  return cat;
+  return new Promise((resolve, reject) => {
+    Category.findOne({ 'CategoryName': name })
+      .then(data => {
+        console.log(`findCat ${data}`)
+        resolve(data !== null);
+      });
+  })
+
 }
 
 const updateCategories = async (req, res) => {
@@ -96,7 +103,6 @@ const updateCategories = async (req, res) => {
     .then((data) => {
 
       let categoriesToAdd = []
-      console.log(newCategories[0]);
 
       newCategories.forEach(element => {
 
@@ -105,8 +111,6 @@ const updateCategories = async (req, res) => {
         element.children.forEach((child) => categoriesToAdd.push({ CategoryName: child.id, ParentCategory: element.id }))
       })
 
-      console.log(categoriesToAdd[0])
-      console.log(categoriesToAdd[1])
       Category.insertMany(categoriesToAdd)
         .then(data => {
           Category.deleteMany({ 'del': true }).then(() => res.json({ msg: 'Success' }));
