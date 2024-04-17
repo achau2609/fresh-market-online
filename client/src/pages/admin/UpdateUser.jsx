@@ -18,23 +18,34 @@ function UpdateUser() {
       // Get user based on Id from server to show in form
       axios.get(`${apiUrl}/api/users/${id}`).then((res) => {
         setUser(res.data);
+      }).catch(error => {
+        console.log(error);
+        navigate("/admin/users"); 
       });
     } catch (error) {
       console.log(error);
-      navigate("/admin/users");
+      navigate("/admin/users"); 
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      await axios.patch(`${apiUrl}/api/users/${id}`, user).then((res) => {
-        console.log(res);
-        navigate("/admin/users");
-      });
+      await axios.patch(`${apiUrl}/api/users/${id}`, user)
+        .then((res) => {
+          console.log(res);
+          // Show an alert when the update is successful
+          alert("User updated successfully!");
+          navigate("/admin/users"); 
+        })
+        .catch((err) => {
+          console.error("Error updating user: ", err);
+          alert("Failed to update user: " + err.message);
+        });
     } catch (error) {
       console.error("Error adding user: ", error);
+      alert("An unexpected error occurred: " + error.message);
     }
   };
 
