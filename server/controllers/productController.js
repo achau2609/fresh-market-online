@@ -10,7 +10,7 @@ const getAllProducts = (req, res) => {
     }
 
     if (req.query.Name)
-        query.ProductName = { '$regex': `${req.query.Name}`, '$options' : 'i' };
+        query.ProductName = { '$regex': `${req.query.Name}`, '$options': 'i' };
 
     if (req.query.minPrice)
         query.ProductPrice = { '$gte': req.query.minPrice };
@@ -22,11 +22,11 @@ const getAllProducts = (req, res) => {
     if (req.query.maxInventory)
         query.Quantity = { ...query.Quantity, '$lte': req.query.maxInventory };
 
-    if (req.query.category){
+    if (req.query.category) {
         let arr = req.query.category.split(',');
-        query.CategoryId = {'$in': arr};
+        query.CategoryId = { '$in': arr };
     }
-        
+
     let sort = {}
     if (req.query.sort) {
         if (req.query.sort === "1")
@@ -79,8 +79,12 @@ const createOrUpdateProduct = (req, res) => {
     if (inValidPictures.length >= 1)
         return res.status(400).json({ err: 'Invalid Parameter' });
 
+    if (!newProduct._id)
+        newProduct._id = new mongoose.Types.ObjectId();
+
     Product.findByIdAndUpdate(newProduct._id, newProduct, {
-        upsert: true
+        upsert: true,
+        new: true
     })
         .then((data) => {
             return res.json({ msg: 'Success' })

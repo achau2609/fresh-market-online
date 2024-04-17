@@ -38,7 +38,6 @@ const ProductDetail = () => {
         .catch(err => alert(err));
     }
 
-    //get categories
     // fetch categories
     fetch(`${apiUrl}/api/categories`)
       .then(res => res.json())
@@ -49,6 +48,7 @@ const ProductDetail = () => {
         });
 
         setCategories(newCategories);
+        setProduct({...product, CategoryId: newCategories[0].CategoryName})
       })
       .catch(err => alert(err));
 
@@ -127,8 +127,11 @@ const ProductDetail = () => {
       }
     })
       .then(res => {
-        if (res.ok)
+        if (res.ok){
           alert('Product saved successfully')
+          navigate('/admin/products')
+        }
+          
         else
           alert('Something went wrong')
       })
