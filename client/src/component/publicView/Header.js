@@ -25,7 +25,7 @@ const Header = () => {
     }, [])
 
     const handleSearchSubmit = (event) => {
-        event.preventDefault();
+        //   event.preventDefault();
         if (searchTerm.trim() !== '') {
             // Redirect to product list page with search query as URL parameter
             navigate(`/productlist?Name=${encodeURIComponent(searchTerm.trim())}`);
@@ -67,17 +67,15 @@ const Header = () => {
 
             {/* Search bar */}
             <div className='col-12 col-sm-7'>
-                <form className='d-flex'>
-                    <div className="input-group">
-                        <input type="search" className="form-control py-2 rounded-0" placeholder="Search in products..." value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)} />
-                        <button className="btn pb-2 rounded-0 border" type="button" id="button-addon2"
-                            onClick={handleSearchSubmit}
-                        >
-                            <FaSearch className="search-icon" />
-                        </button>
-                    </div>
-                </form>
+                <div className="input-group">
+                    <input type="text" className="form-control py-2 rounded-0" placeholder="Search in products..." value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)} />
+                    <button className="btn pb-2 rounded-0 border" type="button" id="button-addon2"
+                        onClick={handleSearchSubmit}
+                    >
+                        <FaSearch className="search-icon" />
+                    </button>
+                </div>
             </div>
 
             {/* Conditionally display the shopping cart only when logged in */}
