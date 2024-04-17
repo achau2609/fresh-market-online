@@ -85,7 +85,7 @@ const Navigation = () => {
                     </div>
                     <Link to="/myaccount">My Account</Link>
                     <Link to="/myaccount/orderhistory">My Orders</Link>
-                    <Link to="/myaccount/changepw">Change Password</Link>
+                    {/* <Link to="/myaccount/changepw">Change Password</Link> */}
                 </div>
             </div>}
         </nav>

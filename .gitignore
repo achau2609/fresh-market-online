@@ -9,6 +9,7 @@
 /server/.pnp
 /server/.pnp.js
 /client/node_modules
+/client/build
 /client/.pnp
 /client/.pnp.js
 
