@@ -6,7 +6,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [newCat, setNewCat] = useState("");
   const [showList, setShowList] = useState(true);
-
+  
   useEffect(() => {
     fetch(`${apiUrl}/api/categories`)
       .then((res) => res.json())
@@ -31,6 +31,7 @@ const Categories = () => {
 
 
   const onItemChange = (newItems) => {
+
     fetch(`${apiUrl}/api/categories/`, {
       method: 'PUT',
       headers: {

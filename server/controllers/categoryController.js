@@ -92,23 +92,30 @@ const updateCategories = async (req, res) => {
   if (newCategories.length === 0)
     return res.status(400).json({ err: 'Invalid Parameter' });
 
-  await Category.deleteMany({});
+  Category.updateMany({}, { '$set': { 'del': true } })
+    .then((data) => {
 
-  let categoriesToAdd = []
+      let categoriesToAdd = []
+      console.log(newCategories[0]);
 
-  newCategories.forEach(element => {
+      newCategories.forEach(element => {
 
-    categoriesToAdd.push({ CategoryName: element.id })
+        categoriesToAdd.push({ CategoryName: element.id })
 
-    element.children.forEach((child) => categoriesToAdd.push({ CategoryName: child.id, ParentCategory: child.parentId }))
-  })
+        element.children.forEach((child) => categoriesToAdd.push({ CategoryName: child.id, ParentCategory: element.id }))
+      })
 
+      console.log(categoriesToAdd[0])
+      console.log(categoriesToAdd[1])
+      Category.insertMany(categoriesToAdd)
+        .then(data => {
+          Category.deleteMany({ 'del': true }).then(() => res.json({ msg: 'Success' }));
 
-  Category.insertMany(categoriesToAdd)
-    .then(data => res.json({ msg: 'Success' }))
-    .catch(err => res.status(500).json({ err: err })
-    );
-
+        }
+        )
+        .catch(err => res.status(500).json({ err: err })
+        );
+    });
 }
 
 module.exports = { getCategories, addCategory, updateCategories }
