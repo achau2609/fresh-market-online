@@ -104,13 +104,16 @@ class Users extends Component {
       filtered = allUsers;
     }
 
-    if (searchQuery)
+    if (searchQuery) {
       filtered = this.state.users.filter((item) =>
-        Object.values(item).some((value) =>
-          value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        Object.values(item).some(
+          (value) =>
+            value &&
+            value.toString().toLowerCase().includes(searchQuery.toLowerCase())
         )
       );
-
+    }
+    
     //this.state.pageSize = selectedPageSize.name;
 
     const users = paginate(filtered, currentPage, pageSize);
