@@ -46,7 +46,7 @@ const getCategories = (req, res) => {
     })
 }
 
-const addCategory = (req, res) => {
+const addCategory = async (req, res) => {
 
   if (!req.isAdmin)
     return res.status(401).json({ err: 'Unauthorized' });
@@ -56,27 +56,34 @@ const addCategory = (req, res) => {
   if (!newCategory)
     return res.status(400).json({ err: 'Invalid Parameter' });
 
-  let existCat = findCategoryByName(newCategory)
-  if (existCat)
-    return res.status(400).json({ err: 'Category exists' });
+  findCategoryByName(newCategory).then(existCat => {
+
+    console.log(`existCat = ${existCat}`)
+    if (existCat)
+      return res.status(400).json({ err: 'Category exists' });
 
 
-  Category.create({ CategoryName: newCategory })
-    .then((data) => res.json({ msg: 'Success' }))
-    .catch(err => {
-      console.log(err);
-      return res.status(500).json({ error: err })
-    })
+
+    Category.create({ CategoryName: newCategory })
+      .then((data) => res.json({ msg: 'Success' }))
+      .catch(err => {
+        console.log(err);
+        return res.status(500).json({ error: err })
+      })
+  });
+
 }
 
-const findCategoryByName = (name) => {
+const findCategoryByName = name => {
 
-  let cat = {};
-  Category.findOne({ 'CategoryName': name })
-    .then(data => {
-      cat = data
-    });
-  return cat;
+  return new Promise((resolve, reject) => {
+    Category.findOne({ 'CategoryName': name })
+      .then(data => {
+        console.log(`findCat ${data}`)
+        resolve(data !== null);
+      });
+  })
+
 }
 
 const updateCategories = async (req, res) => {
@@ -92,23 +99,27 @@ const updateCategories = async (req, res) => {
   if (newCategories.length === 0)
     return res.status(400).json({ err: 'Invalid Parameter' });
 
-  await Category.deleteMany({});
+  Category.updateMany({}, { '$set': { 'del': true } })
+    .then((data) => {
 
-  let categoriesToAdd = []
+      let categoriesToAdd = []
 
-  newCategories.forEach(element => {
+      newCategories.forEach(element => {
 
-    categoriesToAdd.push({ CategoryName: element.id })
+        categoriesToAdd.push({ CategoryName: element.id })
 
-    element.children.forEach((child) => categoriesToAdd.push({ CategoryName: child.id, ParentCategory: child.parentId }))
-  })
+        element.children.forEach((child) => categoriesToAdd.push({ CategoryName: child.id, ParentCategory: element.id }))
+      })
 
+      Category.insertMany(categoriesToAdd)
+        .then(data => {
+          Category.deleteMany({ 'del': true }).then(() => res.json({ msg: 'Success' }));
 
-  Category.insertMany(categoriesToAdd)
-    .then(data => res.json({ msg: 'Success' }))
-    .catch(err => res.status(500).json({ err: err })
-    );
-
+        }
+        )
+        .catch(err => res.status(500).json({ err: err })
+        );
+    });
 }
 
 module.exports = { getCategories, addCategory, updateCategories }
