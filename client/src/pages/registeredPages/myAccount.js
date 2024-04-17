@@ -39,6 +39,7 @@ const MyAccount = () => {
         )
         .then((res) => {
           setFormData(res.data);
+          alert("Your changes have been saved successfully!");
         })
         .catch((err) => {
           console.log(err);
