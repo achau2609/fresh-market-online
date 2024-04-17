@@ -8,13 +8,13 @@ const ProductDetail = () => {
   const productId = useParams().productId;
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState({
-    "_id": '',
-    "ProductName": '',
-    "ProductDescription": "",
-    "ProductPrice": 0,
-    "Quantity": 0,
-    "CategoryId": "",
-    "Picture": []
+    _id: '',
+    ProductName: '',
+    ProductDescription: "",
+    ProductPrice: 0,
+    Quantity: 0,
+    CategoryId: "",
+    Picture: []
   });
 
 
@@ -98,16 +98,21 @@ const ProductDetail = () => {
   };
 
   const addImage = () => {
-    
+
     // get the file extension of the new image
     let splitedArray = newImage.split('.')
     const format = splitedArray[splitedArray.length - 1]
-    if(format !== 'jpg' && splitedArray[splitedArray.length - 1] !== 'jpeg' && splitedArray[splitedArray.length - 1] !== 'png'){
+    if (format !== 'jpg' && splitedArray[splitedArray.length - 1] !== 'jpeg' && splitedArray[splitedArray.length - 1] !== 'png') {
       alert('This format is not accpeted')
-      return 
+      return
     }
-    const oldPicture = product.Picture;
-    oldPicture.push(newImage);
+
+    let oldPicture = product.Picture;
+    if (oldPicture)
+      oldPicture.push(newImage);
+    else
+      oldPicture = [newImage];
+
     setProduct({ ...product, Picture: oldPicture });
     setNewImage('');
   }
@@ -152,7 +157,7 @@ const ProductDetail = () => {
   const changeProductPicrure = (index, newValue) => {
     let newArr = product.Picture;
     newArr[index] = newValue;
-    setProduct({...product, Picture: newArr});
+    setProduct({ ...product, Picture: newArr });
   }
 
   return (
@@ -196,19 +201,19 @@ const ProductDetail = () => {
             {product.Picture && product.Picture.map((src, index) =>
               <div className="input-group mb-3" key={src}>
                 <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
-                <input type="text" className="form-control" placeholder="" value={src} onChange={(e)=> changeProductPicrure(index, e.target.value)}/>
+                <input type="text" className="form-control" placeholder="" value={src} onChange={(e) => changeProductPicrure(index, e.target.value)} />
                 <button className="btn btn-outline-danger" type="button" id="button-addon2"
-                onClick={() => removeImage(index)}>Delete</button>
+                  onClick={() => removeImage(index)}>Delete</button>
               </div>
             )}
 
             <div className="input-group mb-3">
               <span class="input-group-text" id="inputGroup-sizing-default">URL</span>
-              <input type="text" className="form-control" placeholder="JPG, JPEG, PNG supported" 
-              value={newImage}
-              onChange={(e) => setNewImage(e.target.value.toLowerCase())}/>
+              <input type="text" className="form-control" placeholder="JPG, JPEG, PNG supported"
+                value={newImage}
+                onChange={(e) => setNewImage(e.target.value.toLowerCase())} />
               <button className="btn btn-outline-primary" type="button" id="button-addon2"
-              onClick={()=> addImage()}>Add</button>
+                onClick={() => addImage()}>Add</button>
             </div>
           </div>
           {/* Delete Button */}
